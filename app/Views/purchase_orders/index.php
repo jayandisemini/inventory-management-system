@@ -15,7 +15,7 @@ use App\Core\CSRF;
 
     <div class="card border-0 rounded-4 bg-slate-900 p-4">
         <div class="table-responsive">
-            <table class="table align-middle mb-0" id="movementsDataTable">
+            <table class="table align-middle mb-0 fs-7" id="purchaseOrdersDataTable">
                 <thead>
                     <tr class="text-slate-400">
                         <th>PO Number</th>
@@ -28,32 +28,26 @@ use App\Core\CSRF;
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if (empty($orders)): ?>
+                    <?php foreach ($orders as $po): ?>
                         <tr>
-                            <td colspan="7" class="text-center text-slate-400 py-4">No Purchase Orders created yet. Click "Create New PO" to start.</td>
+                            <td class="fw-mono text-cyan fw-bold"><?= htmlspecialchars($po->po_number) ?></td>
+                            <td class="fw-bold text-white"><?= htmlspecialchars($po->supplier_name) ?></td>
+                            <td class="fw-bold text-emerald">$<?= number_format($po->total_amount, 2) ?></td>
+                            <td><?= htmlspecialchars($po->user_name) ?></td>
+                            <td><?= $po->getStatusBadgeHtml() ?></td>
+                            <td class="text-slate-400 fs-8"><?= date('Y-m-d H:i', strtotime($po->created_at)) ?></td>
+                            <td class="text-end">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="/purchase-orders/show?id=<?= $po->po_id ?>" class="btn btn-slate-800 text-white border border-slate-700" title="View PO Details">
+                                        <i class="fas fa-eye me-1"></i> View
+                                    </a>
+                                    <a href="/purchase-orders/print?id=<?= $po->po_id ?>" target="_blank" class="btn btn-outline-cyan" title="Print Invoice">
+                                        <i class="fas fa-print"></i>
+                                    </a>
+                                </div>
+                            </td>
                         </tr>
-                    <?php else: ?>
-                        <?php foreach ($orders as $po): ?>
-                            <tr>
-                                <td class="fw-mono text-cyan fw-bold"><?= htmlspecialchars($po->po_number) ?></td>
-                                <td class="fw-bold text-white"><?= htmlspecialchars($po->supplier_name) ?></td>
-                                <td class="fw-bold text-emerald">$<?= number_format($po->total_amount, 2) ?></td>
-                                <td><?= htmlspecialchars($po->user_name) ?></td>
-                                <td><?= $po->getStatusBadgeHtml() ?></td>
-                                <td class="text-slate-400 fs-8"><?= date('Y-m-d H:i', strtotime($po->created_at)) ?></td>
-                                <td class="text-end">
-                                    <div class="btn-group btn-group-sm">
-                                        <a href="/purchase-orders/show?id=<?= $po->po_id ?>" class="btn btn-slate-800 text-white border border-slate-700" title="View PO Details">
-                                            <i class="fas fa-eye me-1"></i> View
-                                        </a>
-                                        <a href="/purchase-orders/print?id=<?= $po->po_id ?>" target="_blank" class="btn btn-outline-cyan" title="Print Invoice">
-                                            <i class="fas fa-print"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

@@ -16,13 +16,14 @@ document.addEventListener('DOMContentLoaded', function () {
         sidebarToggleClose.addEventListener('click', () => sidebar.classList.remove('show'));
     }
 
-    // 2. DataTables Configuration with Dark Styling
+    // 2. DataTables Configuration with Dark Styling & Graceful Empty States
     const dataTableOptions = {
         pageLength: 10,
         responsive: true,
         language: {
             search: "_INPUT_",
-            searchPlaceholder: "Search records..."
+            searchPlaceholder: "Search records...",
+            zeroRecords: "No matching records found"
         }
     };
 
@@ -30,6 +31,9 @@ document.addEventListener('DOMContentLoaded', function () {
         if ($('#productsDataTable').length) $('#productsDataTable').DataTable(dataTableOptions);
         if ($('#suppliersDataTable').length) $('#suppliersDataTable').DataTable(dataTableOptions);
         if ($('#movementsDataTable').length) $('#movementsDataTable').DataTable(dataTableOptions);
+        if ($('#salesOrdersDataTable').length) $('#salesOrdersDataTable').DataTable(dataTableOptions);
+        if ($('#purchaseOrdersDataTable').length) $('#purchaseOrdersDataTable').DataTable(dataTableOptions);
+        if ($('#stockRequestsDataTable').length) $('#stockRequestsDataTable').DataTable(dataTableOptions);
         if ($('#usersDataTable').length) $('#usersDataTable').DataTable(dataTableOptions);
         if ($('#dashboardLowStockTable').length) $('#dashboardLowStockTable').DataTable({ pageLength: 5, searching: false, lengthChange: false });
     }
@@ -290,6 +294,12 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('deleteUserId').value = this.dataset.id;
             document.getElementById('deleteUserName').textContent = this.dataset.name;
             new bootstrap.Modal(document.getElementById('deleteUserModal')).show();
+        });
+    });
+
+    document.querySelectorAll('.edit-wh-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            alert('Warehouse details: ' + this.dataset.name + ' (' + this.dataset.code + ')');
         });
     });
 

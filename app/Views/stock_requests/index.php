@@ -15,7 +15,7 @@ use App\Core\CSRF;
 
     <div class="card border-0 rounded-4 bg-slate-900 p-4">
         <div class="table-responsive">
-            <table class="table align-middle mb-0 fs-7" id="movementsDataTable">
+            <table class="table align-middle mb-0 fs-7" id="stockRequestsDataTable">
                 <thead>
                     <tr class="text-slate-400">
                         <th>Req ID</th>
@@ -31,51 +31,45 @@ use App\Core\CSRF;
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if (empty($requests)): ?>
+                    <?php foreach ($requests as $req): ?>
                         <tr>
-                            <td colspan="8" class="text-center text-slate-400 py-4">No stock requisitions logged yet.</td>
-                        </tr>
-                    <?php else: ?>
-                        <?php foreach ($requests as $req): ?>
-                            <tr>
-                                <td class="fw-mono text-cyan fw-bold">#REQ-<?= str_pad($req->request_id, 4, '0', STR_PAD_LEFT) ?></td>
-                                <td>
-                                    <div class="fw-bold text-white"><?= htmlspecialchars($req->product_name) ?></div>
-                                    <small class="text-slate-400 fs-8"><?= htmlspecialchars($req->sku) ?></small>
-                                </td>
-                                <td class="fw-bold text-white fs-6"><?= $req->quantity ?></td>
-                                <td><?= htmlspecialchars($req->user_name) ?></td>
-                                <td class="text-slate-300"><?= htmlspecialchars($req->reason ?? 'Internal requisition') ?></td>
-                                <td><?= $req->getStatusBadgeHtml() ?></td>
-                                <td class="text-slate-400 fs-8"><?= date('M d, H:i', strtotime($req->created_at)) ?></td>
+                            <td class="fw-mono text-cyan fw-bold">#REQ-<?= str_pad($req->request_id, 4, '0', STR_PAD_LEFT) ?></td>
+                            <td>
+                                <div class="fw-bold text-white"><?= htmlspecialchars($req->product_name) ?></div>
+                                <small class="text-slate-400 fs-8"><?= htmlspecialchars($req->sku) ?></small>
+                            </td>
+                            <td class="fw-bold text-white fs-6"><?= $req->quantity ?></td>
+                            <td><?= htmlspecialchars($req->user_name) ?></td>
+                            <td class="text-slate-300"><?= htmlspecialchars($req->reason ?? 'Internal requisition') ?></td>
+                            <td><?= $req->getStatusBadgeHtml() ?></td>
+                            <td class="text-slate-400 fs-8"><?= date('M d, H:i', strtotime($req->created_at)) ?></td>
 
-                                <?php if (in_array($userRole, ['Admin', 'Inventory Manager'])): ?>
-                                    <td class="text-end">
-                                        <?php if ($req->status === 'Pending'): ?>
-                                            <div class="btn-group btn-group-sm">
-                                                <form action="/stock-requests/approve" method="POST" class="d-inline">
-                                                    <?= CSRF::field() ?>
-                                                    <input type="hidden" name="id" value="<?= $req->request_id ?>">
-                                                    <button type="submit" class="btn btn-emerald me-1 rounded-2" title="Approve Request">
-                                                        <i class="fas fa-check me-1"></i> Approve
-                                                    </button>
-                                                </form>
-                                                <form action="/stock-requests/reject" method="POST" class="d-inline">
-                                                    <?= CSRF::field() ?>
-                                                    <input type="hidden" name="id" value="<?= $req->request_id ?>">
-                                                    <button type="submit" class="btn btn-rose rounded-2" title="Reject Request">
-                                                        <i class="fas fa-xmark me-1"></i> Reject
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        <?php else: ?>
-                                            <small class="text-slate-400 fs-8">Processed by <?= htmlspecialchars($req->action_by_name ?? 'System') ?></small>
-                                        <?php endif; ?>
-                                    </td>
-                                <?php endif; ?>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
+                            <?php if (in_array($userRole, ['Admin', 'Inventory Manager'])): ?>
+                                <td class="text-end">
+                                    <?php if ($req->status === 'Pending'): ?>
+                                        <div class="btn-group btn-group-sm">
+                                            <form action="/stock-requests/approve" method="POST" class="d-inline">
+                                                <?= CSRF::field() ?>
+                                                <input type="hidden" name="id" value="<?= $req->request_id ?>">
+                                                <button type="submit" class="btn btn-emerald me-1 rounded-2" title="Approve Request">
+                                                    <i class="fas fa-check me-1"></i> Approve
+                                                </button>
+                                            </form>
+                                            <form action="/stock-requests/reject" method="POST" class="d-inline">
+                                                <?= CSRF::field() ?>
+                                                <input type="hidden" name="id" value="<?= $req->request_id ?>">
+                                                <button type="submit" class="btn btn-rose rounded-2" title="Reject Request">
+                                                    <i class="fas fa-xmark me-1"></i> Reject
+                                                </button>
+                                            </form>
+                                        </div>
+                                    <?php else: ?>
+                                        <small class="text-slate-400 fs-8">Processed by <?= htmlspecialchars($req->action_by_name ?? 'System') ?></small>
+                                    <?php endif; ?>
+                                </td>
+                            <?php endif; ?>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
