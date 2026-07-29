@@ -41,6 +41,7 @@ use App\Controllers\SettingController;
 use App\Controllers\ProfileController;
 use App\Controllers\WarehouseController;
 use App\Controllers\SalesOrderController;
+use App\Controllers\BatchController;
 
 $request = new Request();
 $response = new Response();
@@ -115,6 +116,10 @@ $router->get('/sales-orders/create', [SalesOrderController::class, 'create']);
 $router->post('/sales-orders/store', [SalesOrderController::class, 'store']);
 $router->get('/sales-orders/show', [SalesOrderController::class, 'show']);
 $router->get('/sales-orders/print', [SalesOrderController::class, 'printReceipt']);
+
+// Batch & Expiry Tracking Routes
+$router->get('/batches', [BatchController::class, 'index']);
+$router->post('/batches/store', [BatchController::class, 'store']);
 
 // Staff Stock Requisitions & Approvals
 $router->get('/stock-requests', [StockRequestController::class, 'index']);

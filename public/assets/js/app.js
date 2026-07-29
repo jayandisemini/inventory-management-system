@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if ($('#salesOrdersDataTable').length) $('#salesOrdersDataTable').DataTable(dataTableOptions);
         if ($('#purchaseOrdersDataTable').length) $('#purchaseOrdersDataTable').DataTable(dataTableOptions);
         if ($('#stockRequestsDataTable').length) $('#stockRequestsDataTable').DataTable(dataTableOptions);
+        if ($('#batchesDataTable').length) $('#batchesDataTable').DataTable(dataTableOptions);
         if ($('#usersDataTable').length) $('#usersDataTable').DataTable(dataTableOptions);
         if ($('#dashboardLowStockTable').length) $('#dashboardLowStockTable').DataTable({ pageLength: 5, searching: false, lengthChange: false });
     }

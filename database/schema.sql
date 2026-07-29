@@ -170,3 +170,17 @@ CREATE TABLE IF NOT EXISTS `so_items` (
     FOREIGN KEY (`so_id`) REFERENCES `sales_orders`(`so_id`) ON DELETE CASCADE,
     FOREIGN KEY (`product_id`) REFERENCES `products`(`product_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Product Batches & Expiry Tracking Table
+CREATE TABLE IF NOT EXISTS `product_batches` (
+    `batch_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `product_id` INT NOT NULL,
+    `batch_number` VARCHAR(100) NOT NULL,
+    `quantity` INT NOT NULL DEFAULT 0,
+    `mfd_date` DATE NULL,
+    `expiry_date` DATE NOT NULL,
+    `status` ENUM('Active', 'Expiring Soon', 'Expired') NOT NULL DEFAULT 'Active',
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (`product_id`) REFERENCES `products`(`product_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+

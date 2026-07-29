@@ -69,6 +69,12 @@ $activeNav = $activeNav ?? 'dashboard';
             </a>
         </li>
 
+        <li class="nav-item">
+            <a href="/batches" class="nav-link <?= $activeNav === 'batches' ? 'active' : '' ?>">
+                <i class="fas fa-boxes-stacked me-2.5 text-amber"></i> Batch & Expiry
+            </a>
+        </li>
+
         <li class="nav-header text-uppercase text-slate-400 fs-8 fw-bold px-3 py-1 mt-3">Orders & Sales</li>
 
         <li class="nav-item">
