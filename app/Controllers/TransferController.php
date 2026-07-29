@@ -2,30 +2,33 @@
 
 namespace App\Controllers;
 
+use App\Core\Controller;
+use App\Core\AuthMiddleware;
 use App\Repositories\TransferRepository;
 use App\Repositories\WarehouseRepository;
 use App\Repositories\ProductRepository;
 use App\Core\CSRF;
 
-class TransferController extends BaseController {
+class TransferController extends Controller {
     private TransferRepository $transferRepo;
     private WarehouseRepository $warehouseRepo;
     private ProductRepository $productRepo;
 
     public function __construct() {
+        parent::__construct();
+        AuthMiddleware::check();
         $this->transferRepo = new TransferRepository();
         $this->warehouseRepo = new WarehouseRepository();
         $this->productRepo = new ProductRepository();
     }
 
     public function index(): void {
-        $this->requireLogin();
-
         $transfers = $this->transferRepo->getAll();
         $warehouses = $this->warehouseRepo->getAll();
         $products = $this->productRepo->getAll();
 
         $this->render('transfers/index', [
+            'pageTitle' => 'Inter-Warehouse Stock Transfers',
             'activeNav' => 'transfers',
             'transfers' => $transfers,
             'warehouses' => $warehouses,
@@ -34,9 +37,13 @@ class TransferController extends BaseController {
     }
 
     public function store(): void {
-        $this->requireLogin();
-        $this->requireRole(['Admin', 'Inventory Manager']);
-        CSRF::validateToken();
+        AuthMiddleware::authorize(['Admin', 'Inventory Manager']);
+
+        if (!CSRF::verifyToken($_POST['csrf_token'] ?? '')) {
+            $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'CSRF validation failed.'];
+            $this->redirect('/transfers');
+            return;
+        }
 
         $sourceId = (int)($_POST['source_warehouse_id'] ?? 0);
         $destId = (int)($_POST['dest_warehouse_id'] ?? 0);
@@ -45,13 +52,13 @@ class TransferController extends BaseController {
         $notes = trim($_POST['notes'] ?? '');
 
         if ($sourceId <= 0 || $destId <= 0 || $productId <= 0 || $quantity <= 0) {
-            $this->flash('error', 'Please fill in all required transfer fields.');
+            $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'Please fill in all required transfer fields.'];
             $this->redirect('/transfers');
             return;
         }
 
         if ($sourceId === $destId) {
-            $this->flash('error', 'Source and destination warehouses cannot be the same location.');
+            $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'Source and destination warehouses cannot be the same location.'];
             $this->redirect('/transfers');
             return;
         }
@@ -70,9 +77,9 @@ class TransferController extends BaseController {
         ]);
 
         if ($success) {
-            $this->flash('success', "Stock Transfer {$code} executed successfully.");
+            $_SESSION['flash_messages'][] = ['type' => 'success', 'value' => "Stock Transfer {$code} executed successfully."];
         } else {
-            $this->flash('error', 'Failed to create stock transfer order.');
+            $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'Failed to create stock transfer order.'];
         }
 
         $this->redirect('/transfers');

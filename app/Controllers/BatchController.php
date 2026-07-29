@@ -2,26 +2,29 @@
 
 namespace App\Controllers;
 
+use App\Core\Controller;
+use App\Core\AuthMiddleware;
 use App\Repositories\BatchRepository;
 use App\Repositories\ProductRepository;
 use App\Core\CSRF;
 
-class BatchController extends BaseController {
+class BatchController extends Controller {
     private BatchRepository $batchRepo;
     private ProductRepository $productRepo;
 
     public function __construct() {
+        parent::__construct();
+        AuthMiddleware::check();
         $this->batchRepo = new BatchRepository();
         $this->productRepo = new ProductRepository();
     }
 
     public function index(): void {
-        $this->requireLogin();
-
         $batches = $this->batchRepo->getAll();
         $products = $this->productRepo->getAll();
 
         $this->render('batches/index', [
+            'pageTitle' => 'Batch & Expiry Date Tracking',
             'activeNav' => 'batches',
             'batches' => $batches,
             'products' => $products
@@ -29,9 +32,13 @@ class BatchController extends BaseController {
     }
 
     public function store(): void {
-        $this->requireLogin();
-        $this->requireRole(['Admin', 'Inventory Manager']);
-        CSRF::validateToken();
+        AuthMiddleware::authorize(['Admin', 'Inventory Manager']);
+        
+        if (!CSRF::verifyToken($_POST['csrf_token'] ?? '')) {
+            $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'CSRF validation failed.'];
+            $this->redirect('/batches');
+            return;
+        }
 
         $productId = (int)($_POST['product_id'] ?? 0);
         $batchNumber = trim($_POST['batch_number'] ?? '');
@@ -40,7 +47,7 @@ class BatchController extends BaseController {
         $expiryDate = trim($_POST['expiry_date'] ?? '');
 
         if ($productId <= 0 || empty($batchNumber) || $quantity <= 0 || empty($expiryDate)) {
-            $this->flash('error', 'Please fill in all required batch fields.');
+            $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'Please fill in all required batch fields.'];
             $this->redirect('/batches');
             return;
         }
@@ -54,9 +61,9 @@ class BatchController extends BaseController {
         ]);
 
         if ($success) {
-            $this->flash('success', "Batch #{$batchNumber} registered successfully.");
+            $_SESSION['flash_messages'][] = ['type' => 'success', 'value' => "Batch #{$batchNumber} registered successfully."];
         } else {
-            $this->flash('error', 'Failed to register batch.');
+            $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'Failed to register batch.'];
         }
 
         $this->redirect('/batches');

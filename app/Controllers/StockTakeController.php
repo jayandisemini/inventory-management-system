@@ -2,30 +2,33 @@
 
 namespace App\Controllers;
 
+use App\Core\Controller;
+use App\Core\AuthMiddleware;
 use App\Repositories\StockTakeRepository;
 use App\Repositories\WarehouseRepository;
 use App\Repositories\ProductRepository;
 use App\Core\CSRF;
 
-class StockTakeController extends BaseController {
+class StockTakeController extends Controller {
     private StockTakeRepository $stockTakeRepo;
     private WarehouseRepository $warehouseRepo;
     private ProductRepository $productRepo;
 
     public function __construct() {
+        parent::__construct();
+        AuthMiddleware::check();
         $this->stockTakeRepo = new StockTakeRepository();
         $this->warehouseRepo = new WarehouseRepository();
         $this->productRepo = new ProductRepository();
     }
 
     public function index(): void {
-        $this->requireLogin();
-
         $stockTakes = $this->stockTakeRepo->getAll();
         $warehouses = $this->warehouseRepo->getAll();
         $products = $this->productRepo->getAll();
 
         $this->render('stock_takes/index', [
+            'pageTitle' => 'Stock-Take & Audit Reconciliation',
             'activeNav' => 'stock_takes',
             'stockTakes' => $stockTakes,
             'warehouses' => $warehouses,
@@ -34,9 +37,13 @@ class StockTakeController extends BaseController {
     }
 
     public function store(): void {
-        $this->requireLogin();
-        $this->requireRole(['Admin', 'Inventory Manager']);
-        CSRF::validateToken();
+        AuthMiddleware::authorize(['Admin', 'Inventory Manager']);
+
+        if (!CSRF::verifyToken($_POST['csrf_token'] ?? '')) {
+            $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'CSRF validation failed.'];
+            $this->redirect('/stock-takes');
+            return;
+        }
 
         $warehouseId = (int)($_POST['warehouse_id'] ?? 0);
         $productId = (int)($_POST['product_id'] ?? 0);
@@ -44,7 +51,7 @@ class StockTakeController extends BaseController {
         $notes = trim($_POST['notes'] ?? '');
 
         if ($warehouseId <= 0 || $productId <= 0 || $countedQty < 0) {
-            $this->flash('error', 'Please fill in all required count audit fields.');
+            $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'Please fill in all required count audit fields.'];
             $this->redirect('/stock-takes');
             return;
         }
@@ -64,9 +71,9 @@ class StockTakeController extends BaseController {
         ]);
 
         if ($success) {
-            $this->flash('success', "Stock-Take Reconciliation {$code} logged successfully.");
+            $_SESSION['flash_messages'][] = ['type' => 'success', 'value' => "Stock-Take Reconciliation {$code} logged successfully."];
         } else {
-            $this->flash('error', 'Failed to log stock-take audit count.');
+            $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'Failed to log stock-take audit count.'];
         }
 
         $this->redirect('/stock-takes');

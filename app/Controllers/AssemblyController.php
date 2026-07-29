@@ -2,26 +2,29 @@
 
 namespace App\Controllers;
 
+use App\Core\Controller;
+use App\Core\AuthMiddleware;
 use App\Repositories\AssemblyRepository;
 use App\Repositories\ProductRepository;
 use App\Core\CSRF;
 
-class AssemblyController extends BaseController {
+class AssemblyController extends Controller {
     private AssemblyRepository $assemblyRepo;
     private ProductRepository $productRepo;
 
     public function __construct() {
+        parent::__construct();
+        AuthMiddleware::check();
         $this->assemblyRepo = new AssemblyRepository();
         $this->productRepo = new ProductRepository();
     }
 
     public function index(): void {
-        $this->requireLogin();
-
         $assemblies = $this->assemblyRepo->getAll();
         $products = $this->productRepo->getAll();
 
         $this->render('assemblies/index', [
+            'pageTitle' => 'Bill of Materials (BOM) & Kit Assemblies',
             'activeNav' => 'assemblies',
             'assemblies' => $assemblies,
             'products' => $products
@@ -29,9 +32,13 @@ class AssemblyController extends BaseController {
     }
 
     public function store(): void {
-        $this->requireLogin();
-        $this->requireRole(['Admin', 'Inventory Manager']);
-        CSRF::validateToken();
+        AuthMiddleware::authorize(['Admin', 'Inventory Manager']);
+
+        if (!CSRF::verifyToken($_POST['csrf_token'] ?? '')) {
+            $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'CSRF validation failed.'];
+            $this->redirect('/assemblies');
+            return;
+        }
 
         $parentId = (int)($_POST['parent_product_id'] ?? 0);
         $componentId = (int)($_POST['component_product_id'] ?? 0);
@@ -39,13 +46,13 @@ class AssemblyController extends BaseController {
         $assembledUnits = (int)($_POST['assembled_units'] ?? 0);
 
         if ($parentId <= 0 || $componentId <= 0 || $requiredQty <= 0 || $assembledUnits <= 0) {
-            $this->flash('error', 'Please fill in all required assembly recipe fields.');
+            $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'Please fill in all required assembly recipe fields.'];
             $this->redirect('/assemblies');
             return;
         }
 
         if ($parentId === $componentId) {
-            $this->flash('error', 'Parent finished kit and component raw item cannot be the same product.');
+            $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'Parent finished kit and component raw item cannot be the same product.'];
             $this->redirect('/assemblies');
             return;
         }
@@ -62,9 +69,9 @@ class AssemblyController extends BaseController {
         ]);
 
         if ($success) {
-            $this->flash('success', "Product Assembly {$code} executed successfully. Stock balances updated.");
+            $_SESSION['flash_messages'][] = ['type' => 'success', 'value' => "Product Assembly {$code} executed successfully. Stock balances updated."];
         } else {
-            $this->flash('error', 'Failed to execute product kit assembly.');
+            $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'Failed to execute product kit assembly.'];
         }
 
         $this->redirect('/assemblies');
