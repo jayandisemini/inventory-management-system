@@ -6,6 +6,9 @@
             <p class="text-slate-400 fs-7 mb-0">Generate inventory valuations, stock movement logs, low stock alerts, and supplier reports.</p>
         </div>
         <div class="d-flex gap-2">
+            <a href="/reports/export-inventory-csv" class="btn btn-emerald btn-sm rounded-3 fw-semibold">
+                <i class="fas fa-file-csv me-1.5"></i> Export CSV
+            </a>
             <a href="/reports/print?type=<?= $currentType ?>&<?= http_build_query($filters) ?>" target="_blank" class="btn btn-outline-cyan btn-sm rounded-3">
                 <i class="fas fa-print me-1.5"></i> Print / PDF Export
             </a>

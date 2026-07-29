@@ -138,9 +138,12 @@ $router->post('/inventory/adjust', [InventoryController::class, 'processAdjust']
 // Movements & Audit Trail History
 $router->get('/movements', [MovementController::class, 'index']);
 
-// Reporting Module
+// Reporting Module & CSV Exporters
 $router->get('/reports', [ReportController::class, 'index']);
 $router->get('/reports/print', [ReportController::class, 'printReport']);
+$router->get('/reports/export-inventory-csv', [ReportController::class, 'exportInventoryCsv']);
+$router->get('/reports/export-movements-csv', [ReportController::class, 'exportMovementsCsv']);
+$router->get('/reports/export-sales-csv', [ReportController::class, 'exportSalesCsv']);
 
 // System User Management (Admin only)
 $router->get('/users', [UserController::class, 'index']);

@@ -8,9 +8,14 @@ use App\Core\CSRF;
             <h4 class="fw-bold text-white mb-1">Customer Sales Orders & Invoices</h4>
             <p class="text-slate-400 fs-7 mb-0">Issue sales invoices, track customer purchases, and print official sales receipts.</p>
         </div>
-        <a href="/sales-orders/create" class="btn btn-emerald btn-sm rounded-3 fw-semibold">
-            <i class="fas fa-cart-plus me-1.5"></i> New Sales Invoice
-        </a>
+        <div class="d-flex gap-2">
+            <a href="/reports/export-sales-csv" class="btn btn-outline-cyan btn-sm rounded-3 fw-semibold">
+                <i class="fas fa-file-csv me-1.5"></i> Export CSV
+            </a>
+            <a href="/sales-orders/create" class="btn btn-emerald btn-sm rounded-3 fw-semibold">
+                <i class="fas fa-cart-plus me-1.5"></i> New Sales Invoice
+            </a>
+        </div>
     </div>
 
     <div class="card border-0 rounded-4 bg-slate-900 p-4">

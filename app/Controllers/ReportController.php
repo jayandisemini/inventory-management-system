@@ -5,6 +5,9 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Core\AuthMiddleware;
 use App\Services\ReportService;
+use App\Repositories\ProductRepository;
+use App\Repositories\MovementRepository;
+use App\Repositories\SORepository;
 
 class ReportController extends Controller {
     private ReportService $reportService;
@@ -93,5 +96,96 @@ class ReportController extends Controller {
             'currentType' => $type,
             'reportData' => $reportData
         ]);
+    }
+
+    public function exportInventoryCsv(): void {
+        $productRepo = new ProductRepository();
+        $products = $productRepo->getAll();
+
+        $filename = "inventory_valuation_" . date('Y-m-d') . ".csv";
+
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+
+        $output = fopen('php://output', 'w');
+        fputcsv($output, ['Product ID', 'SKU', 'Product Name', 'Category', 'Supplier', 'Cost Price ($)', 'Selling Price ($)', 'Stock Qty', 'Total Cost Value ($)', 'Total Retail Value ($)']);
+
+        foreach ($products as $p) {
+            $costVal = $p->unit_price * $p->quantity;
+            $retailVal = $p->selling_price * $p->quantity;
+            fputcsv($output, [
+                $p->product_id,
+                $p->sku,
+                $p->product_name,
+                $p->category_name ?? 'N/A',
+                $p->supplier_name ?? 'N/A',
+                number_format($p->unit_price, 2, '.', ''),
+                number_format($p->selling_price, 2, '.', ''),
+                $p->quantity,
+                number_format($costVal, 2, '.', ''),
+                number_format($retailVal, 2, '.', '')
+            ]);
+        }
+
+        fclose($output);
+        exit;
+    }
+
+    public function exportMovementsCsv(): void {
+        $movementRepo = new MovementRepository();
+        $movements = $movementRepo->getFiltered([]);
+
+        $filename = "stock_movements_" . date('Y-m-d') . ".csv";
+
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+
+        $output = fopen('php://output', 'w');
+        fputcsv($output, ['Log ID', 'Product SKU', 'Product Name', 'Movement Type', 'Quantity Transacted', 'Operator Name', 'Timestamp', 'Reference Note']);
+
+        foreach ($movements as $m) {
+            fputcsv($output, [
+                '#LOG-' . str_pad($m->movement_id, 5, '0', STR_PAD_LEFT),
+                $m->sku,
+                $m->product_name,
+                $m->movement_type,
+                $m->quantity,
+                $m->user_name,
+                $m->created_at,
+                $m->reference_note ?? 'N/A'
+            ]);
+        }
+
+        fclose($output);
+        exit;
+    }
+
+    public function exportSalesCsv(): void {
+        $soRepo = new SORepository();
+        $orders = $soRepo->getAll();
+
+        $filename = "sales_orders_" . date('Y-m-d') . ".csv";
+
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+
+        $output = fopen('php://output', 'w');
+        fputcsv($output, ['SO ID', 'Invoice Number', 'Customer Name', 'Customer Email', 'Total Billed ($)', 'Payment Status', 'Issued By', 'Created Timestamp']);
+
+        foreach ($orders as $so) {
+            fputcsv($output, [
+                $so->so_id,
+                $so->order_number,
+                $so->customer_name,
+                $so->customer_email ?? 'N/A',
+                number_format($so->total_amount, 2, '.', ''),
+                $so->payment_status,
+                $so->user_name,
+                $so->created_at
+            ]);
+        }
+
+        fclose($output);
+        exit;
     }
 }
