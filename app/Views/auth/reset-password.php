@@ -12,8 +12,17 @@ $flashes = $_SESSION['flash_messages'] ?? [];
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="/assets/css/style.css">
+    <style>
+        .auth-wrapper {
+            min-height: 100vh;
+            background: linear-gradient(135deg, rgba(9, 13, 22, 0.88) 0%, rgba(15, 23, 42, 0.92) 100%),
+                        url('/assets/images/login_bg.png') no-repeat center center / cover;
+            position: relative;
+            overflow: hidden;
+        }
+    </style>
 </head>
-<body class="bg-dark-app min-vh-100 d-flex align-items-center justify-content-center p-3">
+<body class="bg-dark-app text-white auth-wrapper min-vh-100 d-flex align-items-center justify-content-center p-3">
 
 <div class="auth-card card shadow-2xl border-slate-800 rounded-4 overflow-hidden w-100" style="max-width: 440px;">
     <div class="card-header bg-slate-900 text-center p-4 border-bottom border-slate-800">

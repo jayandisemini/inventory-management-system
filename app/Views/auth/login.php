@@ -26,30 +26,59 @@ $flashes = $_SESSION['flash_messages'] ?? [];
     <style>
         .login-wrapper {
             min-height: 100vh;
-            background: radial-gradient(circle at 15% 15%, rgba(6, 182, 212, 0.12) 0%, transparent 45%),
-                        radial-gradient(circle at 85% 85%, rgba(59, 130, 246, 0.12) 0%, transparent 45%),
-                        #090d16;
+            background: linear-gradient(135deg, rgba(9, 13, 22, 0.88) 0%, rgba(15, 23, 42, 0.92) 100%),
+                        url('/assets/images/login_bg.png') no-repeat center center / cover;
+            position: relative;
+            overflow: hidden;
+        }
+        .login-wrapper::before {
+            content: '';
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            top: -100px;
+            left: -100px;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.35) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+        }
+        .login-wrapper::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            bottom: -150px;
+            right: -150px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(90px);
+            pointer-events: none;
         }
         .hero-panel {
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.6) 100%);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.75) 0%, rgba(30, 41, 59, 0.55) 100%);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
         }
         .login-card {
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid #1e293b;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
         }
         .role-option-card {
-            background: #020617;
+            background: rgba(2, 6, 23, 0.8);
             border: 1px solid #1e293b;
             cursor: pointer;
             transition: all 0.25s ease;
         }
         .role-option-card:hover, .role-option-card.active {
             border-color: #06b6d4;
-            background: rgba(6, 182, 212, 0.08);
+            background: rgba(6, 182, 212, 0.12);
             transform: translateY(-2px);
+            box-shadow: 0 4px 14px rgba(6, 182, 212, 0.2);
         }
     </style>
 </head>
