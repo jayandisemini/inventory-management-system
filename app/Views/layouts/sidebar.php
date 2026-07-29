@@ -75,11 +75,23 @@ $activeNav = $activeNav ?? 'dashboard';
             </a>
         </li>
 
+        <li class="nav-item">
+            <a href="/assemblies" class="nav-link <?= $activeNav === 'assemblies' ? 'active' : '' ?>">
+                <i class="fas fa-microchip me-2.5 text-cyan"></i> Bill of Materials (BOM)
+            </a>
+        </li>
+
         <li class="nav-header text-uppercase text-slate-400 fs-8 fw-bold px-3 py-1 mt-3">Orders & Sales</li>
 
         <li class="nav-item">
             <a href="/sales-orders" class="nav-link <?= $activeNav === 'sales_orders' ? 'active' : '' ?>">
                 <i class="fas fa-receipt me-2.5 text-emerald"></i> Customer Sales Orders
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="/customers" class="nav-link <?= $activeNav === 'customers' ? 'active' : '' ?>">
+                <i class="fas fa-users me-2.5 text-cyan"></i> Customer CRM Directory
             </a>
         </li>
 
@@ -98,6 +110,18 @@ $activeNav = $activeNav ?? 'dashboard';
         </li>
 
         <li class="nav-header text-uppercase text-slate-400 fs-8 fw-bold px-3 py-1 mt-3">Stock Operations</li>
+
+        <li class="nav-item">
+            <a href="/transfers" class="nav-link <?= $activeNav === 'transfers' ? 'active' : '' ?>">
+                <i class="fas fa-truck-ramp-box me-2.5 text-cyan"></i> Inter-Warehouse Transfers
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="/stock-takes" class="nav-link <?= $activeNav === 'stock_takes' ? 'active' : '' ?>">
+                <i class="fas fa-clipboard-check me-2.5 text-emerald"></i> Stock-Take Audits
+            </a>
+        </li>
 
         <?php if (in_array($userRole, ['Admin', 'Inventory Manager'])): ?>
             <li class="nav-item">

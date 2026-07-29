@@ -42,6 +42,10 @@ use App\Controllers\ProfileController;
 use App\Controllers\WarehouseController;
 use App\Controllers\SalesOrderController;
 use App\Controllers\BatchController;
+use App\Controllers\TransferController;
+use App\Controllers\StockTakeController;
+use App\Controllers\AssemblyController;
+use App\Controllers\CustomerController;
 
 $request = new Request();
 $response = new Response();
@@ -120,6 +124,22 @@ $router->get('/sales-orders/print', [SalesOrderController::class, 'printReceipt'
 // Batch & Expiry Tracking Routes
 $router->get('/batches', [BatchController::class, 'index']);
 $router->post('/batches/store', [BatchController::class, 'store']);
+
+// Inter-Warehouse Transfers
+$router->get('/transfers', [TransferController::class, 'index']);
+$router->post('/transfers/store', [TransferController::class, 'store']);
+
+// Stock-Take Audits
+$router->get('/stock-takes', [StockTakeController::class, 'index']);
+$router->post('/stock-takes/store', [StockTakeController::class, 'store']);
+
+// Bill of Materials (BOM) & Assemblies
+$router->get('/assemblies', [AssemblyController::class, 'index']);
+$router->post('/assemblies/store', [AssemblyController::class, 'store']);
+
+// Customer CRM Directory
+$router->get('/customers', [CustomerController::class, 'index']);
+$router->post('/customers/store', [CustomerController::class, 'store']);
 
 // Staff Stock Requisitions & Approvals
 $router->get('/stock-requests', [StockRequestController::class, 'index']);

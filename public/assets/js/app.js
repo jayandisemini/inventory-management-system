@@ -35,6 +35,10 @@ document.addEventListener('DOMContentLoaded', function () {
         if ($('#purchaseOrdersDataTable').length) $('#purchaseOrdersDataTable').DataTable(dataTableOptions);
         if ($('#stockRequestsDataTable').length) $('#stockRequestsDataTable').DataTable(dataTableOptions);
         if ($('#batchesDataTable').length) $('#batchesDataTable').DataTable(dataTableOptions);
+        if ($('#transfersDataTable').length) $('#transfersDataTable').DataTable(dataTableOptions);
+        if ($('#stockTakesDataTable').length) $('#stockTakesDataTable').DataTable(dataTableOptions);
+        if ($('#assembliesDataTable').length) $('#assembliesDataTable').DataTable(dataTableOptions);
+        if ($('#customersDataTable').length) $('#customersDataTable').DataTable(dataTableOptions);
         if ($('#usersDataTable').length) $('#usersDataTable').DataTable(dataTableOptions);
         if ($('#dashboardLowStockTable').length) $('#dashboardLowStockTable').DataTable({ pageLength: 5, searching: false, lengthChange: false });
     }
