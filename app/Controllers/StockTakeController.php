@@ -41,7 +41,7 @@ class StockTakeController extends Controller {
 
         if (!CSRF::verifyToken($_POST['csrf_token'] ?? '')) {
             $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'CSRF validation failed.'];
-            $this->redirect('/stock-takes');
+            $this->response->redirect('/stock-takes');
             return;
         }
 
@@ -52,11 +52,11 @@ class StockTakeController extends Controller {
 
         if ($warehouseId <= 0 || $productId <= 0 || $countedQty < 0) {
             $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'Please fill in all required count audit fields.'];
-            $this->redirect('/stock-takes');
+            $this->response->redirect('/stock-takes');
             return;
         }
 
-        $product = $this->productRepo->getById($productId);
+        $product = $this->productRepo->findById($productId);
         $expectedQty = $product ? $product->quantity : 0;
         $code = 'STK-' . date('Ymd') . '-' . rand(100, 999);
 
@@ -76,6 +76,6 @@ class StockTakeController extends Controller {
             $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'Failed to log stock-take audit count.'];
         }
 
-        $this->redirect('/stock-takes');
+        $this->response->redirect('/stock-takes');
     }
 }

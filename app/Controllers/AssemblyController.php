@@ -36,7 +36,7 @@ class AssemblyController extends Controller {
 
         if (!CSRF::verifyToken($_POST['csrf_token'] ?? '')) {
             $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'CSRF validation failed.'];
-            $this->redirect('/assemblies');
+            $this->response->redirect('/assemblies');
             return;
         }
 
@@ -47,13 +47,13 @@ class AssemblyController extends Controller {
 
         if ($parentId <= 0 || $componentId <= 0 || $requiredQty <= 0 || $assembledUnits <= 0) {
             $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'Please fill in all required assembly recipe fields.'];
-            $this->redirect('/assemblies');
+            $this->response->redirect('/assemblies');
             return;
         }
 
         if ($parentId === $componentId) {
             $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'Parent finished kit and component raw item cannot be the same product.'];
-            $this->redirect('/assemblies');
+            $this->response->redirect('/assemblies');
             return;
         }
 
@@ -74,6 +74,6 @@ class AssemblyController extends Controller {
             $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'Failed to execute product kit assembly.'];
         }
 
-        $this->redirect('/assemblies');
+        $this->response->redirect('/assemblies');
     }
 }

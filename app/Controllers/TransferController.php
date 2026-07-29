@@ -41,7 +41,7 @@ class TransferController extends Controller {
 
         if (!CSRF::verifyToken($_POST['csrf_token'] ?? '')) {
             $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'CSRF validation failed.'];
-            $this->redirect('/transfers');
+            $this->response->redirect('/transfers');
             return;
         }
 
@@ -53,13 +53,13 @@ class TransferController extends Controller {
 
         if ($sourceId <= 0 || $destId <= 0 || $productId <= 0 || $quantity <= 0) {
             $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'Please fill in all required transfer fields.'];
-            $this->redirect('/transfers');
+            $this->response->redirect('/transfers');
             return;
         }
 
         if ($sourceId === $destId) {
             $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'Source and destination warehouses cannot be the same location.'];
-            $this->redirect('/transfers');
+            $this->response->redirect('/transfers');
             return;
         }
 
@@ -82,6 +82,6 @@ class TransferController extends Controller {
             $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'Failed to create stock transfer order.'];
         }
 
-        $this->redirect('/transfers');
+        $this->response->redirect('/transfers');
     }
 }

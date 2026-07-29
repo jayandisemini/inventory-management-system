@@ -36,7 +36,7 @@ class BatchController extends Controller {
         
         if (!CSRF::verifyToken($_POST['csrf_token'] ?? '')) {
             $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'CSRF validation failed.'];
-            $this->redirect('/batches');
+            $this->response->redirect('/batches');
             return;
         }
 
@@ -48,7 +48,7 @@ class BatchController extends Controller {
 
         if ($productId <= 0 || empty($batchNumber) || $quantity <= 0 || empty($expiryDate)) {
             $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'Please fill in all required batch fields.'];
-            $this->redirect('/batches');
+            $this->response->redirect('/batches');
             return;
         }
 
@@ -66,6 +66,6 @@ class BatchController extends Controller {
             $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'Failed to register batch.'];
         }
 
-        $this->redirect('/batches');
+        $this->response->redirect('/batches');
     }
 }

@@ -31,7 +31,7 @@ class CustomerController extends Controller {
 
         if (!CSRF::verifyToken($_POST['csrf_token'] ?? '')) {
             $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'CSRF validation failed.'];
-            $this->redirect('/customers');
+            $this->response->redirect('/customers');
             return;
         }
 
@@ -43,7 +43,7 @@ class CustomerController extends Controller {
 
         if (empty($name)) {
             $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'Customer name is required.'];
-            $this->redirect('/customers');
+            $this->response->redirect('/customers');
             return;
         }
 
@@ -61,6 +61,6 @@ class CustomerController extends Controller {
             $_SESSION['flash_messages'][] = ['type' => 'error', 'value' => 'Failed to register customer.'];
         }
 
-        $this->redirect('/customers');
+        $this->response->redirect('/customers');
     }
 }
