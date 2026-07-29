@@ -1,5 +1,4 @@
--- Smart Inventory Management System (SIMS) Database Schema
--- Compatible with MySQL 8.0+ / MariaDB 10.4+
+-- Smart Inventory Management System (SIMS) Full Schema
 
 CREATE DATABASE IF NOT EXISTS `sims_db` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `sims_db`;
@@ -8,7 +7,7 @@ USE `sims_db`;
 CREATE TABLE IF NOT EXISTS `roles` (
     `role_id` INT AUTO_INCREMENT PRIMARY KEY,
     `role_name` VARCHAR(50) NOT NULL UNIQUE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Users Table
 CREATE TABLE IF NOT EXISTS `users` (
@@ -19,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `users` (
     `role_id` INT NOT NULL,
     `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (`role_id`) REFERENCES `roles`(`role_id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Categories Table
 CREATE TABLE IF NOT EXISTS `categories` (
@@ -27,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
     `category_name` VARCHAR(100) NOT NULL UNIQUE,
     `description` TEXT NULL,
     `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Suppliers Table
 CREATE TABLE IF NOT EXISTS `suppliers` (
@@ -38,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `suppliers` (
     `email` VARCHAR(100) NULL,
     `address` TEXT NULL,
     `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Products Table
 CREATE TABLE IF NOT EXISTS `products` (
@@ -56,11 +55,8 @@ CREATE TABLE IF NOT EXISTS `products` (
     `image` VARCHAR(255) NULL,
     `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (`category_id`) REFERENCES `categories`(`category_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (`supplier_id`) REFERENCES `suppliers`(`supplier_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    INDEX `idx_sku` (`sku`),
-    INDEX `idx_barcode` (`barcode`),
-    INDEX `idx_product_name` (`product_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    FOREIGN KEY (`supplier_id`) REFERENCES `suppliers`(`supplier_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Stock Movements Table
 CREATE TABLE IF NOT EXISTS `stock_movements` (
@@ -72,9 +68,8 @@ CREATE TABLE IF NOT EXISTS `stock_movements` (
     `user_id` INT NOT NULL,
     `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (`product_id`) REFERENCES `products`(`product_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (`user_id`) REFERENCES `users`(`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    INDEX `idx_movement_date` (`created_at`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Notifications Table
 CREATE TABLE IF NOT EXISTS `notifications` (
@@ -85,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `notifications` (
     `is_read` TINYINT(1) NOT NULL DEFAULT 0,
     `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (`user_id`) REFERENCES `users`(`user_id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Purchase Orders Table
 CREATE TABLE IF NOT EXISTS `purchase_orders` (
@@ -99,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `purchase_orders` (
     `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (`supplier_id`) REFERENCES `suppliers`(`supplier_id`) ON DELETE CASCADE,
     FOREIGN KEY (`user_id`) REFERENCES `users`(`user_id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- PO Items Table
 CREATE TABLE IF NOT EXISTS `po_items` (
@@ -111,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `po_items` (
     `total_cost` DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (`po_id`) REFERENCES `purchase_orders`(`po_id`) ON DELETE CASCADE,
     FOREIGN KEY (`product_id`) REFERENCES `products`(`product_id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Staff Stock Requests Table
 CREATE TABLE IF NOT EXISTS `stock_requests` (
@@ -126,4 +121,52 @@ CREATE TABLE IF NOT EXISTS `stock_requests` (
     FOREIGN KEY (`product_id`) REFERENCES `products`(`product_id`) ON DELETE CASCADE,
     FOREIGN KEY (`user_id`) REFERENCES `users`(`user_id`) ON DELETE CASCADE,
     FOREIGN KEY (`action_by`) REFERENCES `users`(`user_id`) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Settings Table
+CREATE TABLE IF NOT EXISTS `settings` (
+    `id` INT PRIMARY KEY DEFAULT 1,
+    `company_name` VARCHAR(150) NOT NULL DEFAULT 'Smart Inventory Systems',
+    `tax_id` VARCHAR(50) NULL DEFAULT 'TAX-889920',
+    `currency_symbol` VARCHAR(10) NOT NULL DEFAULT '$',
+    `default_min_stock` INT NOT NULL DEFAULT 5,
+    `company_address` TEXT NULL,
+    `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Warehouses Table
+CREATE TABLE IF NOT EXISTS `warehouses` (
+    `warehouse_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `warehouse_name` VARCHAR(150) NOT NULL,
+    `code` VARCHAR(50) NOT NULL UNIQUE,
+    `location` TEXT NULL,
+    `manager_name` VARCHAR(100) NULL,
+    `phone` VARCHAR(30) NULL,
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Sales Orders Table
+CREATE TABLE IF NOT EXISTS `sales_orders` (
+    `so_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `order_number` VARCHAR(50) NOT NULL UNIQUE,
+    `customer_name` VARCHAR(100) NOT NULL,
+    `customer_email` VARCHAR(100) NULL,
+    `total_amount` DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    `payment_status` ENUM('Paid', 'Pending', 'Cancelled') NOT NULL DEFAULT 'Paid',
+    `notes` TEXT NULL,
+    `user_id` INT NOT NULL,
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`user_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Sales Order Line Items Table
+CREATE TABLE IF NOT EXISTS `so_items` (
+    `item_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `so_id` INT NOT NULL,
+    `product_id` INT NOT NULL,
+    `quantity` INT NOT NULL,
+    `unit_price` DECIMAL(10,2) NOT NULL,
+    `total_price` DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (`so_id`) REFERENCES `sales_orders`(`so_id`) ON DELETE CASCADE,
+    FOREIGN KEY (`product_id`) REFERENCES `products`(`product_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

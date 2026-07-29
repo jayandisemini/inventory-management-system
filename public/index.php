@@ -37,6 +37,10 @@ use App\Controllers\UserController;
 use App\Controllers\NotificationController;
 use App\Controllers\PurchaseOrderController;
 use App\Controllers\StockRequestController;
+use App\Controllers\SettingController;
+use App\Controllers\ProfileController;
+use App\Controllers\WarehouseController;
+use App\Controllers\SalesOrderController;
 
 $request = new Request();
 $response = new Response();
@@ -58,6 +62,15 @@ $router->get('/logout', [AuthController::class, 'logout']);
 // Dashboard
 $router->get('/', [DashboardController::class, 'index']);
 $router->get('/dashboard', [DashboardController::class, 'index']);
+
+// User Profile & Password Security
+$router->get('/profile', [ProfileController::class, 'index']);
+$router->post('/profile/update', [ProfileController::class, 'update']);
+$router->post('/profile/password', [ProfileController::class, 'changePassword']);
+
+// System Settings (Admin only)
+$router->get('/settings', [SettingController::class, 'index']);
+$router->post('/settings/update', [SettingController::class, 'update']);
 
 // Product Management
 $router->get('/products', [ProductController::class, 'index']);
@@ -82,6 +95,12 @@ $router->post('/suppliers/update', [SupplierController::class, 'update']);
 $router->get('/suppliers/show', [SupplierController::class, 'show']);
 $router->post('/suppliers/delete', [SupplierController::class, 'delete']);
 
+// Multi-Warehouse Management
+$router->get('/warehouses', [WarehouseController::class, 'index']);
+$router->post('/warehouses/store', [WarehouseController::class, 'store']);
+$router->post('/warehouses/update', [WarehouseController::class, 'update']);
+$router->post('/warehouses/delete', [WarehouseController::class, 'delete']);
+
 // Purchase Orders (PO) Procurement
 $router->get('/purchase-orders', [PurchaseOrderController::class, 'index']);
 $router->get('/purchase-orders/create', [PurchaseOrderController::class, 'create']);
@@ -89,6 +108,13 @@ $router->post('/purchase-orders/store', [PurchaseOrderController::class, 'store'
 $router->get('/purchase-orders/show', [PurchaseOrderController::class, 'show']);
 $router->get('/purchase-orders/print', [PurchaseOrderController::class, 'printPO']);
 $router->post('/purchase-orders/receive', [PurchaseOrderController::class, 'markReceived']);
+
+// Sales Orders & Receipts
+$router->get('/sales-orders', [SalesOrderController::class, 'index']);
+$router->get('/sales-orders/create', [SalesOrderController::class, 'create']);
+$router->post('/sales-orders/store', [SalesOrderController::class, 'store']);
+$router->get('/sales-orders/show', [SalesOrderController::class, 'show']);
+$router->get('/sales-orders/print', [SalesOrderController::class, 'printReceipt']);
 
 // Staff Stock Requisitions & Approvals
 $router->get('/stock-requests', [StockRequestController::class, 'index']);

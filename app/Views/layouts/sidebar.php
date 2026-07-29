@@ -21,7 +21,7 @@ $activeNav = $activeNav ?? 'dashboard';
     </div>
 
     <!-- User Profile Badge Card -->
-    <div class="user-card bg-slate-800/80 p-2.5 rounded-3 mb-4 d-flex align-items-center gap-3 border border-slate-700">
+    <a href="/profile" class="text-decoration-none user-card bg-slate-800/80 p-2.5 rounded-3 mb-4 d-flex align-items-center gap-3 border border-slate-700 hover-border-cyan">
         <div class="avatar bg-cyan-glow text-cyan rounded-circle d-flex align-items-center justify-content-center fw-bold fs-6 shadow-xs" style="width: 38px; height: 38px; min-width: 38px;">
             <?= strtoupper(substr($userName, 0, 1)) ?>
         </div>
@@ -31,7 +31,7 @@ $activeNav = $activeNav ?? 'dashboard';
                 <i class="fas fa-user-shield me-1"></i><?= htmlspecialchars($userRole) ?>
             </span>
         </div>
-    </div>
+    </a>
 
     <!-- Navigation Menu -->
     <ul class="nav nav-pills flex-column mb-auto gap-1">
@@ -43,7 +43,7 @@ $activeNav = $activeNav ?? 'dashboard';
             </a>
         </li>
 
-        <li class="nav-header text-uppercase text-slate-400 fs-8 fw-bold px-3 py-1 mt-3">Catalog Management</li>
+        <li class="nav-header text-uppercase text-slate-400 fs-8 fw-bold px-3 py-1 mt-3">Catalog & Storage</li>
 
         <li class="nav-item">
             <a href="/products" class="nav-link <?= $activeNav === 'products' ? 'active' : '' ?>">
@@ -58,12 +58,24 @@ $activeNav = $activeNav ?? 'dashboard';
         </li>
 
         <li class="nav-item">
+            <a href="/warehouses" class="nav-link <?= $activeNav === 'warehouses' ? 'active' : '' ?>">
+                <i class="fas fa-warehouse me-2.5 text-cyan"></i> Warehouse Locations
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a href="/suppliers" class="nav-link <?= $activeNav === 'suppliers' ? 'active' : '' ?>">
                 <i class="fas fa-truck-field me-2.5"></i> Suppliers Directory
             </a>
         </li>
 
-        <li class="nav-header text-uppercase text-slate-400 fs-8 fw-bold px-3 py-1 mt-3">Procurement & Workflow</li>
+        <li class="nav-header text-uppercase text-slate-400 fs-8 fw-bold px-3 py-1 mt-3">Orders & Sales</li>
+
+        <li class="nav-item">
+            <a href="/sales-orders" class="nav-link <?= $activeNav === 'sales_orders' ? 'active' : '' ?>">
+                <i class="fas fa-receipt me-2.5 text-emerald"></i> Customer Sales Orders
+            </a>
+        </li>
 
         <?php if (in_array($userRole, ['Admin', 'Inventory Manager'])): ?>
             <li class="nav-item">
@@ -119,6 +131,12 @@ $activeNav = $activeNav ?? 'dashboard';
             <li class="nav-item">
                 <a href="/users" class="nav-link <?= $activeNav === 'users' ? 'active' : '' ?>">
                     <i class="fas fa-users-gear me-2.5"></i> System Users
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="/settings" class="nav-link <?= $activeNav === 'settings' ? 'active' : '' ?>">
+                    <i class="fas fa-gear me-2.5"></i> System Settings
                 </a>
             </li>
         <?php endif; ?>
