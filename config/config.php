@@ -1,10 +1,10 @@
 <?php
 
-// SIMS Application Configuration
+// NEXUS INVENTORY ERP Application Configuration
 
-define('APP_NAME', 'Smart Inventory Management System');
-define('APP_SHORT_NAME', 'SIMS');
-define('APP_VERSION', '1.0.0');
+define('APP_NAME', 'NEXUS INVENTORY ERP');
+define('APP_SHORT_NAME', 'NEXUS ERP');
+define('APP_VERSION', '2.4.0');
 
 // Base URL calculation or default
 $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || ($_SERVER['SERVER_PORT'] ?? 80) == 443) ? "https://" : "http://";

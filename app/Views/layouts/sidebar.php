@@ -8,11 +8,11 @@ $activeNav = $activeNav ?? 'dashboard';
     <div class="sidebar-header d-flex align-items-center justify-content-between pb-3 mb-3 border-bottom border-slate-800">
         <a href="/dashboard" class="text-decoration-none d-flex align-items-center gap-2 text-white">
             <div class="brand-logo bg-gradient-cyan text-slate-950 rounded-3 d-flex align-items-center justify-content-center fw-bold fs-4 shadow-cyan" style="width: 42px; height: 42px;">
-                <i class="fas fa-boxes-packing"></i>
+                <i class="fas fa-cubes-stacked"></i>
             </div>
             <div>
-                <span class="fs-5 fw-bold tracking-tight text-white d-block lh-1">SIMS <span class="badge bg-cyan text-slate-950 fs-8 align-middle ms-1">PRO</span></span>
-                <small class="text-cyan text-uppercase fs-8 tracking-wider fw-bold">Smart Inventory</small>
+                <span class="fs-5 fw-bold tracking-tight text-white d-block lh-1">NEXUS <span class="badge bg-cyan text-slate-950 fs-8 align-middle ms-1">PRO</span></span>
+                <small class="text-cyan text-uppercase fs-8 tracking-wider fw-bold">Inventory Engine</small>
             </div>
         </a>
         <button class="btn btn-link text-white-50 d-md-none p-0" id="sidebarToggleClose">
