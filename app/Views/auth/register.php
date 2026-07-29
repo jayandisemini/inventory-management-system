@@ -7,7 +7,7 @@ $flashes = $_SESSION['flash_messages'] ?? [];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Account - Smart Inventory ERP</title>
+    <title>Create Account - NEXUS Inventory ERP</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -20,7 +20,7 @@ $flashes = $_SESSION['flash_messages'] ?? [];
         <div class="brand-logo bg-gradient-cyan text-slate-950 rounded-3 d-inline-flex align-items-center justify-content-center fw-bold fs-3 mb-2 shadow-cyan" style="width: 54px; height: 54px;">
             <i class="fas fa-user-plus"></i>
         </div>
-        <h4 class="fw-bold text-white mb-1 tracking-tight">Create SIMS Account</h4>
+        <h4 class="fw-bold text-white mb-1 tracking-tight">Create NEXUS ERP Account</h4>
         <p class="text-slate-400 fs-7 mb-0">Register a new team member or manager profile</p>
     </div>
     
@@ -49,7 +49,7 @@ $flashes = $_SESSION['flash_messages'] ?? [];
                 <label for="email" class="form-label fw-semibold text-slate-300 fs-7">Email Address</label>
                 <div class="input-group">
                     <span class="input-group-text bg-slate-950 border-slate-800 text-slate-400"><i class="fas fa-envelope fs-7"></i></span>
-                    <input type="email" class="form-control bg-slate-950 border-slate-800 text-white fs-7" id="email" name="email" placeholder="john@company.com" required>
+                    <input type="email" class="form-control bg-slate-950 border-slate-800 text-white fs-7" id="email" name="email" placeholder="john@nexus.com" required>
                 </div>
             </div>
 
