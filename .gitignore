@@ -1,0 +1,21 @@
+# SIMS Project .gitignore
+
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE / Editor configuration
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Temporary uploads (keep directory, ignore specific test files if needed)
+public/uploads/products/*
+!public/uploads/products/.gitkeep
+
+# Temporary log files
+*.log
