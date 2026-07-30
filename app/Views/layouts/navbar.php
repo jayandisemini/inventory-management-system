@@ -25,6 +25,11 @@ $flashes = $_SESSION['flash_messages'] ?? [];
             </div>
         </div>
 
+        <!-- Theme Switcher Button (Dark/Light Mode) -->
+        <button class="btn btn-slate-800 text-white rounded-circle p-2 border border-slate-700" id="themeToggleBtn" title="Toggle Light / Dark Theme" style="width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;">
+            <i class="fas fa-sun text-warning" id="themeToggleIcon"></i>
+        </button>
+
         <!-- System Alerts Dropdown -->
         <div class="dropdown">
             <button class="btn btn-slate-800 text-white rounded-circle position-relative p-2 border border-slate-700" id="notifBellBtn" data-bs-toggle="dropdown" aria-expanded="false">

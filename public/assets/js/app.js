@@ -4,6 +4,34 @@
 
 document.addEventListener('DOMContentLoaded', function () {
 
+    // 0. Dark / Light Mode Theme Switcher
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeToggleIcon = document.getElementById('themeToggleIcon');
+
+    function applyTheme(theme) {
+        document.documentElement.setAttribute('data-bs-theme', theme);
+        localStorage.setItem('sims_theme', theme);
+        if (themeToggleIcon) {
+            if (theme === 'dark') {
+                themeToggleIcon.className = 'fas fa-sun text-warning';
+            } else {
+                themeToggleIcon.className = 'fas fa-moon text-primary';
+            }
+        }
+    }
+
+    // Initialize icon state on load
+    const currentSavedTheme = localStorage.getItem('sims_theme') || 'dark';
+    applyTheme(currentSavedTheme);
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', function () {
+            const activeTheme = document.documentElement.getAttribute('data-bs-theme') || 'dark';
+            const nextTheme = activeTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(nextTheme);
+        });
+    }
+
     // 1. Mobile Sidebar Toggle
     const sidebar = document.getElementById('sidebar');
     const sidebarToggle = document.getElementById('sidebarToggle');

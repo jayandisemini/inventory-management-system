@@ -5,6 +5,12 @@ $flashes = $_SESSION['flash_messages'] ?? [];
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
 <head>
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('sims_theme') || 'dark';
+            document.documentElement.setAttribute('data-bs-theme', savedTheme);
+        })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account - NEXUS Inventory ERP</title>
