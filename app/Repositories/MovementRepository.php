@@ -51,6 +51,10 @@ class MovementRepository {
         return array_map(fn($row) => new StockMovement($row), $rows);
     }
 
+    public function getFiltered(array $filters = []): array {
+        return $this->getAll($filters);
+    }
+
     public function create(array $data): int {
         $stmt = $this->db->prepare("
             INSERT INTO stock_movements (product_id, movement_type, quantity, reference_note, user_id, created_at)

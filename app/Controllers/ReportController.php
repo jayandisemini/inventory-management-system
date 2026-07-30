@@ -133,7 +133,7 @@ class ReportController extends Controller {
 
     public function exportMovementsCsv(): void {
         $movementRepo = new MovementRepository();
-        $movements = $movementRepo->getFiltered([]);
+        $movements = $movementRepo->getAll($this->request->getBody());
 
         $filename = "stock_movements_" . date('Y-m-d') . ".csv";
 
