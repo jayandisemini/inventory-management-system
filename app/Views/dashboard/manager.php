@@ -214,7 +214,7 @@ $outPct = min(100 - ($healthyPct + $lowPct), round(($outCount / $totalProds) * 1
                     <h6 class="fw-bold text-white mb-0">
                         <i class="fas fa-clock-rotate-left text-cyan me-2"></i> Recent Stock Feed
                     </h6>
-                    <a href="/inventory/movements" class="fs-8 text-cyan text-decoration-none">View All <i class="fas fa-arrow-right ms-1"></i></a>
+                    <a href="/movements" class="fs-8 text-cyan text-decoration-none">View All <i class="fas fa-arrow-right ms-1"></i></a>
                 </div>
 
                 <div class="activity-feed">

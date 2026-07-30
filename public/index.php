@@ -158,6 +158,7 @@ $router->post('/inventory/adjust', [InventoryController::class, 'processAdjust']
 
 // Movements & Audit Trail History
 $router->get('/movements', [MovementController::class, 'index']);
+$router->get('/inventory/movements', [MovementController::class, 'index']);
 
 // Reporting Module & CSV Exporters
 $router->get('/reports', [ReportController::class, 'index']);
