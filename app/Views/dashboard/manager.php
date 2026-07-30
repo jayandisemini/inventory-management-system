@@ -223,17 +223,18 @@ $outPct = min(100 - ($healthyPct + $lowPct), round(($outCount / $totalProds) * 1
                     <?php else: ?>
                         <div class="d-flex flex-column gap-2.5">
                             <?php foreach (array_slice($recentMovements, 0, 6) as $m): 
-                                $type = $m['type'] ?? 'in';
-                                $badgeClass = match($type) {
-                                    'in' => 'bg-emerald-subtle text-emerald',
-                                    'out' => 'bg-rose-subtle text-rose',
-                                    default => 'bg-warning-subtle text-warning'
-                                };
-                                $icon = match($type) {
-                                    'in' => 'fa-arrow-down-left',
-                                    'out' => 'fa-arrow-up-right',
-                                    default => 'fa-sliders'
-                                };
+                                $isObj = is_object($m);
+                                $mType = $isObj ? ($m->movement_type ?? 'Stock In') : ($m['movement_type'] ?? $m['type'] ?? 'Stock In');
+                                $pName = $isObj ? ($m->product_name ?? 'Product') : ($m['product_name'] ?? 'Product');
+                                $uName = $isObj ? ($m->user_name ?? 'System') : ($m['user_name'] ?? 'System');
+                                $qty = $isObj ? ($m->quantity ?? 0) : ($m['quantity'] ?? 0);
+                                $createdAt = $isObj ? ($m->created_at ?? 'now') : ($m['created_at'] ?? 'now');
+
+                                $isOut = str_contains(strtolower($mType), 'out');
+                                $isIn = str_contains(strtolower($mType), 'in');
+
+                                $badgeClass = $isIn ? 'bg-emerald-subtle text-emerald' : ($isOut ? 'bg-rose-subtle text-rose' : 'bg-warning-subtle text-warning');
+                                $icon = $isIn ? 'fa-arrow-down-left' : ($isOut ? 'fa-arrow-up-right' : 'fa-sliders');
                             ?>
                                 <div class="d-flex align-items-center justify-content-between p-2.5 rounded-3 bg-slate-800/50 border border-slate-800">
                                     <div class="d-flex align-items-center gap-2.5">
@@ -241,12 +242,12 @@ $outPct = min(100 - ($healthyPct + $lowPct), round(($outCount / $totalProds) * 1
                                             <i class="fas <?= $icon ?> fs-7"></i>
                                         </div>
                                         <div>
-                                            <div class="fw-bold text-white fs-7"><?= htmlspecialchars($m['product_name'] ?? 'Product') ?></div>
-                                            <div class="text-slate-400 fs-8">By <?= htmlspecialchars($m['user_name'] ?? 'System') ?> • <?= date('M d, H:i', strtotime($m['created_at'] ?? 'now')) ?></div>
+                                            <div class="fw-bold text-white fs-7"><?= htmlspecialchars($pName) ?></div>
+                                            <div class="text-slate-400 fs-8">By <?= htmlspecialchars($uName) ?> • <?= date('M d, H:i', strtotime($createdAt)) ?></div>
                                         </div>
                                     </div>
                                     <span class="badge <?= $badgeClass ?> font-mono fs-8 fw-bold">
-                                        <?= $type === 'out' ? '-' : '+' ?><?= $m['quantity'] ?>
+                                        <?= $isOut ? '-' : '+' ?><?= $qty ?>
                                     </span>
                                 </div>
                             <?php endforeach; ?>
