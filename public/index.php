@@ -46,6 +46,7 @@ use App\Controllers\TransferController;
 use App\Controllers\StockTakeController;
 use App\Controllers\AssemblyController;
 use App\Controllers\CustomerController;
+use App\Controllers\ApiController;
 
 $request = new Request();
 $response = new Response();
@@ -164,6 +165,8 @@ $router->get('/reports/print', [ReportController::class, 'printReport']);
 $router->get('/reports/export-inventory-csv', [ReportController::class, 'exportInventoryCsv']);
 $router->get('/reports/export-movements-csv', [ReportController::class, 'exportMovementsCsv']);
 $router->get('/reports/export-sales-csv', [ReportController::class, 'exportSalesCsv']);
+$router->get('/reports/export-batch-expiry-csv', [ReportController::class, 'exportBatchExpiryCsv']);
+$router->get('/reports/export-procurement-csv', [ReportController::class, 'exportProcurementCsv']);
 
 // System User Management (Admin only)
 $router->get('/users', [UserController::class, 'index']);
@@ -174,6 +177,13 @@ $router->post('/users/delete', [UserController::class, 'delete']);
 // System Notifications API
 $router->get('/notifications/unread', [NotificationController::class, 'getUnread']);
 $router->post('/notifications/mark-read', [NotificationController::class, 'markRead']);
+
+// RESTful API v1 Endpoints
+$router->get('/api/v1/stock-summary', [ApiController::class, 'stockSummary']);
+$router->get('/api/v1/products', [ApiController::class, 'products']);
+$router->get('/api/v1/products/show', [ApiController::class, 'showProduct']);
+$router->post('/api/v1/stock-adjust', [ApiController::class, 'stockAdjust']);
+$router->get('/api/v1/movements', [ApiController::class, 'movements']);
 
 // Resolve Request
 $router->resolve($request, $response);
