@@ -53,9 +53,11 @@ class DashboardController extends Controller {
 
         // Compute Smart Restock Recommendations for Manager
         $restockQueue = [];
+        $totalReorderCost = 0;
         foreach ($lowStockProducts as $p) {
             $suggestedQty = max(1, ($p->min_stock_level * 2) - $p->quantity);
             $p->suggested_reorder_qty = $suggestedQty;
+            $totalReorderCost += ($suggestedQty * (float)($p->cost_price ?? 0));
             $restockQueue[] = $p;
         }
 
@@ -86,7 +88,8 @@ class DashboardController extends Controller {
                     'total_categories' => count($categories),
                     'total_suppliers' => count($suppliers),
                     'healthy_count' => $healthyCount,
-                    'health_percentage' => $healthPercentage
+                    'health_percentage' => $healthPercentage,
+                    'total_reorder_cost' => $totalReorderCost
                 ]),
                 'products' => $allProducts,
                 'restockQueue' => $restockQueue,
