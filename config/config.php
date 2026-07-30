@@ -21,9 +21,15 @@ define('UPLOAD_URL', BASE_URL . '/uploads/products');
 // Timezone
 date_default_timezone_set('UTC');
 
+// Email & API Notifications Config
+define('ADMIN_ALERT_EMAIL', 'admin@sims.com');
+define('ENABLE_EMAIL_ALERTS', true);
+define('SYS_API_KEY', 'nexus_sims_api_secret_key_2026');
+
 // Session Config
 if (session_status() === PHP_SESSION_NONE) {
     ini_set('session.cookie_httponly', 1);
     ini_set('session.use_only_cookies', 1);
     session_start();
 }
+
