@@ -27,7 +27,7 @@
         <p class="text-muted mb-0">Enterprise Inventory Telemetry & Audit Report</p>
     </div>
     <div class="text-end">
-        <h5 class="fw-bold text-primary mb-0"><?= htmlspecialchars($reportData['title']) ?></h5>
+        <h5 class="fw-bold text-primary mb-0"><?= htmlspecialchars($reportData['title'] ?? 'Report') ?></h5>
         <small class="text-muted">Generated: <?= date('Y-m-d H:i:s T') ?></small>
     </div>
 </div>
@@ -64,6 +64,103 @@
                     <td>$<?= number_format($p->quantity * $p->unit_price, 2) ?></td>
                     <td>$<?= number_format($p->selling_price, 2) ?></td>
                     <td>$<?= number_format($p->quantity * $p->selling_price, 2) ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+
+<?php elseif ($currentType === 'sales_revenue'): ?>
+    <div class="row text-center mb-4">
+        <div class="col-3"><div class="border p-2 bg-light"><strong>Total Revenue:</strong> $<?= number_format($reportData['total_revenue'] ?? 0, 2) ?></div></div>
+        <div class="col-3"><div class="border p-2 bg-light"><strong>Total Invoices:</strong> <?= $reportData['total_orders'] ?? 0 ?></div></div>
+        <div class="col-3"><div class="border p-2 bg-light"><strong>Avg Order Value:</strong> $<?= number_format($reportData['avg_order_value'] ?? 0, 2) ?></div></div>
+        <div class="col-3"><div class="border p-2 bg-light"><strong>Paid Orders:</strong> <?= $reportData['paid_count'] ?? 0 ?></div></div>
+    </div>
+
+    <table class="table table-bordered table-striped table-sm align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Order Number</th>
+                <th>Customer Name</th>
+                <th>Total Billed</th>
+                <th>Payment Status</th>
+                <th>Issued By</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($reportData['orders'] as $so): ?>
+                <tr>
+                    <td><?= htmlspecialchars($so->order_number) ?></td>
+                    <td><?= htmlspecialchars($so->customer_name) ?></td>
+                    <td>$<?= number_format($so->total_amount, 2) ?></td>
+                    <td><?= htmlspecialchars($so->payment_status) ?></td>
+                    <td><?= htmlspecialchars($so->user_name) ?></td>
+                    <td><?= date('Y-m-d H:i', strtotime($so->created_at)) ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+
+<?php elseif ($currentType === 'batch_expiry'): ?>
+    <div class="row text-center mb-4">
+        <div class="col-4"><div class="border p-2 bg-light"><strong>Expiring Soon:</strong> <?= $reportData['expiring_soon_count'] ?? 0 ?></div></div>
+        <div class="col-4"><div class="border p-2 bg-light"><strong>Expired Batches:</strong> <?= $reportData['expired_count'] ?? 0 ?></div></div>
+        <div class="col-4"><div class="border p-2 bg-light"><strong>At-Risk Units:</strong> <?= number_format($reportData['at_risk_qty'] ?? 0) ?></div></div>
+    </div>
+
+    <table class="table table-bordered table-striped table-sm align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Batch Number</th>
+                <th>Product Name</th>
+                <th>SKU</th>
+                <th>Quantity</th>
+                <th>Expiry Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($reportData['batches'] as $b): ?>
+                <tr>
+                    <td><?= htmlspecialchars($b->batch_number) ?></td>
+                    <td><?= htmlspecialchars($b->product_name) ?></td>
+                    <td><?= htmlspecialchars($b->sku) ?></td>
+                    <td><?= $b->quantity ?></td>
+                    <td><?= $b->expiry_date ?></td>
+                    <td><?= htmlspecialchars($b->status) ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+
+<?php elseif ($currentType === 'supplier_procurement'): ?>
+    <div class="row text-center mb-4">
+        <div class="col-4"><div class="border p-2 bg-light"><strong>Total PO Spend:</strong> $<?= number_format($reportData['total_spend'] ?? 0, 2) ?></div></div>
+        <div class="col-4"><div class="border p-2 bg-light"><strong>Total POs Issued:</strong> <?= $reportData['total_pos'] ?? 0 ?></div></div>
+        <div class="col-4"><div class="border p-2 bg-light"><strong>Received Orders:</strong> <?= $reportData['received_count'] ?? 0 ?></div></div>
+    </div>
+
+    <table class="table table-bordered table-striped table-sm align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>PO Number</th>
+                <th>Supplier Name</th>
+                <th>Total Cost</th>
+                <th>Status</th>
+                <th>Officer</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($reportData['purchase_orders'] as $po): ?>
+                <tr>
+                    <td><?= htmlspecialchars($po->po_number) ?></td>
+                    <td><?= htmlspecialchars($po->supplier_name) ?></td>
+                    <td>$<?= number_format($po->total_amount, 2) ?></td>
+                    <td><?= htmlspecialchars($po->status) ?></td>
+                    <td><?= htmlspecialchars($po->user_name) ?></td>
+                    <td><?= date('Y-m-d H:i', strtotime($po->created_at)) ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

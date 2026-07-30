@@ -8,6 +8,8 @@ use App\Services\ReportService;
 use App\Repositories\ProductRepository;
 use App\Repositories\MovementRepository;
 use App\Repositories\SORepository;
+use App\Repositories\BatchRepository;
+use App\Repositories\PORepository;
 
 class ReportController extends Controller {
     private ReportService $reportService;
@@ -40,6 +42,21 @@ class ReportController extends Controller {
                     'title' => 'Supplier Directory & Product Supply Report',
                     'suppliers' => $this->reportService->getSupplierReport()
                 ];
+                break;
+            case 'sales_revenue':
+                $reportData = array_merge([
+                    'title' => 'Sales Performance & Revenue Analytics Report'
+                ], $this->reportService->getSalesRevenueReport());
+                break;
+            case 'batch_expiry':
+                $reportData = array_merge([
+                    'title' => 'Batch Expiry & Inventory Waste Risk Report'
+                ], $this->reportService->getBatchExpiryReport());
+                break;
+            case 'supplier_procurement':
+                $reportData = array_merge([
+                    'title' => 'Supplier Procurement & Purchase Order Analytics'
+                ], $this->reportService->getSupplierProcurementReport());
                 break;
             case 'inventory_value':
             default:
@@ -81,6 +98,21 @@ class ReportController extends Controller {
                     'title' => 'Supplier Directory & Inventory Summary Report',
                     'suppliers' => $this->reportService->getSupplierReport()
                 ];
+                break;
+            case 'sales_revenue':
+                $reportData = array_merge([
+                    'title' => 'Sales Performance & Revenue Analytics Report'
+                ], $this->reportService->getSalesRevenueReport());
+                break;
+            case 'batch_expiry':
+                $reportData = array_merge([
+                    'title' => 'Batch Expiry & Inventory Waste Risk Report'
+                ], $this->reportService->getBatchExpiryReport());
+                break;
+            case 'supplier_procurement':
+                $reportData = array_merge([
+                    'title' => 'Supplier Procurement & Purchase Order Analytics'
+                ], $this->reportService->getSupplierProcurementReport());
                 break;
             case 'inventory_value':
             default:
@@ -182,6 +214,63 @@ class ReportController extends Controller {
                 $so->payment_status,
                 $so->user_name,
                 $so->created_at
+            ]);
+        }
+
+        fclose($output);
+        exit;
+    }
+
+    public function exportBatchExpiryCsv(): void {
+        $batchRepo = new BatchRepository();
+        $batches = $batchRepo->getAll();
+
+        $filename = "batch_expiry_risk_" . date('Y-m-d') . ".csv";
+
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+
+        $output = fopen('php://output', 'w');
+        fputcsv($output, ['Batch ID', 'Product SKU', 'Product Name', 'Batch Number', 'Quantity', 'MFD Date', 'Expiry Date', 'Status']);
+
+        foreach ($batches as $b) {
+            fputcsv($output, [
+                $b->batch_id,
+                $b->sku,
+                $b->product_name,
+                $b->batch_number,
+                $b->quantity,
+                $b->mfd_date ?? 'N/A',
+                $b->expiry_date,
+                $b->status
+            ]);
+        }
+
+        fclose($output);
+        exit;
+    }
+
+    public function exportProcurementCsv(): void {
+        $poRepo = new PORepository();
+        $pos = $poRepo->getAll();
+
+        $filename = "procurement_pos_" . date('Y-m-d') . ".csv";
+
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+
+        $output = fopen('php://output', 'w');
+        fputcsv($output, ['PO ID', 'PO Number', 'Supplier Name', 'Total Spend ($)', 'Status', 'Issued By', 'Created Timestamp']);
+
+        foreach ($pos as $po) {
+            fputcsv($output, [
+                $po->po_id,
+                $po->po_number,
+                $po->supplier_name,
+                number_format($po->total_amount, 2, '.', ''),
+                $po->status,
+                $po->user_name,
+                $po->created_at
             ]);
         }
 
