@@ -145,4 +145,18 @@ class InventoryService {
             return ['success' => false, 'error' => 'Database transaction failed: ' . $e->getMessage()];
         }
     }
+
+    public function adjustStock(int $productId, int $newQuantity, int $userId = 1, ?string $note = null, string $userName = 'API System'): bool {
+        $product = $this->productRepository->findById($productId);
+        if (!$product) {
+            return false;
+        }
+
+        if ((int)$product->quantity === $newQuantity) {
+            return true;
+        }
+
+        $result = $this->processAdjustment($productId, $newQuantity, $note, $userId, $userName);
+        return !empty($result['success']);
+    }
 }
