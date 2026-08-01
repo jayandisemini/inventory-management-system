@@ -53,10 +53,6 @@ class ProductRepository {
         return $row ? new Product($row) : null;
     }
 
-    public function findBySKU(string $sku, ?int $excludeId = null): ?Product {
-        return $this->findBySku($sku, $excludeId);
-    }
-
     public function findByBarcode(string $barcode, ?int $excludeId = null): ?Product {
         if (empty($barcode)) return null;
         $sql = "SELECT * FROM products WHERE barcode = :barcode";

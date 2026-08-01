@@ -115,7 +115,7 @@ class ApiController extends Controller {
         if ($id > 0) {
             $product = $this->productRepo->findById($id);
         } elseif ($sku) {
-            $product = $this->productRepo->findBySKU($sku);
+            $product = $this->productRepo->findBySku($sku);
         }
 
         if (!$product) {
