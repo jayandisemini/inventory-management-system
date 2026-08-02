@@ -10,6 +10,7 @@ use App\Repositories\SupplierRepository;
 use App\Repositories\MovementRepository;
 use App\Repositories\UserRepository;
 use App\Repositories\RequestRepository;
+use App\Repositories\PORepository;
 use App\Services\ReportService;
 
 class DashboardController extends Controller {
@@ -19,6 +20,7 @@ class DashboardController extends Controller {
     private MovementRepository $movementRepository;
     private UserRepository $userRepository;
     private RequestRepository $requestRepository;
+    private PORepository $poRepository;
     private ReportService $reportService;
 
     public function __construct() {
@@ -30,6 +32,7 @@ class DashboardController extends Controller {
         $this->movementRepository = new MovementRepository();
         $this->userRepository = new UserRepository();
         $this->requestRepository = new RequestRepository();
+        $this->poRepository = new PORepository();
         $this->reportService = new ReportService();
     }
 
@@ -89,6 +92,9 @@ class DashboardController extends Controller {
                 'chartsData' => $chartsData
             ]);
         } elseif ($roleId === 2 || $roleName === 'Inventory Manager') {
+            $allPOs = $this->poRepository->getAll();
+            $pendingPOs = array_values(array_filter($allPOs, fn($p) => strtolower($p->status ?? '') !== 'received' && strtolower($p->status ?? '') !== 'cancelled'));
+
             $this->render('dashboard/manager', [
                 'pageTitle' => 'Manager Operations Hub & Restock Engine',
                 'activeNav' => 'dashboard',
@@ -97,10 +103,12 @@ class DashboardController extends Controller {
                     'total_suppliers' => count($suppliers),
                     'healthy_count' => $healthyCount,
                     'health_percentage' => $healthPercentage,
-                    'total_reorder_cost' => $totalReorderCost
+                    'total_reorder_cost' => $totalReorderCost,
+                    'pending_po_count' => count($pendingPOs)
                 ]),
                 'products' => $allProducts,
                 'restockQueue' => $restockQueue,
+                'pendingPOs' => $pendingPOs,
                 'recentMovements' => $recentMovements,
                 'chartsData' => $chartsData
             ]);

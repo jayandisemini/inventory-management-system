@@ -253,8 +253,45 @@ $outPct = min(100 - ($healthyPct + $lowPct), round(($outCount / $totalProds) * 1
             </div>
         </div>
 
-        <!-- Recent Stock Activity Feed Side Widget -->
-        <div class="col-12 col-xl-4">
+        <!-- Operations Side Column: PO Pipeline + Recent Feed -->
+        <div class="col-12 col-xl-4 d-flex flex-column gap-4">
+            <!-- Pending Purchase Orders Pipeline Panel -->
+            <div class="card border-0 rounded-4 bg-slate-900 p-4 border border-slate-800">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div>
+                        <h6 class="fw-bold text-white mb-0">
+                            <i class="fas fa-file-signature text-warning me-2"></i> Pending Supplier POs
+                        </h6>
+                        <small class="text-slate-400 fs-8">Active purchase orders pending delivery</small>
+                    </div>
+                    <a href="/purchase-orders" class="fs-8 text-cyan text-decoration-none">View All (<?= count($pendingPOs ?? []) ?>) &rarr;</a>
+                </div>
+
+                <?php if (empty($pendingPOs)): ?>
+                    <div class="text-center py-3 text-slate-400 fs-8">
+                        <i class="fas fa-check-circle text-emerald me-1"></i> No pending purchase orders.
+                    </div>
+                <?php else: ?>
+                    <div class="d-flex flex-column gap-2">
+                        <?php foreach (array_slice($pendingPOs, 0, 3) as $po): ?>
+                            <div class="p-2.5 rounded-3 bg-slate-800/60 border border-slate-700/60 d-flex align-items-center justify-content-between">
+                                <div>
+                                    <div class="fw-bold text-white fs-7"><?= htmlspecialchars($po->po_number ?? 'PO-' . $po->po_id) ?></div>
+                                    <small class="text-slate-400 fs-8"><?= htmlspecialchars($po->supplier_name ?? 'Supplier') ?> &bull; <span class="text-emerald">$<?= number_format($po->total_amount ?? 0, 2) ?></span></small>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="badge bg-warning-subtle text-warning fs-8 px-2 py-1"><i class="fas fa-truck-fast me-1"></i><?= htmlspecialchars($po->status ?? 'Sent') ?></span>
+                                    <a href="/purchase-orders/show?id=<?= $po->po_id ?>" class="btn btn-xs btn-outline-cyan rounded-2 px-2 py-0.5" title="View PO">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+
+            <!-- Recent Stock Activity Feed Side Widget -->
             <div class="card border-0 rounded-4 bg-slate-900 p-4 h-100 border border-slate-800">
                 <div class="d-flex align-items-center justify-content-between mb-3">
                     <h6 class="fw-bold text-white mb-0">
