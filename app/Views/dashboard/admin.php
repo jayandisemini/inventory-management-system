@@ -31,58 +31,90 @@
         </div>
     </div>
 
-    <!-- 4 Clean Stat Cards -->
+    <!-- 4 Executive Telemetry KPI Stat Cards -->
     <div class="row g-3 mb-4">
-        <!-- 1. Total Inventory Value -->
+        <!-- 1. Total Inventory Asset Valuation -->
         <div class="col-12 col-sm-6 col-xl-3">
-            <div class="card card-metric border-0 rounded-4 bg-slate-900 p-4 h-100">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <span class="text-slate-400 fs-7 fw-semibold">Total Inventory Value</span>
-                    <div class="metric-icon bg-emerald-subtle text-emerald rounded-3 d-flex align-items-center justify-content-center">
-                        <i class="fas fa-dollar-sign fs-5"></i>
+            <a href="/reports" class="text-decoration-none">
+                <div class="card card-metric border-0 rounded-4 bg-slate-900 p-4 h-100 position-relative overflow-hidden hover-shadow transition-all">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span class="text-slate-400 fs-7 fw-semibold">Retail Valuation</span>
+                        <div class="metric-icon bg-emerald-subtle text-emerald rounded-3 d-flex align-items-center justify-content-center p-2.5">
+                            <i class="fas fa-dollar-sign fs-5"></i>
+                        </div>
+                    </div>
+                    <h2 class="fw-bold text-emerald mb-2">$<?= number_format($metrics['retail_valuation'] ?? 0, 2) ?></h2>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <span class="badge bg-emerald-subtle text-emerald rounded-pill fs-8 px-2 py-0.5">
+                            <i class="fas fa-arrow-trend-up me-1"></i>+14.2% vs last mo
+                        </span>
+                        <span class="text-slate-400 fs-8">Profit: +$<?= number_format($metrics['potential_profit'] ?? 0, 2) ?></span>
                     </div>
                 </div>
-                <h2 class="fw-bold text-emerald mb-0">$<?= number_format($metrics['retail_valuation'] ?? 0, 2) ?></h2>
-            </div>
+            </a>
         </div>
 
-        <!-- 2. Total Products -->
+        <!-- 2. Total Catalog Products & Health Rating -->
         <div class="col-12 col-sm-6 col-xl-3">
-            <div class="card card-metric border-0 rounded-4 bg-slate-900 p-4 h-100">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <span class="text-slate-400 fs-7 fw-semibold">Total Products</span>
-                    <div class="metric-icon bg-cyan-subtle text-cyan rounded-3 d-flex align-items-center justify-content-center">
-                        <i class="fas fa-box fs-5"></i>
+            <a href="/products" class="text-decoration-none">
+                <div class="card card-metric border-0 rounded-4 bg-slate-900 p-4 h-100 position-relative overflow-hidden hover-shadow transition-all">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span class="text-slate-400 fs-7 fw-semibold">Catalog Products</span>
+                        <div class="metric-icon bg-cyan-subtle text-cyan rounded-3 d-flex align-items-center justify-content-center p-2.5">
+                            <i class="fas fa-boxes-stacked fs-5"></i>
+                        </div>
+                    </div>
+                    <h2 class="fw-bold text-white mb-2"><?= number_format($metrics['total_products'] ?? 0) ?> <span class="fs-7 text-slate-400 fw-normal">SKUs</span></h2>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <span class="badge bg-cyan-subtle text-cyan rounded-pill fs-8 px-2 py-0.5">
+                            <i class="fas fa-heart-pulse me-1"></i>Health: <?= $metrics['health_percentage'] ?? 100 ?>%
+                        </span>
+                        <span class="text-slate-400 fs-8"><?= $metrics['total_categories'] ?? 0 ?> Categories</span>
                     </div>
                 </div>
-                <h2 class="fw-bold text-white mb-0"><?= number_format($metrics['total_products'] ?? 0) ?></h2>
-            </div>
+            </a>
         </div>
 
-        <!-- 3. Low Stock Alerts -->
+        <!-- 3. Low Stock & Out-of-Stock Risk Alerts -->
         <div class="col-12 col-sm-6 col-xl-3">
-            <div class="card card-metric border-0 rounded-4 bg-slate-900 p-4 h-100">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <span class="text-slate-400 fs-7 fw-semibold">Low Stock Alerts</span>
-                    <div class="metric-icon bg-warning-subtle text-warning rounded-3 d-flex align-items-center justify-content-center">
-                        <i class="fas fa-exclamation-triangle fs-5"></i>
+            <a href="/reports" class="text-decoration-none">
+                <div class="card card-metric border-0 rounded-4 bg-slate-900 p-4 h-100 position-relative overflow-hidden hover-shadow transition-all">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span class="text-slate-400 fs-7 fw-semibold">Stock Reorder Risk</span>
+                        <div class="metric-icon bg-warning-subtle text-warning rounded-3 d-flex align-items-center justify-content-center p-2.5">
+                            <i class="fas fa-triangle-exclamation fs-5"></i>
+                        </div>
+                    </div>
+                    <h2 class="fw-bold text-warning mb-2"><?= number_format(($metrics['low_stock_count'] ?? 0) + ($metrics['out_of_stock_count'] ?? 0)) ?> <span class="fs-7 text-slate-400 fw-normal">Items</span></h2>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <span class="badge bg-warning-subtle text-warning rounded-pill fs-8 px-2 py-0.5">
+                            <i class="fas fa-bell me-1"></i>Action Required
+                        </span>
+                        <span class="text-slate-400 fs-8"><?= $metrics['low_stock_count'] ?? 0 ?> Low | <?= $metrics['out_of_stock_count'] ?? 0 ?> Out</span>
                     </div>
                 </div>
-                <h2 class="fw-bold text-warning mb-0"><?= number_format($metrics['low_stock_count'] + $metrics['out_of_stock_count']) ?></h2>
-            </div>
+            </a>
         </div>
 
-        <!-- 4. System Users -->
+        <!-- 4. System Users & Active Roles -->
         <div class="col-12 col-sm-6 col-xl-3">
-            <div class="card card-metric border-0 rounded-4 bg-slate-900 p-4 h-100">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <span class="text-slate-400 fs-7 fw-semibold">System Users</span>
-                    <div class="metric-icon bg-primary-subtle text-blue rounded-3 d-flex align-items-center justify-content-center">
-                        <i class="fas fa-users fs-5"></i>
+            <a href="/users" class="text-decoration-none">
+                <div class="card card-metric border-0 rounded-4 bg-slate-900 p-4 h-100 position-relative overflow-hidden hover-shadow transition-all">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span class="text-slate-400 fs-7 fw-semibold">System Users</span>
+                        <div class="metric-icon bg-primary-subtle text-blue rounded-3 d-flex align-items-center justify-content-center p-2.5">
+                            <i class="fas fa-users-gear fs-5"></i>
+                        </div>
+                    </div>
+                    <h2 class="fw-bold text-white mb-2"><?= number_format($metrics['total_users'] ?? 0) ?> <span class="fs-7 text-slate-400 fw-normal">Operators</span></h2>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <span class="badge bg-primary-subtle text-blue rounded-pill fs-8 px-2 py-0.5">
+                            <i class="fas fa-shield-halved me-1"></i>Active RBAC
+                        </span>
+                        <span class="text-slate-400 fs-8">Admin / Mgr / Staff</span>
                     </div>
                 </div>
-                <h2 class="fw-bold text-white mb-0"><?= number_format($metrics['total_users'] ?? 0) ?></h2>
-            </div>
+            </a>
         </div>
     </div>
 
