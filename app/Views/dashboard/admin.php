@@ -86,50 +86,35 @@
         </div>
     </div>
 
-    <!-- Main Content Section: Chart + Activity Table -->
-    <div class="row g-3">
+    <!-- Analytics Row 1: Monthly Movements & Category Donut Chart -->
+    <div class="row g-3 mb-4">
         <!-- Monthly Stock Activity Chart -->
-        <div class="col-12 col-lg-7">
+        <div class="col-12 col-lg-8">
             <div class="card border-0 rounded-4 bg-slate-900 p-4 h-100">
                 <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h6 class="fw-bold text-white mb-0"><i class="fas fa-chart-bar me-2 text-cyan"></i> Monthly Stock Activity</h6>
+                    <div>
+                        <h6 class="fw-bold text-white mb-0"><i class="fas fa-chart-bar me-2 text-cyan"></i> Monthly Stock Activity Telemetry</h6>
+                        <small class="text-slate-400 fs-8">Inflow vs Outflow stock volume history</small>
+                    </div>
+                    <span class="badge bg-slate-800 text-slate-300 fs-8">Monthly</span>
                 </div>
-                <div style="height: 300px;">
+                <div style="height: 280px;">
                     <canvas id="monthlyMovementsChart"></canvas>
                 </div>
             </div>
         </div>
 
-        <!-- Recent Activity Feed -->
-        <div class="col-12 col-lg-5">
+        <!-- Category Stock Distribution Donut Chart -->
+        <div class="col-12 col-lg-4">
             <div class="card border-0 rounded-4 bg-slate-900 p-4 h-100">
                 <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h6 class="fw-bold text-white mb-0"><i class="fas fa-history me-2 text-cyan"></i> Recent Activity</h6>
-                    <a href="/movements" class="text-cyan fs-8 text-decoration-none fw-semibold">View All &rarr;</a>
+                    <div>
+                        <h6 class="fw-bold text-white mb-0"><i class="fas fa-chart-pie me-2 text-emerald"></i> Category Distribution</h6>
+                        <small class="text-slate-400 fs-8">Inventory units grouped by category</small>
+                    </div>
                 </div>
-                <div class="table-responsive">
-                    <table class="table align-middle mb-0 fs-7">
-                        <thead>
-                            <tr class="text-slate-400">
-                                <th>Product</th>
-                                <th>Action</th>
-                                <th>Qty</th>
-                                <th>Time</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($recentMovements as $mv): ?>
-                                <tr>
-                                    <td>
-                                        <div class="fw-semibold text-white"><?= htmlspecialchars($mv->product_name) ?></div>
-                                    </td>
-                                    <td><?= $mv->getTypeBadgeHtml() ?></td>
-                                    <td class="fw-bold text-white"><?= $mv->quantity ?></td>
-                                    <td class="text-slate-400 fs-8"><?= date('M d, H:i', strtotime($mv->created_at)) ?></td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                <div style="height: 280px; position: relative;">
+                    <canvas id="categoryDistributionChart"></canvas>
                 </div>
             </div>
         </div>
