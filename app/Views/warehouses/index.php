@@ -96,3 +96,47 @@ $userRole = $_SESSION['user']['role_name'] ?? 'Staff';
         </div>
     </div>
 </div>
+
+<!-- Modal Edit Warehouse -->
+<div class="modal fade" id="editWarehouseModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-slate-900 text-white rounded-4 border border-slate-800 shadow-2xl">
+            <div class="modal-header border-bottom border-slate-800">
+                <h6 class="modal-title fw-bold text-white"><i class="fas fa-pen text-cyan me-2"></i> Edit Storage Location</h6>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="/warehouses/update" method="POST">
+                <?= CSRF::field() ?>
+                <input type="hidden" name="id" id="editWhId">
+                <div class="modal-body p-4">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold text-slate-300 fs-7">Warehouse Name <span class="text-rose">*</span></label>
+                        <input type="text" class="form-control bg-slate-950 text-white fs-7" name="warehouse_name" id="editWhName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold text-slate-300 fs-7">Location Code <span class="text-rose">*</span></label>
+                        <input type="text" class="form-control bg-slate-950 text-white fs-7 font-mono" name="code" id="editWhCode" required>
+                    </div>
+                    <div class="row g-2 mb-3">
+                        <div class="col-6">
+                            <label class="form-label fw-semibold text-slate-300 fs-7">Manager Name</label>
+                            <input type="text" class="form-control bg-slate-950 text-white fs-7" name="manager_name" id="editWhManager">
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label fw-semibold text-slate-300 fs-7">Phone Number</label>
+                            <input type="text" class="form-control bg-slate-950 text-white fs-7" name="phone" id="editWhPhone">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold text-slate-300 fs-7">Address / Location</label>
+                        <textarea class="form-control bg-slate-950 text-white fs-7" name="location" id="editWhLocation" rows="2"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer border-top border-slate-800">
+                    <button type="button" class="btn btn-slate-800 text-white" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-cyan"><i class="fas fa-save me-1"></i> Update Details</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

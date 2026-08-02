@@ -332,7 +332,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.querySelectorAll('.edit-wh-btn').forEach(btn => {
         btn.addEventListener('click', function () {
-            alert('Warehouse details: ' + this.dataset.name + ' (' + this.dataset.code + ')');
+            document.getElementById('editWhId').value = this.dataset.id;
+            document.getElementById('editWhName').value = this.dataset.name;
+            document.getElementById('editWhCode').value = this.dataset.code;
+            document.getElementById('editWhManager').value = this.dataset.manager;
+            document.getElementById('editWhPhone').value = this.dataset.phone;
+            document.getElementById('editWhLocation').value = this.dataset.location;
+            new bootstrap.Modal(document.getElementById('editWarehouseModal')).show();
         });
     });
 
