@@ -15,17 +15,29 @@ $outPct = min(100 - ($healthyPct + $lowPct), round(($outCount / $totalProds) * 1
     <!-- Manager Header -->
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3 bg-slate-900 p-4 rounded-4 border border-slate-800">
         <div>
-            <h4 class="fw-bold text-white mb-1">
-                <i class="fas fa-cubes-stacked text-cyan me-2"></i>Manager Operations Hub & Restock Engine
-            </h4>
-            <p class="text-slate-400 fs-7 mb-0">Monitor inventory health, review reorder financial commitments, and manage dispatches.</p>
+            <div class="d-flex align-items-center gap-2">
+                <h4 class="fw-bold text-white mb-0">
+                    <i class="fas fa-cubes-stacked text-cyan me-2"></i>Manager Operations Hub & Restock Engine
+                </h4>
+                <span class="badge bg-cyan-subtle text-cyan rounded-pill px-2.5 py-1 fs-8 fw-semibold"><i class="fas fa-shield-halved me-1"></i> Manager Mode</span>
+            </div>
+            <p class="text-slate-400 fs-7 mb-0 mt-1">Monitor inventory health, review reorder financial commitments, and execute procurement dispatches.</p>
         </div>
         <div class="d-flex align-items-center gap-2 flex-wrap">
-            <a href="/inventory/stock-in" class="btn btn-emerald btn-sm rounded-3">
+            <a href="/inventory/stock-in" class="btn btn-emerald btn-sm rounded-3 fw-semibold">
                 <i class="fas fa-plus me-1.5"></i> Stock In
             </a>
-            <a href="/inventory/stock-out" class="btn btn-rose btn-sm rounded-3">
+            <a href="/inventory/stock-out" class="btn btn-rose btn-sm rounded-3 fw-semibold">
                 <i class="fas fa-minus me-1.5"></i> Stock Out
+            </a>
+            <a href="/purchase-orders/create" class="btn btn-outline-warning btn-sm rounded-3 fw-semibold">
+                <i class="fas fa-file-signature me-1.5"></i> Create PO
+            </a>
+            <a href="/transfers" class="btn btn-outline-cyan btn-sm rounded-3 fw-semibold">
+                <i class="fas fa-right-left me-1.5"></i> Transfer
+            </a>
+            <a href="/stock-takes" class="btn btn-outline-light btn-sm rounded-3">
+                <i class="fas fa-clipboard-list me-1.5"></i> Stock Audit
             </a>
             <a href="/inventory/adjust" class="btn btn-outline-light btn-sm rounded-3">
                 <i class="fas fa-sliders me-1.5"></i> Adjust Count
