@@ -152,7 +152,100 @@
         </div>
     </div>
 
-</div>
+    <!-- Governance & Telemetry Row: Pending Approvals & Live Audit Stream -->
+    <div class="row g-3">
+        <!-- Pending Requisitions & Approvals Queue -->
+        <div class="col-12 col-lg-5">
+            <div class="card border-0 rounded-4 bg-slate-900 p-4 h-100">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div>
+                        <h6 class="fw-bold text-white mb-0"><i class="fas fa-clipboard-check me-2 text-warning"></i> Pending Staff Requisitions</h6>
+                        <small class="text-slate-400 fs-8">Stock requests waiting for Admin approval</small>
+                    </div>
+                    <a href="/stock-requests" class="text-cyan fs-8 text-decoration-none fw-semibold">View All (<?= count($pendingRequests ?? []) ?>) &rarr;</a>
+                </div>
+
+                <?php if (empty($pendingRequests)): ?>
+                    <div class="text-center py-4 my-auto text-slate-400">
+                        <i class="fas fa-check-circle fs-3 text-emerald mb-2"></i>
+                        <p class="mb-0 fs-7">No pending requisitions. All caught up!</p>
+                    </div>
+                <?php else: ?>
+                    <div class="d-flex flex-column gap-2">
+                        <?php foreach (array_slice($pendingRequests, 0, 4) as $req): ?>
+                            <div class="p-3 bg-slate-800 rounded-3 border border-slate-700/50 d-flex align-items-center justify-content-between gap-2">
+                                <div>
+                                    <div class="fw-semibold text-white fs-7"><?= htmlspecialchars($req->product_name) ?></div>
+                                    <div class="text-slate-400 fs-8">
+                                        Requested by <span class="text-slate-300"><?= htmlspecialchars($req->user_name) ?></span> &bull; Qty: <strong class="text-cyan"><?= $req->quantity ?></strong>
+                                    </div>
+                                    <?php if (!empty($req->reason)): ?>
+                                        <div class="text-slate-400 fs-8 fst-italic mt-0.5">"<?= htmlspecialchars($req->reason) ?>"</div>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="d-flex gap-1.5 align-items-center">
+                                    <form action="/stock-requests/approve" method="POST" class="d-inline">
+                                        <input type="hidden" name="request_id" value="<?= $req->request_id ?>">
+                                        <button type="submit" class="btn btn-emerald btn-xs px-2.5 py-1 rounded-2" title="Approve Request">
+                                            <i class="fas fa-check"></i> Approve
+                                        </button>
+                                    </form>
+                                    <form action="/stock-requests/reject" method="POST" class="d-inline">
+                                        <input type="hidden" name="request_id" value="<?= $req->request_id ?>">
+                                        <button type="submit" class="btn btn-outline-danger btn-xs px-2 py-1 rounded-2" title="Reject Request">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <!-- Live System Audit Trail Telemetry Stream -->
+        <div class="col-12 col-lg-7">
+            <div class="card border-0 rounded-4 bg-slate-900 p-4 h-100">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div>
+                        <h6 class="fw-bold text-white mb-0"><i class="fas fa-shield-halved me-2 text-cyan"></i> System Audit Stream Telemetry</h6>
+                        <small class="text-slate-400 fs-8">Immutable stock movement log & operator activity</small>
+                    </div>
+                    <a href="/movements" class="text-cyan fs-8 text-decoration-none fw-semibold">Audit History &rarr;</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0 fs-7">
+                        <thead>
+                            <tr class="text-slate-400">
+                                <th>Item</th>
+                                <th>Type</th>
+                                <th>Qty</th>
+                                <th>Operator</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($recentMovements as $mv): ?>
+                                <tr>
+                                    <td>
+                                        <div class="fw-semibold text-white"><?= htmlspecialchars($mv->product_name) ?></div>
+                                        <small class="text-slate-400 fw-mono fs-8"><?= htmlspecialchars($mv->sku ?? '') ?></small>
+                                    </td>
+                                    <td><?= $mv->getTypeBadgeHtml() ?></td>
+                                    <td class="fw-bold text-white"><?= $mv->quantity ?></td>
+                                    <td class="text-slate-300 fs-8">
+                                        <i class="fas fa-user-circle text-slate-500 me-1"></i><?= htmlspecialchars($mv->user_name ?? 'System') ?>
+                                    </td>
+                                    <td class="text-slate-400 fs-8"><?= date('M d, H:i', strtotime($mv->created_at)) ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <script>
     window.dashboardChartsData = <?= json_encode($chartsData) ?>;

@@ -9,6 +9,7 @@ use App\Repositories\CategoryRepository;
 use App\Repositories\SupplierRepository;
 use App\Repositories\MovementRepository;
 use App\Repositories\UserRepository;
+use App\Repositories\RequestRepository;
 use App\Services\ReportService;
 
 class DashboardController extends Controller {
@@ -17,6 +18,7 @@ class DashboardController extends Controller {
     private SupplierRepository $supplierRepository;
     private MovementRepository $movementRepository;
     private UserRepository $userRepository;
+    private RequestRepository $requestRepository;
     private ReportService $reportService;
 
     public function __construct() {
@@ -27,6 +29,7 @@ class DashboardController extends Controller {
         $this->supplierRepository = new SupplierRepository();
         $this->movementRepository = new MovementRepository();
         $this->userRepository = new UserRepository();
+        $this->requestRepository = new RequestRepository();
         $this->reportService = new ReportService();
     }
 
@@ -64,6 +67,9 @@ class DashboardController extends Controller {
         // Render role-tailored view
         if ($roleId === 1 || $roleName === 'Admin') {
             $usersCount = count($this->userRepository->getAll());
+            $allRequests = $this->requestRepository->getAll();
+            $pendingRequests = array_values(array_filter($allRequests, fn($r) => $r->status === 'Pending'));
+
             $this->render('dashboard/admin', [
                 'pageTitle' => 'Admin Executive Command Center',
                 'activeNav' => 'dashboard',
@@ -74,10 +80,12 @@ class DashboardController extends Controller {
                     'potential_profit' => $valData['potential_profit'] ?? 0,
                     'cost_valuation' => $valData['total_cost_valuation'] ?? 0,
                     'retail_valuation' => $valData['total_retail_valuation'] ?? 0,
-                    'health_percentage' => $healthPercentage
+                    'health_percentage' => $healthPercentage,
+                    'pending_requests_count' => count($pendingRequests)
                 ]),
                 'lowStockProducts' => $lowStockProducts,
                 'recentMovements' => $recentMovements,
+                'pendingRequests' => $pendingRequests,
                 'chartsData' => $chartsData
             ]);
         } elseif ($roleId === 2 || $roleName === 'Inventory Manager') {
