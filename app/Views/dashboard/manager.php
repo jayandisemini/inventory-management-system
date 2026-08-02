@@ -142,6 +142,40 @@ $outPct = min(100 - ($healthyPct + $lowPct), round(($outCount / $totalProds) * 1
         </div>
     </div>
 
+    <!-- Manager Analytics Row: Stock Activity Telemetry & Category Donut Chart -->
+    <div class="row g-3 mb-4">
+        <!-- Monthly Stock Activity Chart -->
+        <div class="col-12 col-lg-7">
+            <div class="card border-0 rounded-4 bg-slate-900 p-4 h-100 border border-slate-800">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div>
+                        <h6 class="fw-bold text-white mb-0"><i class="fas fa-chart-bar me-2 text-cyan"></i> Monthly Operations Volume</h6>
+                        <small class="text-slate-400 fs-8">Inflow receiving vs Outflow dispatch history</small>
+                    </div>
+                    <span class="badge bg-slate-800 text-slate-300 fs-8">Telemetry</span>
+                </div>
+                <div style="height: 260px;">
+                    <canvas id="monthlyMovementsChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category Distribution Chart -->
+        <div class="col-12 col-lg-5">
+            <div class="card border-0 rounded-4 bg-slate-900 p-4 h-100 border border-slate-800">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div>
+                        <h6 class="fw-bold text-white mb-0"><i class="fas fa-chart-pie me-2 text-emerald"></i> Category Share</h6>
+                        <small class="text-slate-400 fs-8">Inventory volume split by category</small>
+                    </div>
+                </div>
+                <div style="height: 260px; position: relative;">
+                    <canvas id="categoryDistributionChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row g-4 mb-4">
         <!-- Restock Queue Table with Live Filter -->
         <div class="col-12 col-xl-8">
@@ -347,4 +381,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+</script>
+
+<script>
+    window.dashboardChartsData = <?= json_encode($chartsData ?? []) ?>;
 </script>
