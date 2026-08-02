@@ -3,11 +3,26 @@
     <!-- Simple Top Header -->
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3 bg-slate-900 p-4 rounded-4 border border-slate-800">
         <div>
-            <h4 class="fw-bold text-white mb-1">Admin Dashboard</h4>
-            <p class="text-slate-400 fs-7 mb-0">Overview of inventory assets, stock status, and recent activity.</p>
+            <div class="d-flex align-items-center gap-2">
+                <h4 class="fw-bold text-white mb-0">Admin Executive Command Center</h4>
+                <span class="badge bg-emerald-subtle text-emerald rounded-pill px-2.5 py-1 fs-8 fw-semibold"><i class="fas fa-signal me-1"></i> Live</span>
+            </div>
+            <p class="text-slate-400 fs-7 mb-0 mt-1">Real-time inventory telemetry, asset valuations, and executive quick commands.</p>
         </div>
-        <div class="d-flex gap-2">
-            <a href="/users" class="btn btn-cyan btn-sm rounded-3 fw-semibold">
+        <div class="d-flex flex-wrap gap-2">
+            <a href="/inventory/stock-in" class="btn btn-emerald btn-sm rounded-3 fw-semibold">
+                <i class="fas fa-arrow-down-left me-1.5"></i> Stock In
+            </a>
+            <a href="/inventory/stock-out" class="btn btn-outline-danger btn-sm rounded-3 fw-semibold">
+                <i class="fas fa-arrow-up-right me-1.5"></i> Stock Out
+            </a>
+            <a href="/products/create" class="btn btn-cyan btn-sm rounded-3 fw-semibold">
+                <i class="fas fa-plus me-1.5"></i> Add Product
+            </a>
+            <a href="/purchase-orders/create" class="btn btn-outline-warning btn-sm rounded-3 fw-semibold">
+                <i class="fas fa-file-signature me-1.5"></i> Create PO
+            </a>
+            <a href="/users" class="btn btn-outline-light btn-sm rounded-3">
                 <i class="fas fa-users-gear me-1.5"></i> Manage Users
             </a>
             <a href="/reports" class="btn btn-outline-light btn-sm rounded-3">
