@@ -236,13 +236,20 @@ $outPct = min(100 - ($healthyPct + $lowPct), round(($outCount / $totalProds) * 1
                                         </td>
                                         <td class="fw-bold text-indigo">$<?= number_format($estCost, 2) ?></td>
                                         <td class="text-end">
-                                            <button type="button" 
-                                                    class="btn btn-xs btn-emerald rounded-2 open-restock-modal"
-                                                    data-id="<?= $p->product_id ?>"
-                                                    data-name="<?= htmlspecialchars($p->product_name) ?>"
-                                                    data-qty="<?= $p->suggested_reorder_qty ?>">
-                                                <i class="fas fa-plus me-1"></i> Quick Restock
-                                            </button>
+                                            <div class="d-flex align-items-center justify-content-end gap-1.5">
+                                                <a href="/purchase-orders/create?product_id=<?= $p->product_id ?>&qty=<?= $p->suggested_reorder_qty ?>" 
+                                                   class="btn btn-xs btn-outline-warning rounded-2" 
+                                                   title="Draft Purchase Order for Supplier">
+                                                    <i class="fas fa-file-signature me-1"></i> PO
+                                                </a>
+                                                <button type="button" 
+                                                        class="btn btn-xs btn-emerald rounded-2 open-restock-modal"
+                                                        data-id="<?= $p->product_id ?>"
+                                                        data-name="<?= htmlspecialchars($p->product_name) ?>"
+                                                        data-qty="<?= $p->suggested_reorder_qty ?>">
+                                                    <i class="fas fa-plus me-1"></i> Quick Restock
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
