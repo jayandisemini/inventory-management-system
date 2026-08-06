@@ -28,69 +28,17 @@ $flashes = $_SESSION['flash_messages'] ?? [];
     
     <!-- Custom Enterprise CSS -->
     <link rel="stylesheet" href="/assets/css/style.css">
-    
-    <style>
-        .login-wrapper {
-            min-height: 100vh;
-            background: linear-gradient(135deg, rgba(9, 13, 22, 0.88) 0%, rgba(15, 23, 42, 0.92) 100%),
-                        url('/assets/images/login_bg.png') no-repeat center center / cover;
-            position: relative;
-            overflow: hidden;
-        }
-        .login-wrapper::before {
-            content: '';
-            position: absolute;
-            width: 350px;
-            height: 350px;
-            top: -100px;
-            left: -100px;
-            background: radial-gradient(circle, rgba(6, 182, 212, 0.35) 0%, transparent 70%);
-            border-radius: 50%;
-            filter: blur(80px);
-            pointer-events: none;
-        }
-        .login-wrapper::after {
-            content: '';
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            bottom: -150px;
-            right: -150px;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, transparent 70%);
-            border-radius: 50%;
-            filter: blur(90px);
-            pointer-events: none;
-        }
-        .hero-panel {
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.75) 0%, rgba(30, 41, 59, 0.55) 100%);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-        }
-        .login-card {
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(28px);
-            -webkit-backdrop-filter: blur(28px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
-        }
-        .role-option-card {
-            background: rgba(2, 6, 23, 0.8);
-            border: 1px solid #1e293b;
-            cursor: pointer;
-            transition: all 0.25s ease;
-        }
-        .role-option-card:hover, .role-option-card.active {
-            border-color: #06b6d4;
-            background: rgba(6, 182, 212, 0.12);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 14px rgba(6, 182, 212, 0.2);
-        }
-    </style>
 </head>
-<body class="bg-dark-app text-white login-wrapper d-flex align-items-center justify-content-center p-3 p-md-4">
+<body class="login-wrapper d-flex align-items-center justify-content-center p-3 p-md-4">
 
-<div class="container" style="max-width: 1100px;">
+<!-- Floating Theme Toggle Button -->
+<div class="position-absolute top-0 end-0 p-3 p-md-4 z-3">
+    <button class="btn btn-theme-outline rounded-circle p-2 shadow-sm" id="themeToggleBtn" title="Toggle Light / Dark Theme" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+        <i class="fas fa-sun text-amber" id="themeToggleIcon"></i>
+    </button>
+</div>
+
+<div class="container" style="max-width: 1060px;">
     <div class="row g-0 rounded-4 overflow-hidden shadow-2xl login-card">
         
         <!-- Left Hero Showcase Panel -->
@@ -98,7 +46,7 @@ $flashes = $_SESSION['flash_messages'] ?? [];
             <div>
                 <!-- Brand Badge -->
                 <div class="d-flex align-items-center gap-3 mb-4">
-                    <div class="brand-logo bg-gradient-cyan text-slate-950 rounded-3 d-flex align-items-center justify-content-center fw-bold fs-3 shadow-cyan" style="width: 48px; height: 48px;">
+                    <div class="brand-logo bg-cyan text-slate-950 rounded-3 d-flex align-items-center justify-content-center fw-bold fs-3 shadow-sm" style="width: 48px; height: 48px;">
                         <i class="fas fa-cubes-stacked"></i>
                     </div>
                     <div>
@@ -109,7 +57,7 @@ $flashes = $_SESSION['flash_messages'] ?? [];
 
                 <div class="my-4">
                     <h2 class="fw-extrabold text-white mb-3 tracking-tight lh-sm">Smart Supply Chain & Multi-Warehouse Intelligence</h2>
-                    <p class="text-slate-400 fs-7 leading-relaxed mb-4">
+                    <p class="hero-desc fs-7 leading-relaxed mb-4">
                         Automated stock management, real-time inventory telemetry, purchase order workflows, and executive business analytics for modern enterprises.
                     </p>
                 </div>
@@ -117,46 +65,46 @@ $flashes = $_SESSION['flash_messages'] ?? [];
                 <!-- Feature Highlights Grid -->
                 <div class="row g-2 mb-4">
                     <div class="col-6">
-                        <div class="p-2.5 bg-slate-950/60 rounded-3 border border-slate-800 d-flex align-items-center gap-2">
+                        <div class="p-2.5 feature-badge rounded-3 d-flex align-items-center gap-2">
                             <i class="fas fa-chart-line text-cyan fs-6"></i>
-                            <span class="fs-8 fw-semibold text-slate-200">Real-Time Telemetry</span>
+                            <span class="fs-8 fw-semibold">Real-Time Telemetry</span>
                         </div>
                     </div>
                     <div class="col-6">
-                        <div class="p-2.5 bg-slate-950/60 rounded-3 border border-slate-800 d-flex align-items-center gap-2">
+                        <div class="p-2.5 feature-badge rounded-3 d-flex align-items-center gap-2">
                             <i class="fas fa-warehouse text-emerald fs-6"></i>
-                            <span class="fs-8 fw-semibold text-slate-200">Multi-Warehouse ERP</span>
+                            <span class="fs-8 fw-semibold">Multi-Warehouse ERP</span>
                         </div>
                     </div>
                     <div class="col-6">
-                        <div class="p-2.5 bg-slate-950/60 rounded-3 border border-slate-800 d-flex align-items-center gap-2">
+                        <div class="p-2.5 feature-badge rounded-3 d-flex align-items-center gap-2">
                             <i class="fas fa-robot text-amber fs-6"></i>
-                            <span class="fs-8 fw-semibold text-slate-200">Auto-Restock Engine</span>
+                            <span class="fs-8 fw-semibold">Auto-Restock Engine</span>
                         </div>
                     </div>
                     <div class="col-6">
-                        <div class="p-2.5 bg-slate-950/60 rounded-3 border border-slate-800 d-flex align-items-center gap-2">
+                        <div class="p-2.5 feature-badge rounded-3 d-flex align-items-center gap-2">
                             <i class="fas fa-shield-halved text-blue fs-6"></i>
-                            <span class="fs-8 fw-semibold text-slate-200">RBAC Security Guard</span>
+                            <span class="fs-8 fw-semibold">RBAC Security Guard</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="pt-3 border-top border-slate-800/80 d-flex align-items-center justify-content-between">
+            <div class="pt-3 border-top border-slate-700/60 d-flex align-items-center justify-content-between">
                 <span class="badge bg-emerald-subtle text-emerald fs-8 border border-emerald-subtle px-2.5 py-1">
                     <i class="fas fa-circle-check me-1"></i> System Operational v2.4
                 </span>
-                <small class="text-slate-400 fs-8">&copy; <?= date('Y') ?> NEXUS Systems</small>
+                <small class="text-slate-300 fs-8">&copy; <?= date('Y') ?> NEXUS Systems</small>
             </div>
         </div>
 
         <!-- Right Authentication Console -->
-        <div class="col-12 col-lg-6 p-4 p-md-5 bg-slate-900 d-flex flex-column justify-content-center">
+        <div class="col-12 col-lg-6 p-4 p-md-5 auth-console d-flex flex-column justify-content-center">
             
             <div class="mb-4">
-                <h4 class="fw-bold text-white mb-1">Sign In to Dashboard</h4>
-                <p class="text-slate-400 fs-7 mb-0">Enter your credentials or choose a quick demo account below.</p>
+                <h4 class="fw-bold text-theme-main mb-1">Sign In to Dashboard</h4>
+                <p class="text-theme-muted fs-7 mb-0">Enter your credentials or choose a quick demo account below.</p>
             </div>
 
             <!-- Flash Alert Messages -->
@@ -176,62 +124,62 @@ $flashes = $_SESSION['flash_messages'] ?? [];
                 <?= CSRF::field() ?>
 
                 <div class="mb-3">
-                    <label for="email" class="form-label fw-semibold text-slate-300 fs-7">Email Address <span class="text-rose">*</span></label>
+                    <label for="email" class="form-label fw-semibold text-theme-main fs-7">Email Address <span class="text-rose">*</span></label>
                     <div class="input-group">
-                        <span class="input-group-text bg-slate-950 border-slate-800 text-slate-400"><i class="fas fa-envelope"></i></span>
-                        <input type="email" class="form-control bg-slate-950 border-slate-800 text-white fs-7" id="email" name="email" value="admin@sims.com" placeholder="name@nexus.com" required>
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        <input type="email" class="form-control fs-7" id="email" name="email" value="admin@sims.com" placeholder="name@nexus.com" required>
                     </div>
                 </div>
 
                 <div class="mb-4">
                     <div class="d-flex justify-content-between align-items-center mb-1">
-                        <label for="password" class="form-label fw-semibold text-slate-300 fs-7 mb-0">Password <span class="text-rose">*</span></label>
+                        <label for="password" class="form-label fw-semibold text-theme-main fs-7 mb-0">Password <span class="text-rose">*</span></label>
                         <a href="/reset-password" class="text-cyan text-decoration-none fs-8 fw-semibold">Forgot Password?</a>
                     </div>
                     <div class="input-group">
-                        <span class="input-group-text bg-slate-950 border-slate-800 text-slate-400"><i class="fas fa-lock"></i></span>
-                        <input type="password" class="form-control bg-slate-950 border-slate-800 text-white fs-7" id="password" name="password" value="admin123" placeholder="Enter password" required>
-                        <button class="btn btn-slate-800 border border-slate-800 text-slate-400" type="button" id="togglePasswordBtn">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        <input type="password" class="form-control fs-7" id="password" name="password" value="admin123" placeholder="Enter password" required>
+                        <button class="btn btn-theme-outline input-group-text" type="button" id="togglePasswordBtn">
                             <i class="fas fa-eye" id="togglePasswordIcon"></i>
                         </button>
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-cyan btn-lg w-100 rounded-3 fs-6 fw-bold mb-4 shadow-cyan">
+                <button type="submit" class="btn btn-cyan btn-lg w-100 rounded-3 fs-6 fw-bold mb-4 shadow-sm">
                     <i class="fas fa-right-to-bracket me-2"></i> Authenticate & Enter Hub
                 </button>
             </form>
 
             <!-- 1-Click Role Quick Login Switcher -->
             <div>
-                <small class="text-slate-400 fw-semibold fs-8 text-uppercase tracking-wider d-block mb-2.5">1-Click Quick Demo Accounts:</small>
+                <small class="text-theme-muted fw-bold fs-8 text-uppercase tracking-wider d-block mb-2.5">1-Click Quick Demo Accounts:</small>
                 <div class="row g-2">
                     <div class="col-4">
                         <div class="role-option-card p-2 rounded-3 text-center active demo-role-card" data-email="admin@sims.com" data-pass="admin123">
                             <div class="avatar bg-cyan-subtle text-cyan rounded-circle mx-auto mb-1 d-flex align-items-center justify-content-center fw-bold fs-8" style="width: 28px; height: 28px;">A</div>
-                            <span class="d-block fw-bold text-white fs-8">Admin</span>
-                            <small class="text-cyan fs-9">Executive</small>
+                            <span class="d-block role-title fs-8">Admin</span>
+                            <small class="text-cyan fs-9 fw-semibold">Executive</small>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="role-option-card p-2 rounded-3 text-center demo-role-card" data-email="manager@sims.com" data-pass="manager123">
                             <div class="avatar bg-emerald-subtle text-emerald rounded-circle mx-auto mb-1 d-flex align-items-center justify-content-center fw-bold fs-8" style="width: 28px; height: 28px;">M</div>
-                            <span class="d-block fw-bold text-white fs-8">Manager</span>
-                            <small class="text-emerald fs-9">Operations</small>
+                            <span class="d-block role-title fs-8">Manager</span>
+                            <small class="text-emerald fs-9 fw-semibold">Operations</small>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="role-option-card p-2 rounded-3 text-center demo-role-card" data-email="staff@sims.com" data-pass="staff123">
                             <div class="avatar bg-warning-subtle text-amber rounded-circle mx-auto mb-1 d-flex align-items-center justify-content-center fw-bold fs-8" style="width: 28px; height: 28px;">S</div>
-                            <span class="d-block fw-bold text-white fs-8">Staff</span>
-                            <small class="text-amber fs-9">Terminal</small>
+                            <span class="d-block role-title fs-8">Staff</span>
+                            <small class="text-amber fs-9 fw-semibold">Terminal</small>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="text-center mt-4 pt-3 border-top border-slate-800">
-                <span class="text-slate-400 fs-7">Don't have an enterprise account? <a href="/register" class="text-cyan text-decoration-none fw-bold ms-1">Register Account</a></span>
+            <div class="text-center mt-4 pt-3 border-top">
+                <span class="text-theme-muted fs-7">Don't have an enterprise account? <a href="/register" class="text-cyan text-decoration-none fw-bold ms-1">Register Account</a></span>
             </div>
 
         </div>
@@ -243,7 +191,26 @@ $flashes = $_SESSION['flash_messages'] ?? [];
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // 1. Password Visibility Toggle
+    // Theme Toggle Functionality
+    function applyTheme(theme) {
+        document.documentElement.setAttribute('data-bs-theme', theme);
+        localStorage.setItem('sims_theme', theme);
+        const icon = document.getElementById('themeToggleIcon');
+        if (icon) icon.className = theme === 'dark' ? 'fas fa-sun text-amber' : 'fas fa-moon text-primary';
+    }
+
+    const currentSavedTheme = localStorage.getItem('sims_theme') || 'dark';
+    applyTheme(currentSavedTheme);
+
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', function () {
+            const activeTheme = document.documentElement.getAttribute('data-bs-theme') || 'dark';
+            applyTheme(activeTheme === 'dark' ? 'light' : 'dark');
+        });
+    }
+
+    // Password Visibility Toggle
     const togglePasswordBtn = document.getElementById('togglePasswordBtn');
     const passwordInput = document.getElementById('password');
     const toggleIcon = document.getElementById('togglePasswordIcon');
@@ -252,11 +219,11 @@ document.addEventListener('DOMContentLoaded', function () {
         togglePasswordBtn.addEventListener('click', function () {
             const isPassword = passwordInput.getAttribute('type') === 'password';
             passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
-            toggleIcon.className = isPassword ? 'fas fa-eye-slash text-cyan' : 'fas fa-eye text-slate-400';
+            toggleIcon.className = isPassword ? 'fas fa-eye-slash text-cyan' : 'fas fa-eye text-theme-muted';
         });
     }
 
-    // 2. Interactive Role Switcher
+    // Interactive Role Switcher
     const roleCards = document.querySelectorAll('.demo-role-card');
     const emailInput = document.getElementById('email');
 
