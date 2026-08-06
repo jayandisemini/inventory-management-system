@@ -79,19 +79,19 @@
                 <div class="col-6 col-md-3">
                     <div class="bg-slate-950 p-3 rounded-3 border border-slate-800 text-center">
                         <span class="text-slate-400 fs-8 text-uppercase fw-bold">Total Stock Cost</span>
-                        <h4 class="fw-bold text-white mb-0 mt-1">$<?= number_format($reportData['total_cost_valuation'] ?? 0, 2) ?></h4>
+                        <h4 class="fw-bold text-white mb-0 mt-1">Rs. <?= number_format($reportData['total_cost_valuation'] ?? 0, 2) ?></h4>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
                     <div class="bg-slate-950 p-3 rounded-3 border border-slate-800 text-center">
                         <span class="text-slate-400 fs-8 text-uppercase fw-bold">Retail Market Value</span>
-                        <h4 class="fw-bold text-emerald mb-0 mt-1">$<?= number_format($reportData['total_retail_valuation'] ?? 0, 2) ?></h4>
+                        <h4 class="fw-bold text-emerald mb-0 mt-1">Rs. <?= number_format($reportData['total_retail_valuation'] ?? 0, 2) ?></h4>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
                     <div class="bg-slate-950 p-3 rounded-3 border border-slate-800 text-center">
                         <span class="text-slate-400 fs-8 text-uppercase fw-bold">Unrealized Gross Margin</span>
-                        <h4 class="fw-bold text-cyan mb-0 mt-1">$<?= number_format($reportData['potential_profit'] ?? 0, 2) ?></h4>
+                        <h4 class="fw-bold text-cyan mb-0 mt-1">Rs. <?= number_format($reportData['potential_profit'] ?? 0, 2) ?></h4>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
@@ -123,10 +123,10 @@
                                 <td class="fw-bold text-white"><?= htmlspecialchars($p->product_name) ?></td>
                                 <td><?= htmlspecialchars($p->category_name) ?></td>
                                 <td class="fw-bold text-white"><?= $p->quantity ?></td>
-                                <td>$<?= number_format($p->unit_price, 2) ?></td>
-                                <td class="fw-semibold text-white">$<?= number_format($p->quantity * $p->unit_price, 2) ?></td>
-                                <td>$<?= number_format($p->selling_price, 2) ?></td>
-                                <td class="fw-bold text-emerald">$<?= number_format($p->quantity * $p->selling_price, 2) ?></td>
+                                <td>Rs. <?= number_format($p->unit_price, 2) ?></td>
+                                <td class="fw-semibold text-white">Rs. <?= number_format($p->quantity * $p->unit_price, 2) ?></td>
+                                <td>Rs. <?= number_format($p->selling_price, 2) ?></td>
+                                <td class="fw-bold text-emerald">Rs. <?= number_format($p->quantity * $p->selling_price, 2) ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -138,7 +138,7 @@
                 <div class="col-6 col-md-3">
                     <div class="bg-slate-950 p-3 rounded-3 border border-slate-800 text-center">
                         <span class="text-slate-400 fs-8 text-uppercase fw-bold">Total Sales Revenue</span>
-                        <h4 class="fw-bold text-emerald mb-0 mt-1">$<?= number_format($reportData['total_revenue'] ?? 0, 2) ?></h4>
+                        <h4 class="fw-bold text-emerald mb-0 mt-1">Rs. <?= number_format($reportData['total_revenue'] ?? 0, 2) ?></h4>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
@@ -150,7 +150,7 @@
                 <div class="col-6 col-md-3">
                     <div class="bg-slate-950 p-3 rounded-3 border border-slate-800 text-center">
                         <span class="text-slate-400 fs-8 text-uppercase fw-bold">Average Order Value</span>
-                        <h4 class="fw-bold text-cyan mb-0 mt-1">$<?= number_format($reportData['avg_order_value'] ?? 0, 2) ?></h4>
+                        <h4 class="fw-bold text-cyan mb-0 mt-1">Rs. <?= number_format($reportData['avg_order_value'] ?? 0, 2) ?></h4>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
@@ -178,7 +178,7 @@
                             <tr>
                                 <td class="fw-mono text-cyan fs-8"><?= htmlspecialchars($so->order_number) ?></td>
                                 <td class="fw-bold text-white"><?= htmlspecialchars($so->customer_name) ?></td>
-                                <td class="fw-bold text-emerald">$<?= number_format($so->total_amount, 2) ?></td>
+                                <td class="fw-bold text-emerald">Rs. <?= number_format($so->total_amount, 2) ?></td>
                                 <td>
                                     <span class="badge bg-<?= strtolower($so->payment_status ?? '') === 'paid' ? 'success' : 'warning' ?>">
                                         <?= htmlspecialchars($so->payment_status) ?>
@@ -250,7 +250,7 @@
                 <div class="col-6 col-md-4">
                     <div class="bg-slate-950 p-3 rounded-3 border border-slate-800 text-center">
                         <span class="text-slate-400 fs-8 text-uppercase fw-bold">Total Procurement Spend</span>
-                        <h4 class="fw-bold text-emerald mb-0 mt-1">$<?= number_format($reportData['total_spend'] ?? 0, 2) ?></h4>
+                        <h4 class="fw-bold text-emerald mb-0 mt-1">Rs. <?= number_format($reportData['total_spend'] ?? 0, 2) ?></h4>
                     </div>
                 </div>
                 <div class="col-6 col-md-4">
@@ -284,7 +284,7 @@
                             <tr>
                                 <td class="fw-mono text-cyan fs-8"><?= htmlspecialchars($po->po_number) ?></td>
                                 <td class="fw-bold text-white"><?= htmlspecialchars($po->supplier_name) ?></td>
-                                <td class="fw-bold text-emerald">$<?= number_format($po->total_amount, 2) ?></td>
+                                <td class="fw-bold text-emerald">Rs. <?= number_format($po->total_amount, 2) ?></td>
                                 <td>
                                     <span class="badge bg-<?= strtolower($po->status ?? '') === 'received' ? 'success' : 'info' ?>">
                                         <?= htmlspecialchars($po->status) ?>

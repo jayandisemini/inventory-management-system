@@ -34,9 +34,9 @@
 
 <?php if ($currentType === 'inventory_value'): ?>
     <div class="row text-center mb-4">
-        <div class="col-3"><div class="border p-2 bg-light"><strong>Total Stock Cost:</strong> $<?= number_format($reportData['total_cost_valuation'] ?? 0, 2) ?></div></div>
-        <div class="col-3"><div class="border p-2 bg-light"><strong>Total Retail Value:</strong> $<?= number_format($reportData['total_retail_valuation'] ?? 0, 2) ?></div></div>
-        <div class="col-3"><div class="border p-2 bg-light"><strong>Unrealized Margin:</strong> $<?= number_format($reportData['potential_profit'] ?? 0, 2) ?></div></div>
+        <div class="col-3"><div class="border p-2 bg-light"><strong>Total Stock Cost:</strong> Rs. <?= number_format($reportData['total_cost_valuation'] ?? 0, 2) ?></div></div>
+        <div class="col-3"><div class="border p-2 bg-light"><strong>Total Retail Value:</strong> Rs. <?= number_format($reportData['total_retail_valuation'] ?? 0, 2) ?></div></div>
+        <div class="col-3"><div class="border p-2 bg-light"><strong>Unrealized Margin:</strong> Rs. <?= number_format($reportData['potential_profit'] ?? 0, 2) ?></div></div>
         <div class="col-3"><div class="border p-2 bg-light"><strong>Total Items:</strong> <?= number_format($reportData['total_items_count'] ?? 0) ?></div></div>
     </div>
 
@@ -60,10 +60,10 @@
                     <td><?= htmlspecialchars($p->product_name) ?></td>
                     <td><?= htmlspecialchars($p->category_name) ?></td>
                     <td><?= $p->quantity ?></td>
-                    <td>$<?= number_format($p->unit_price, 2) ?></td>
-                    <td>$<?= number_format($p->quantity * $p->unit_price, 2) ?></td>
-                    <td>$<?= number_format($p->selling_price, 2) ?></td>
-                    <td>$<?= number_format($p->quantity * $p->selling_price, 2) ?></td>
+                    <td>Rs. <?= number_format($p->unit_price, 2) ?></td>
+                    <td>Rs. <?= number_format($p->quantity * $p->unit_price, 2) ?></td>
+                    <td>Rs. <?= number_format($p->selling_price, 2) ?></td>
+                    <td>Rs. <?= number_format($p->quantity * $p->selling_price, 2) ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
@@ -71,9 +71,9 @@
 
 <?php elseif ($currentType === 'sales_revenue'): ?>
     <div class="row text-center mb-4">
-        <div class="col-3"><div class="border p-2 bg-light"><strong>Total Revenue:</strong> $<?= number_format($reportData['total_revenue'] ?? 0, 2) ?></div></div>
+        <div class="col-3"><div class="border p-2 bg-light"><strong>Total Revenue:</strong> Rs. <?= number_format($reportData['total_revenue'] ?? 0, 2) ?></div></div>
         <div class="col-3"><div class="border p-2 bg-light"><strong>Total Invoices:</strong> <?= $reportData['total_orders'] ?? 0 ?></div></div>
-        <div class="col-3"><div class="border p-2 bg-light"><strong>Avg Order Value:</strong> $<?= number_format($reportData['avg_order_value'] ?? 0, 2) ?></div></div>
+        <div class="col-3"><div class="border p-2 bg-light"><strong>Avg Order Value:</strong> Rs. <?= number_format($reportData['avg_order_value'] ?? 0, 2) ?></div></div>
         <div class="col-3"><div class="border p-2 bg-light"><strong>Paid Orders:</strong> <?= $reportData['paid_count'] ?? 0 ?></div></div>
     </div>
 
@@ -93,7 +93,7 @@
                 <tr>
                     <td><?= htmlspecialchars($so->order_number) ?></td>
                     <td><?= htmlspecialchars($so->customer_name) ?></td>
-                    <td>$<?= number_format($so->total_amount, 2) ?></td>
+                    <td>Rs. <?= number_format($so->total_amount, 2) ?></td>
                     <td><?= htmlspecialchars($so->payment_status) ?></td>
                     <td><?= htmlspecialchars($so->user_name) ?></td>
                     <td><?= date('Y-m-d H:i', strtotime($so->created_at)) ?></td>
@@ -136,7 +136,7 @@
 
 <?php elseif ($currentType === 'supplier_procurement'): ?>
     <div class="row text-center mb-4">
-        <div class="col-4"><div class="border p-2 bg-light"><strong>Total PO Spend:</strong> $<?= number_format($reportData['total_spend'] ?? 0, 2) ?></div></div>
+        <div class="col-4"><div class="border p-2 bg-light"><strong>Total PO Spend:</strong> Rs. <?= number_format($reportData['total_spend'] ?? 0, 2) ?></div></div>
         <div class="col-4"><div class="border p-2 bg-light"><strong>Total POs Issued:</strong> <?= $reportData['total_pos'] ?? 0 ?></div></div>
         <div class="col-4"><div class="border p-2 bg-light"><strong>Received Orders:</strong> <?= $reportData['received_count'] ?? 0 ?></div></div>
     </div>
@@ -157,7 +157,7 @@
                 <tr>
                     <td><?= htmlspecialchars($po->po_number) ?></td>
                     <td><?= htmlspecialchars($po->supplier_name) ?></td>
-                    <td>$<?= number_format($po->total_amount, 2) ?></td>
+                    <td>Rs. <?= number_format($po->total_amount, 2) ?></td>
                     <td><?= htmlspecialchars($po->status) ?></td>
                     <td><?= htmlspecialchars($po->user_name) ?></td>
                     <td><?= date('Y-m-d H:i', strtotime($po->created_at)) ?></td>

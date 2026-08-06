@@ -32,7 +32,7 @@ use App\Core\CSRF;
                         <tr>
                             <td class="fw-mono text-cyan fw-bold"><?= htmlspecialchars($po->po_number) ?></td>
                             <td class="fw-bold text-white"><?= htmlspecialchars($po->supplier_name) ?></td>
-                            <td class="fw-bold text-emerald">$<?= number_format($po->total_amount, 2) ?></td>
+                            <td class="fw-bold text-emerald">Rs. <?= number_format($po->total_amount, 2) ?></td>
                             <td><?= htmlspecialchars($po->user_name) ?></td>
                             <td><?= $po->getStatusBadgeHtml() ?></td>
                             <td class="text-slate-400 fs-8"><?= date('Y-m-d H:i', strtotime($po->created_at)) ?></td>

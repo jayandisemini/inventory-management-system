@@ -54,15 +54,15 @@
                 <tr>
                     <td class="fw-bold"><?= htmlspecialchars($item['product_name']) ?></td>
                     <td><?= $item['quantity'] ?></td>
-                    <td>$<?= number_format($item['unit_price'], 2) ?></td>
-                    <td class="text-end fw-bold">$<?= number_format($item['total_price'], 2) ?></td>
+                    <td>Rs. <?= number_format($item['unit_price'], 2) ?></td>
+                    <td class="text-end fw-bold">Rs. <?= number_format($item['total_price'], 2) ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
         <tfoot>
             <tr>
                 <td colspan="3" class="text-end fw-bold">TOTAL AMOUNT PAID:</td>
-                <td class="text-end fw-bold text-success fs-5">$<?= number_format($so->total_amount, 2) ?></td>
+                <td class="text-end fw-bold text-success fs-5">Rs. <?= number_format($so->total_amount, 2) ?></td>
             </tr>
         </tfoot>
     </table>

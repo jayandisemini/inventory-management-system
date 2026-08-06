@@ -39,10 +39,11 @@ use App\Core\CSRF;
                         <div class="col-12 col-md-6">
                             <label for="currency_symbol" class="form-label fw-semibold text-slate-300 fs-7">Currency Symbol</label>
                             <select class="form-select bg-slate-950 text-white fs-7" id="currency_symbol" name="currency_symbol">
+                                <option value="Rs." <?= ($settings->currency_symbol === 'Rs.' || $settings->currency_symbol === '$') ? 'selected' : '' ?>>Sri Lanka Rupees - LKR (Rs.)</option>
+                                <option value="LKR" <?= $settings->currency_symbol === 'LKR' ? 'selected' : '' ?>>LKR (LKR)</option>
                                 <option value="$" <?= $settings->currency_symbol === '$' ? 'selected' : '' ?>>USD ($)</option>
                                 <option value="€" <?= $settings->currency_symbol === '€' ? 'selected' : '' ?>>EUR (€)</option>
                                 <option value="£" <?= $settings->currency_symbol === '£' ? 'selected' : '' ?>>GBP (£)</option>
-                                <option value="Rs." <?= $settings->currency_symbol === 'Rs.' ? 'selected' : '' ?>>LKR / INR (Rs.)</option>
                             </select>
                         </div>
                         <div class="col-12 col-md-6">

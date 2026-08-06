@@ -36,8 +36,8 @@ use App\Core\CSRF;
                         <th>SKU</th>
                         <th>Product Name</th>
                         <th>Quantity Sold</th>
-                        <th>Selling Price ($)</th>
-                        <th class="text-end">Line Total ($)</th>
+                        <th>Unit Price (Rs.)</th>
+                        <th class="text-end">Line Total (Rs.)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,15 +46,15 @@ use App\Core\CSRF;
                             <td class="fw-mono text-slate-400 fs-8"><?= htmlspecialchars($item['sku']) ?></td>
                             <td class="fw-bold text-white"><?= htmlspecialchars($item['product_name']) ?></td>
                             <td class="fw-bold"><?= number_format($item['quantity']) ?></td>
-                            <td>$<?= number_format($item['unit_price'], 2) ?></td>
-                            <td class="text-end fw-bold text-emerald">$<?= number_format($item['total_price'], 2) ?></td>
+                            <td>Rs. <?= number_format($item['unit_price'], 2) ?></td>
+                            <td class="text-end fw-bold text-emerald">Rs. <?= number_format($item['total_price'], 2) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
                 <tfoot>
                     <tr class="border-top border-slate-800 fs-6 fw-bold">
                         <td colspan="4" class="text-end text-white">Grand Total Billed:</td>
-                        <td class="text-end text-emerald fs-5">$<?= number_format($so->total_amount, 2) ?></td>
+                        <td class="text-end text-emerald fs-5">Rs. <?= number_format($so->total_amount, 2) ?></td>
                     </tr>
                 </tfoot>
             </table>

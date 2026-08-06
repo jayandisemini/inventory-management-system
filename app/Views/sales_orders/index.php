@@ -42,7 +42,7 @@ use App\Core\CSRF;
                                     <small class="text-slate-400 d-block fs-8"><?= htmlspecialchars($so->customer_email) ?></small>
                                 <?php endif; ?>
                             </td>
-                            <td class="fw-bold text-emerald fs-6">$<?= number_format($so->total_amount, 2) ?></td>
+                            <td class="fw-bold text-emerald fs-6">Rs. <?= number_format($so->total_amount, 2) ?></td>
                             <td><?= $so->getStatusBadgeHtml() ?></td>
                             <td><?= htmlspecialchars($so->user_name) ?></td>
                             <td class="text-slate-400 fs-8"><?= date('Y-m-d H:i', strtotime($so->created_at)) ?></td>

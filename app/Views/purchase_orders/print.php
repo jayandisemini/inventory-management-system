@@ -75,15 +75,15 @@
                     <td class="font-monospace"><?= htmlspecialchars($item['sku']) ?></td>
                     <td class="fw-bold"><?= htmlspecialchars($item['product_name']) ?></td>
                     <td><?= $item['quantity'] ?></td>
-                    <td>$<?= number_format($item['unit_cost'], 2) ?></td>
-                    <td class="text-end fw-bold">$<?= number_format($item['total_cost'], 2) ?></td>
+                    <td>Rs. <?= number_format($item['unit_cost'], 2) ?></td>
+                    <td class="text-end fw-bold">Rs. <?= number_format($item['total_cost'], 2) ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
         <tfoot>
             <tr>
                 <td colspan="4" class="text-end fw-bold">TOTAL PURCHASE ORDER VALUE:</td>
-                <td class="text-end fw-bold text-primary fs-5">$<?= number_format($po->total_amount, 2) ?></td>
+                <td class="text-end fw-bold text-primary fs-5">Rs. <?= number_format($po->total_amount, 2) ?></td>
             </tr>
         </tfoot>
     </table>
