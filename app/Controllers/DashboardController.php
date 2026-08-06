@@ -114,12 +114,15 @@ class DashboardController extends Controller {
             ]);
         } else {
             // Staff Role View
+            $myRequests = $this->requestRepository->getAll((int)$user['user_id']);
             $this->render('dashboard/staff', [
                 'pageTitle' => 'Staff Inventory Request & Search Terminal',
                 'activeNav' => 'dashboard',
                 'products' => $allProducts,
+                'categories' => $categories,
                 'lowStockProducts' => $lowStockProducts,
-                'recentMovements' => $recentMovements
+                'recentMovements' => $recentMovements,
+                'myRequests' => $myRequests
             ]);
         }
     }
