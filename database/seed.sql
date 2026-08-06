@@ -68,3 +68,12 @@ ON DUPLICATE KEY UPDATE `message` = VALUES(`message`);
 INSERT INTO `settings` (`id`, `company_name`, `tax_id`, `currency_symbol`, `default_min_stock`, `company_address`) VALUES
 (1, 'Smart Inventory Systems', 'TAX-889920', 'Rs.', 5, 'Colombo, Sri Lanka')
 ON DUPLICATE KEY UPDATE `currency_symbol` = 'Rs.';
+
+-- Insert Sample Product Batches & Expiry Data
+INSERT INTO `product_batches` (`batch_id`, `product_id`, `batch_number`, `quantity`, `mfd_date`, `expiry_date`, `status`, `created_at`) VALUES
+(1, 1, 'BATCH-2025-09A', 15, '2025-01-10', '2027-01-10', 'Active', NOW()),
+(2, 6, 'BATCH-2026-MED', 20, '2025-06-01', DATE_ADD(CURRENT_DATE(), INTERVAL 18 DAY), 'Expiring Soon', NOW()),
+(3, 3, 'BATCH-2024-OFF', 50, '2024-03-01', '2026-05-15', 'Expired', NOW()),
+(4, 2, 'BATCH-2026-ELE', 35, '2026-01-15', '2028-01-15', 'Active', NOW()),
+(5, 7, 'BATCH-2025-NET', 60, '2025-02-01', '2027-02-01', 'Active', NOW())
+ON DUPLICATE KEY UPDATE `batch_number` = VALUES(`batch_number`);
