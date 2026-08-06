@@ -188,18 +188,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(res => res.json())
                 .then(data => {
                     if (data.success && data.products.length > 0) {
-                        searchDropdown.innerHTML = data.products.slice(0, 5).map(p => `
-                            <a href="/products/show?id=${p.product_id}" class="dropdown-item d-flex align-items-center justify-content-between py-2 border-bottom border-slate-800">
+                        searchDropdown.innerHTML = data.products.map(p => `
+                            <a href="/products/show?id=${p.product_id}" class="dropdown-item d-flex align-items-center justify-content-between p-2 rounded-2">
                                 <div>
-                                    <div class="fw-bold text-white fs-7">${p.product_name}</div>
-                                    <small class="text-slate-400 fw-mono fs-8">${p.sku}</small>
+                                    <div class="fw-bold text-theme-main fs-7">${p.product_name}</div>
+                                    <small class="text-theme-muted fw-mono fs-8">${p.sku}</small>
                                 </div>
                                 <span class="badge ${p.quantity <= 0 ? 'bg-danger' : (p.quantity <= p.min_stock_level ? 'bg-warning text-dark' : 'bg-success')}">${p.quantity} in stock</span>
                             </a>
                         `).join('');
                         searchDropdown.classList.remove('d-none');
                     } else {
-                        searchDropdown.innerHTML = '<div class="p-3 text-center text-slate-400 fs-7">No products matched.</div>';
+                        searchDropdown.innerHTML = '<div class="p-3 text-center text-theme-muted fs-7">No products matched.</div>';
                         searchDropdown.classList.remove('d-none');
                     }
                 });
@@ -231,17 +231,17 @@ document.addEventListener('DOMContentLoaded', function () {
                     notifBadge.classList.remove('d-none');
 
                     notifContainer.innerHTML = data.notifications.map(n => `
-                        <div class="list-group-item bg-slate-900 border-slate-800 p-3">
+                        <div class="list-group-item p-3 border-bottom">
                             <div class="d-flex align-items-center gap-2 mb-1">
-                                <span class="badge bg-${n.type === 'danger' ? 'danger' : (n.type === 'warning' ? 'warning text-dark' : 'cyan')} rounded-circle p-1"></span>
-                                <small class="text-slate-400 fs-8">${n.created_at}</small>
+                                <span class="badge bg-${n.type === 'danger' ? 'rose' : (n.type === 'warning' ? 'amber' : 'cyan')} rounded-circle p-1"></span>
+                                <small class="text-theme-muted fs-8">${n.created_at}</small>
                             </div>
-                            <p class="mb-0 fs-7 text-white fw-medium">${n.message}</p>
+                            <p class="mb-0 fs-7 text-theme-main fw-semibold">${n.message}</p>
                         </div>
                     `).join('');
                 } else {
                     notifBadge.classList.add('d-none');
-                    notifContainer.innerHTML = '<div class="p-4 text-center text-slate-400 fs-7"><i class="fas fa-check-circle text-emerald me-1"></i> No unread notifications.</div>';
+                    notifContainer.innerHTML = '<div class="p-4 text-center text-theme-muted fs-7"><i class="fas fa-circle-check text-emerald me-1"></i> No unread notifications.</div>';
                 }
             }
         }).catch(() => {});
