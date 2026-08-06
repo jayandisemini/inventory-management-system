@@ -84,7 +84,7 @@ $outPct = min(100 - ($healthyPct + $lowPct), round(($outCount / $totalProds) * 1
         <div class="col">
             <div class="card card-metric border-0 rounded-4 p-3 h-100">
                 <div class="text-theme-muted fs-8 fw-bold text-uppercase mb-1">Est. Reorder Cost</div>
-                <h3 class="fw-bold text-cyan mb-1">$<?= number_format($metrics['total_reorder_cost'] ?? 0, 2) ?></h3>
+                <h3 class="fw-bold text-cyan mb-1">Rs. <?= number_format($metrics['total_reorder_cost'] ?? 0, 2) ?></h3>
                 <small class="text-cyan fs-8"><i class="fas fa-cart-shopping me-1"></i>Suggested PO Budget</small>
             </div>
         </div>
@@ -146,7 +146,7 @@ $outPct = min(100 - ($healthyPct + $lowPct), round(($outCount / $totalProds) * 1
                                         <td class="fw-bold <?= $item->quantity == 0 ? 'text-rose' : 'text-amber' ?>"><?= $item->quantity ?></td>
                                         <td><?= $item->min_stock_level ?></td>
                                         <td><span class="badge bg-cyan-subtle text-cyan fw-bold px-2 py-1">+<?= $item->suggested_reorder_qty ?> units</span></td>
-                                        <td class="fw-semibold text-theme-main">$<?= number_format($item->suggested_reorder_qty * (float)($item->cost_price ?? 0), 2) ?></td>
+                                        <td class="fw-semibold text-theme-main">Rs. <?= number_format($item->suggested_reorder_qty * (float)($item->cost_price ?? 0), 2) ?></td>
                                         <td>
                                             <a href="/inventory/stock-in?product_id=<?= $item->product_id ?>" class="btn btn-emerald btn-xs rounded-2 px-2 py-1">
                                                 <i class="fas fa-plus me-1"></i> Stock In
@@ -186,7 +186,7 @@ $outPct = min(100 - ($healthyPct + $lowPct), round(($outCount / $totalProds) * 1
                                     <small class="text-theme-muted fs-8"><i class="fas fa-truck me-1"></i><?= htmlspecialchars($po->supplier_name ?? 'Vendor') ?></small>
                                 </div>
                                 <div class="text-end">
-                                    <div class="fw-bold text-cyan fs-7">$<?= number_format($po->total_amount ?? 0, 2) ?></div>
+                                    <div class="fw-bold text-cyan fs-7">Rs. <?= number_format($po->total_amount ?? 0, 2) ?></div>
                                     <span class="badge bg-warning-subtle text-amber fs-8"><?= htmlspecialchars($po->status ?? 'Sent') ?></span>
                                 </div>
                             </div>

@@ -39,12 +39,12 @@
                             <i class="fas fa-dollar-sign fs-5"></i>
                         </div>
                     </div>
-                    <h2 class="fw-bold text-emerald mb-2">$<?= number_format($metrics['retail_valuation'] ?? 0, 2) ?></h2>
+                    <h2 class="fw-bold text-emerald mb-2">Rs. <?= number_format($metrics['retail_valuation'] ?? 0, 2) ?></h2>
                     <div class="d-flex align-items-center justify-content-between">
                         <span class="badge bg-emerald-subtle text-emerald rounded-pill fs-8 px-2 py-0.5">
                             <i class="fas fa-arrow-trend-up me-1"></i>+14.2% vs last mo
                         </span>
-                        <span class="text-theme-muted fs-8">Margin: +$<?= number_format($metrics['potential_profit'] ?? 0, 2) ?></span>
+                        <span class="text-theme-muted fs-8">Margin: +Rs. <?= number_format($metrics['potential_profit'] ?? 0, 2) ?></span>
                     </div>
                 </div>
             </a>

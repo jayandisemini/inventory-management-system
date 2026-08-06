@@ -46,7 +46,7 @@
                 <div class="d-flex align-items-center justify-content-between">
                     <div>
                         <span class="text-muted fs-7 text-uppercase fw-bold tracking-wider d-block mb-1">Inventory Valuation</span>
-                        <h3 class="fw-bold text-success mb-0">$<?= number_format($metrics['total_valuation'] ?? 0, 2) ?></h3>
+                        <h3 class="fw-bold text-success mb-0">Rs. <?= number_format($metrics['total_valuation'] ?? 0, 2) ?></h3>
                     </div>
                     <div class="metric-icon bg-success-subtle text-success rounded-3 d-flex align-items-center justify-content-center">
                         <i class="fas fa-sack-dollar fs-4"></i>
