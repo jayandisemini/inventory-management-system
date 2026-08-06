@@ -1,9 +1,9 @@
 <div class="container-fluid px-0">
 
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3 bg-slate-900 p-4 rounded-4 border border-slate-800">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3 card border-0 rounded-4 p-4">
         <div>
-            <h4 class="fw-bold text-white mb-1">Business Intelligence & Executive Reports</h4>
-            <p class="text-slate-400 fs-7 mb-0">Generate inventory valuations, stock movement logs, sales revenue, batch risk, and supplier procurement analytics.</p>
+            <h4 class="fw-bold text-theme-main mb-1">Business Intelligence & Executive Reports</h4>
+            <p class="text-theme-muted fs-7 mb-0">Generate inventory valuations, stock movement logs, sales revenue, batch risk, and supplier procurement analytics.</p>
         </div>
         <div class="d-flex gap-2">
             <?php
@@ -23,7 +23,7 @@
     </div>
 
     <!-- Report Type Tabs -->
-    <ul class="nav nav-pills bg-slate-900 p-2 rounded-4 border border-slate-800 mb-4 gap-1 flex-wrap">
+    <ul class="nav nav-pills card flex-row p-2 rounded-4 mb-4 gap-1 flex-wrap">
         <li class="nav-item">
             <a class="nav-link fs-7 <?= $currentType === 'inventory_value' ? 'active' : '' ?>" href="/reports?type=inventory_value">
                 <i class="fas fa-sack-dollar me-1.5"></i> Inventory Valuation
@@ -62,14 +62,14 @@
     </ul>
 
     <!-- Report Card Content -->
-    <div class="card border-0 rounded-4 bg-slate-900 p-4" id="reportPrintArea">
-        <div class="d-flex align-items-center justify-content-between border-bottom border-slate-800 pb-3 mb-4">
+    <div class="card border-0 rounded-4 p-4" id="reportPrintArea">
+        <div class="d-flex align-items-center justify-content-between border-bottom pb-3 mb-4">
             <div>
-                <h5 class="fw-bold text-white mb-0"><?= htmlspecialchars($reportData['title'] ?? 'Report') ?></h5>
-                <small class="text-slate-400">Generated on <?= date('F j, Y - H:i:s T') ?></small>
+                <h5 class="fw-bold text-theme-main mb-0"><?= htmlspecialchars($reportData['title'] ?? 'Report') ?></h5>
+                <small class="text-theme-muted">Generated on <?= date('F j, Y - H:i:s T') ?></small>
             </div>
             <div class="text-end">
-                <span class="badge bg-slate-800 text-slate-300 border border-slate-700 px-3 py-2 fs-7">Official SIMS Audit Document</span>
+                <span class="badge bg-body-secondary text-theme-muted border px-3 py-2 fs-7">Official SIMS Audit Document</span>
             </div>
         </div>
 
@@ -77,27 +77,27 @@
             <!-- Inventory Valuation Summary Metrics -->
             <div class="row g-3 mb-4">
                 <div class="col-6 col-md-3">
-                    <div class="bg-slate-950 p-3 rounded-3 border border-slate-800 text-center">
-                        <span class="text-slate-400 fs-8 text-uppercase fw-bold">Total Stock Cost</span>
-                        <h4 class="fw-bold text-white mb-0 mt-1">Rs. <?= number_format($reportData['total_cost_valuation'] ?? 0, 2) ?></h4>
+                    <div class="bg-surface-elevated p-3 rounded-3 border text-center">
+                        <span class="text-theme-muted fs-8 text-uppercase fw-bold">Total Stock Cost</span>
+                        <h4 class="fw-bold text-theme-main mb-0 mt-1">Rs. <?= number_format($reportData['total_cost_valuation'] ?? 0, 2) ?></h4>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
-                    <div class="bg-slate-950 p-3 rounded-3 border border-slate-800 text-center">
-                        <span class="text-slate-400 fs-8 text-uppercase fw-bold">Retail Market Value</span>
+                    <div class="bg-surface-elevated p-3 rounded-3 border text-center">
+                        <span class="text-theme-muted fs-8 text-uppercase fw-bold">Retail Market Value</span>
                         <h4 class="fw-bold text-emerald mb-0 mt-1">Rs. <?= number_format($reportData['total_retail_valuation'] ?? 0, 2) ?></h4>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
-                    <div class="bg-slate-950 p-3 rounded-3 border border-slate-800 text-center">
-                        <span class="text-slate-400 fs-8 text-uppercase fw-bold">Unrealized Gross Margin</span>
+                    <div class="bg-surface-elevated p-3 rounded-3 border text-center">
+                        <span class="text-theme-muted fs-8 text-uppercase fw-bold">Unrealized Gross Margin</span>
                         <h4 class="fw-bold text-cyan mb-0 mt-1">Rs. <?= number_format($reportData['potential_profit'] ?? 0, 2) ?></h4>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
-                    <div class="bg-slate-950 p-3 rounded-3 border border-slate-800 text-center">
-                        <span class="text-slate-400 fs-8 text-uppercase fw-bold">Total Units In Stock</span>
-                        <h4 class="fw-bold text-white mb-0 mt-1"><?= number_format($reportData['total_items_count'] ?? 0) ?></h4>
+                    <div class="bg-surface-elevated p-3 rounded-3 border text-center">
+                        <span class="text-theme-muted fs-8 text-uppercase fw-bold">Total Units In Stock</span>
+                        <h4 class="fw-bold text-theme-main mb-0 mt-1"><?= number_format($reportData['total_items_count'] ?? 0) ?></h4>
                     </div>
                 </div>
             </div>
@@ -105,7 +105,7 @@
             <div class="table-responsive">
                 <table class="table align-middle fs-7 mb-0">
                     <thead>
-                        <tr class="text-slate-400">
+                        <tr class="text-theme-muted">
                             <th>SKU</th>
                             <th>Product Name</th>
                             <th>Category</th>
@@ -119,12 +119,12 @@
                     <tbody>
                         <?php foreach ($reportData['products'] as $p): ?>
                             <tr>
-                                <td class="fw-mono text-slate-400 fs-8"><?= htmlspecialchars($p->sku) ?></td>
-                                <td class="fw-bold text-white"><?= htmlspecialchars($p->product_name) ?></td>
+                                <td class="fw-mono text-theme-muted fs-8"><?= htmlspecialchars($p->sku) ?></td>
+                                <td class="fw-bold text-theme-main"><?= htmlspecialchars($p->product_name) ?></td>
                                 <td><?= htmlspecialchars($p->category_name) ?></td>
-                                <td class="fw-bold text-white"><?= $p->quantity ?></td>
+                                <td class="fw-bold text-theme-main"><?= $p->quantity ?></td>
                                 <td>Rs. <?= number_format($p->unit_price, 2) ?></td>
-                                <td class="fw-semibold text-white">Rs. <?= number_format($p->quantity * $p->unit_price, 2) ?></td>
+                                <td class="fw-semibold text-theme-main">Rs. <?= number_format($p->quantity * $p->unit_price, 2) ?></td>
                                 <td>Rs. <?= number_format($p->selling_price, 2) ?></td>
                                 <td class="fw-bold text-emerald">Rs. <?= number_format($p->quantity * $p->selling_price, 2) ?></td>
                             </tr>
@@ -136,27 +136,27 @@
         <?php elseif ($currentType === 'sales_revenue'): ?>
             <div class="row g-3 mb-4">
                 <div class="col-6 col-md-3">
-                    <div class="bg-slate-950 p-3 rounded-3 border border-slate-800 text-center">
-                        <span class="text-slate-400 fs-8 text-uppercase fw-bold">Total Sales Revenue</span>
+                    <div class="bg-surface-elevated p-3 rounded-3 border text-center">
+                        <span class="text-theme-muted fs-8 text-uppercase fw-bold">Total Sales Revenue</span>
                         <h4 class="fw-bold text-emerald mb-0 mt-1">Rs. <?= number_format($reportData['total_revenue'] ?? 0, 2) ?></h4>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
-                    <div class="bg-slate-950 p-3 rounded-3 border border-slate-800 text-center">
-                        <span class="text-slate-400 fs-8 text-uppercase fw-bold">Total Invoices</span>
-                        <h4 class="fw-bold text-white mb-0 mt-1"><?= $reportData['total_orders'] ?? 0 ?></h4>
+                    <div class="bg-surface-elevated p-3 rounded-3 border text-center">
+                        <span class="text-theme-muted fs-8 text-uppercase fw-bold">Total Invoices</span>
+                        <h4 class="fw-bold text-theme-main mb-0 mt-1"><?= $reportData['total_orders'] ?? 0 ?></h4>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
-                    <div class="bg-slate-950 p-3 rounded-3 border border-slate-800 text-center">
-                        <span class="text-slate-400 fs-8 text-uppercase fw-bold">Average Order Value</span>
+                    <div class="bg-surface-elevated p-3 rounded-3 border text-center">
+                        <span class="text-theme-muted fs-8 text-uppercase fw-bold">Average Order Value</span>
                         <h4 class="fw-bold text-cyan mb-0 mt-1">Rs. <?= number_format($reportData['avg_order_value'] ?? 0, 2) ?></h4>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
-                    <div class="bg-slate-950 p-3 rounded-3 border border-slate-800 text-center">
-                        <span class="text-slate-400 fs-8 text-uppercase fw-bold">Paid Orders Ratio</span>
-                        <h4 class="fw-bold text-white mb-0 mt-1"><?= $reportData['paid_count'] ?? 0 ?> / <?= $reportData['total_orders'] ?? 0 ?></h4>
+                    <div class="bg-surface-elevated p-3 rounded-3 border text-center">
+                        <span class="text-theme-muted fs-8 text-uppercase fw-bold">Paid Orders Ratio</span>
+                        <h4 class="fw-bold text-theme-main mb-0 mt-1"><?= $reportData['paid_count'] ?? 0 ?> / <?= $reportData['total_orders'] ?? 0 ?></h4>
                     </div>
                 </div>
             </div>
@@ -164,7 +164,7 @@
             <div class="table-responsive">
                 <table class="table align-middle fs-7 mb-0">
                     <thead>
-                        <tr class="text-slate-400">
+                        <tr class="text-theme-muted">
                             <th>SO Number</th>
                             <th>Customer</th>
                             <th>Total Billed</th>
@@ -177,7 +177,7 @@
                         <?php foreach ($reportData['orders'] as $so): ?>
                             <tr>
                                 <td class="fw-mono text-cyan fs-8"><?= htmlspecialchars($so->order_number) ?></td>
-                                <td class="fw-bold text-white"><?= htmlspecialchars($so->customer_name) ?></td>
+                                <td class="fw-bold text-theme-main"><?= htmlspecialchars($so->customer_name) ?></td>
                                 <td class="fw-bold text-emerald">Rs. <?= number_format($so->total_amount, 2) ?></td>
                                 <td>
                                     <span class="badge bg-<?= strtolower($so->payment_status ?? '') === 'paid' ? 'success' : 'warning' ?>">
@@ -185,7 +185,7 @@
                                     </span>
                                 </td>
                                 <td><?= htmlspecialchars($so->user_name) ?></td>
-                                <td class="text-slate-400 fs-8"><?= date('Y-m-d H:i', strtotime($so->created_at)) ?></td>
+                                <td class="text-theme-muted fs-8"><?= date('Y-m-d H:i', strtotime($so->created_at)) ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -195,21 +195,21 @@
         <?php elseif ($currentType === 'batch_expiry'): ?>
             <div class="row g-3 mb-4">
                 <div class="col-6 col-md-4">
-                    <div class="bg-slate-950 p-3 rounded-3 border border-slate-800 text-center">
-                        <span class="text-slate-400 fs-8 text-uppercase fw-bold">Batches Expiring Soon</span>
+                    <div class="bg-surface-elevated p-3 rounded-3 border text-center">
+                        <span class="text-theme-muted fs-8 text-uppercase fw-bold">Batches Expiring Soon</span>
                         <h4 class="fw-bold text-warning mb-0 mt-1"><?= $reportData['expiring_soon_count'] ?? 0 ?></h4>
                     </div>
                 </div>
                 <div class="col-6 col-md-4">
-                    <div class="bg-slate-950 p-3 rounded-3 border border-slate-800 text-center">
-                        <span class="text-slate-400 fs-8 text-uppercase fw-bold">Expired Batches</span>
+                    <div class="bg-surface-elevated p-3 rounded-3 border text-center">
+                        <span class="text-theme-muted fs-8 text-uppercase fw-bold">Expired Batches</span>
                         <h4 class="fw-bold text-rose mb-0 mt-1"><?= $reportData['expired_count'] ?? 0 ?></h4>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
-                    <div class="bg-slate-950 p-3 rounded-3 border border-slate-800 text-center">
-                        <span class="text-slate-400 fs-8 text-uppercase fw-bold">At-Risk Quantity (Units)</span>
-                        <h4 class="fw-bold text-white mb-0 mt-1"><?= number_format($reportData['at_risk_qty'] ?? 0) ?></h4>
+                    <div class="bg-surface-elevated p-3 rounded-3 border text-center">
+                        <span class="text-theme-muted fs-8 text-uppercase fw-bold">At-Risk Quantity (Units)</span>
+                        <h4 class="fw-bold text-theme-main mb-0 mt-1"><?= number_format($reportData['at_risk_qty'] ?? 0) ?></h4>
                     </div>
                 </div>
             </div>
@@ -217,7 +217,7 @@
             <div class="table-responsive">
                 <table class="table align-middle fs-7 mb-0">
                     <thead>
-                        <tr class="text-slate-400">
+                        <tr class="text-theme-muted">
                             <th>Batch Number</th>
                             <th>Product Name</th>
                             <th>SKU</th>
@@ -230,9 +230,9 @@
                         <?php foreach ($reportData['batches'] as $b): ?>
                             <tr>
                                 <td class="fw-mono text-cyan fs-8"><?= htmlspecialchars($b->batch_number) ?></td>
-                                <td class="fw-bold text-white"><?= htmlspecialchars($b->product_name) ?></td>
-                                <td class="fw-mono text-slate-400 fs-8"><?= htmlspecialchars($b->sku) ?></td>
-                                <td class="fw-bold text-white"><?= $b->quantity ?></td>
+                                <td class="fw-bold text-theme-main"><?= htmlspecialchars($b->product_name) ?></td>
+                                <td class="fw-mono text-theme-muted fs-8"><?= htmlspecialchars($b->sku) ?></td>
+                                <td class="fw-bold text-theme-main"><?= $b->quantity ?></td>
                                 <td class="fw-mono"><?= $b->expiry_date ?></td>
                                 <td>
                                     <span class="badge bg-<?= $b->status === 'Expired' ? 'danger' : ($b->status === 'Expiring Soon' ? 'warning' : 'success') ?>">
@@ -248,20 +248,20 @@
         <?php elseif ($currentType === 'supplier_procurement'): ?>
             <div class="row g-3 mb-4">
                 <div class="col-6 col-md-4">
-                    <div class="bg-slate-950 p-3 rounded-3 border border-slate-800 text-center">
-                        <span class="text-slate-400 fs-8 text-uppercase fw-bold">Total Procurement Spend</span>
+                    <div class="bg-surface-elevated p-3 rounded-3 border text-center">
+                        <span class="text-theme-muted fs-8 text-uppercase fw-bold">Total Procurement Spend</span>
                         <h4 class="fw-bold text-emerald mb-0 mt-1">Rs. <?= number_format($reportData['total_spend'] ?? 0, 2) ?></h4>
                     </div>
                 </div>
                 <div class="col-6 col-md-4">
-                    <div class="bg-slate-950 p-3 rounded-3 border border-slate-800 text-center">
-                        <span class="text-slate-400 fs-8 text-uppercase fw-bold">Total Purchase Orders</span>
-                        <h4 class="fw-bold text-white mb-0 mt-1"><?= $reportData['total_pos'] ?? 0 ?></h4>
+                    <div class="bg-surface-elevated p-3 rounded-3 border text-center">
+                        <span class="text-theme-muted fs-8 text-uppercase fw-bold">Total Purchase Orders</span>
+                        <h4 class="fw-bold text-theme-main mb-0 mt-1"><?= $reportData['total_pos'] ?? 0 ?></h4>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
-                    <div class="bg-slate-950 p-3 rounded-3 border border-slate-800 text-center">
-                        <span class="text-slate-400 fs-8 text-uppercase fw-bold">Received Orders</span>
+                    <div class="bg-surface-elevated p-3 rounded-3 border text-center">
+                        <span class="text-theme-muted fs-8 text-uppercase fw-bold">Received Orders</span>
                         <h4 class="fw-bold text-cyan mb-0 mt-1"><?= $reportData['received_count'] ?? 0 ?> / <?= $reportData['total_pos'] ?? 0 ?></h4>
                     </div>
                 </div>
@@ -270,7 +270,7 @@
             <div class="table-responsive">
                 <table class="table align-middle fs-7 mb-0">
                     <thead>
-                        <tr class="text-slate-400">
+                        <tr class="text-theme-muted">
                             <th>PO Number</th>
                             <th>Supplier Name</th>
                             <th>Total Spend</th>
@@ -283,7 +283,7 @@
                         <?php foreach ($reportData['purchase_orders'] as $po): ?>
                             <tr>
                                 <td class="fw-mono text-cyan fs-8"><?= htmlspecialchars($po->po_number) ?></td>
-                                <td class="fw-bold text-white"><?= htmlspecialchars($po->supplier_name) ?></td>
+                                <td class="fw-bold text-theme-main"><?= htmlspecialchars($po->supplier_name) ?></td>
                                 <td class="fw-bold text-emerald">Rs. <?= number_format($po->total_amount, 2) ?></td>
                                 <td>
                                     <span class="badge bg-<?= strtolower($po->status ?? '') === 'received' ? 'success' : 'info' ?>">
@@ -291,7 +291,7 @@
                                     </span>
                                 </td>
                                 <td><?= htmlspecialchars($po->user_name) ?></td>
-                                <td class="text-slate-400 fs-8"><?= date('Y-m-d H:i', strtotime($po->created_at)) ?></td>
+                                <td class="text-theme-muted fs-8"><?= date('Y-m-d H:i', strtotime($po->created_at)) ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -302,7 +302,7 @@
             <div class="table-responsive">
                 <table class="table align-middle fs-7 mb-0">
                     <thead>
-                        <tr class="text-slate-400">
+                        <tr class="text-theme-muted">
                             <th>SKU</th>
                             <th>Product Name</th>
                             <th>Category</th>
@@ -318,8 +318,8 @@
                         <?php else: ?>
                             <?php foreach ($reportData['products'] as $p): ?>
                                 <tr>
-                                    <td class="fw-mono text-slate-400 fs-8"><?= htmlspecialchars($p->sku) ?></td>
-                                    <td class="fw-bold text-white"><?= htmlspecialchars($p->product_name) ?></td>
+                                    <td class="fw-mono text-theme-muted fs-8"><?= htmlspecialchars($p->sku) ?></td>
+                                    <td class="fw-bold text-theme-main"><?= htmlspecialchars($p->product_name) ?></td>
                                     <td><?= htmlspecialchars($p->category_name) ?></td>
                                     <td><?= htmlspecialchars($p->supplier_name) ?></td>
                                     <td class="fw-bold fs-6 <?= $p->quantity <= 0 ? 'text-rose' : 'text-warning' ?>"><?= $p->quantity ?></td>
@@ -336,7 +336,7 @@
             <div class="table-responsive">
                 <table class="table align-middle fs-7 mb-0">
                     <thead>
-                        <tr class="text-slate-400">
+                        <tr class="text-theme-muted">
                             <th>Movement ID</th>
                             <th>Product Name</th>
                             <th>SKU</th>
@@ -351,13 +351,13 @@
                         <?php foreach ($reportData['movements'] as $m): ?>
                             <tr>
                                 <td class="fw-mono text-cyan fs-8">#LOG-<?= str_pad($m->movement_id, 5, '0', STR_PAD_LEFT) ?></td>
-                                <td class="fw-bold text-white"><?= htmlspecialchars($m->product_name) ?></td>
-                                <td class="fw-mono text-slate-400 fs-8"><?= htmlspecialchars($m->sku) ?></td>
+                                <td class="fw-bold text-theme-main"><?= htmlspecialchars($m->product_name) ?></td>
+                                <td class="fw-mono text-theme-muted fs-8"><?= htmlspecialchars($m->sku) ?></td>
                                 <td><?= $m->getTypeBadgeHtml() ?></td>
-                                <td class="fw-bold text-white"><?= $m->quantity ?></td>
+                                <td class="fw-bold text-theme-main"><?= $m->quantity ?></td>
                                 <td><?= htmlspecialchars($m->user_name) ?></td>
-                                <td class="text-slate-400 fs-8"><?= date('Y-m-d H:i', strtotime($m->created_at)) ?></td>
-                                <td class="text-slate-400 fs-8"><?= htmlspecialchars($m->reference_note ?? '') ?></td>
+                                <td class="text-theme-muted fs-8"><?= date('Y-m-d H:i', strtotime($m->created_at)) ?></td>
+                                <td class="text-theme-muted fs-8"><?= htmlspecialchars($m->reference_note ?? '') ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -368,7 +368,7 @@
             <div class="table-responsive">
                 <table class="table align-middle fs-7 mb-0">
                     <thead>
-                        <tr class="text-slate-400">
+                        <tr class="text-theme-muted">
                             <th>Supplier Company</th>
                             <th>Contact Person</th>
                             <th>Phone</th>
@@ -380,12 +380,12 @@
                     <tbody>
                         <?php foreach ($reportData['suppliers'] as $s): ?>
                             <tr>
-                                <td class="fw-bold text-white"><?= htmlspecialchars($s->supplier_name) ?></td>
+                                <td class="fw-bold text-theme-main"><?= htmlspecialchars($s->supplier_name) ?></td>
                                 <td><?= htmlspecialchars($s->contact_person ?? 'N/A') ?></td>
                                 <td class="fw-mono"><?= htmlspecialchars($s->phone ?? 'N/A') ?></td>
                                 <td><?= htmlspecialchars($s->email ?? 'N/A') ?></td>
                                 <td><?= htmlspecialchars($s->address ?? 'N/A') ?></td>
-                                <td class="fw-bold text-white"><?= $s->product_count ?> Item(s)</td>
+                                <td class="fw-bold text-theme-main"><?= $s->product_count ?> Item(s)</td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
