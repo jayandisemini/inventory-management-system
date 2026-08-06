@@ -484,6 +484,88 @@ table.dataTable tbody tr:hover,
     color: var(--text-main) !important;
 }
 
+/* ==========================================================================
+   Login & Auth Pages Styling
+   ========================================================================== */
+.login-wrapper {
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.25s ease;
+}
+
+[data-bs-theme="dark"] .login-wrapper {
+    background: linear-gradient(135deg, rgba(9, 13, 22, 0.94) 0%, rgba(15, 23, 42, 0.96) 100%),
+                url('/assets/images/login_bg.png') no-repeat center center / cover;
+}
+
+[data-bs-theme="light"] .login-wrapper {
+    background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%),
+                url('/assets/images/login_bg.png') no-repeat center center / cover;
+}
+
+.login-card {
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.18) !important;
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+/* Hero Left Panel - Sleek Dark Showcase */
+.hero-panel {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
+    color: #ffffff !important;
+    border-right: 1px solid var(--border-color) !important;
+}
+
+.hero-panel h2, .hero-panel h4 {
+    color: #ffffff !important;
+}
+
+.hero-panel .hero-desc {
+    color: #cbd5e1 !important;
+}
+
+.hero-panel .feature-badge {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: #f8fafc !important;
+}
+
+/* Input Group Icons & Role Cards */
+.auth-console {
+    background-color: var(--card-bg) !important;
+}
+
+.input-group-text {
+    background-color: var(--bg-surface-elevated) !important;
+    border-color: var(--input-border) !important;
+    color: var(--text-muted) !important;
+}
+
+.role-option-card {
+    background-color: var(--bg-surface-elevated) !important;
+    border: 1px solid var(--border-color) !important;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.role-option-card .role-title {
+    color: var(--text-main) !important;
+    font-weight: 700;
+}
+
+.role-option-card:hover, .role-option-card.active {
+    border-color: var(--cyan) !important;
+    background-color: var(--cyan-subtle) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(6, 182, 212, 0.25);
+}
+
+.role-option-card.active .role-title {
+    color: var(--cyan) !important;
+}
+
 /* Responsive Mobile Sidebar */
 @media (max-width: 767.98px) {
     #sidebar {
