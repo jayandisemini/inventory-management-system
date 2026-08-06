@@ -55,7 +55,7 @@
             <div class="fw-bold font-monospace fs-7"><?= htmlspecialchars($barcodeVal) ?></div>
             <div class="d-flex justify-content-between align-items-center mt-2 pt-2 border-top fs-8">
                 <span class="fw-bold">SKU: <?= htmlspecialchars($p->sku) ?></span>
-                <span class="badge bg-dark fs-8">$<?= number_format($p->selling_price, 2) ?></span>
+                <span class="badge bg-dark fs-8">Rs. <?= number_format($p->selling_price, 2) ?></span>
             </div>
         </div>
     <?php endforeach; ?>

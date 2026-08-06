@@ -64,17 +64,17 @@
 
                     <div class="col-6 col-sm-4">
                         <span class="text-slate-400 d-block fs-8">Unit Cost Price</span>
-                        <span class="fw-bold text-slate-300">$<?= number_format($product->unit_price, 2) ?></span>
+                        <span class="fw-bold text-slate-300">Rs. <?= number_format($product->unit_price, 2) ?></span>
                     </div>
 
                     <div class="col-6 col-sm-4">
                         <span class="text-slate-400 d-block fs-8">Selling Retail Price</span>
-                        <span class="fw-bold text-white">$<?= number_format($product->selling_price, 2) ?></span>
+                        <span class="fw-bold text-white">Rs. <?= number_format($product->selling_price, 2) ?></span>
                     </div>
 
                     <div class="col-6 col-sm-4">
                         <span class="text-slate-400 d-block fs-8">Margin per Unit</span>
-                        <span class="fw-bold text-emerald">$<?= number_format($product->selling_price - $product->unit_price, 2) ?></span>
+                        <span class="fw-bold text-emerald">Rs. <?= number_format($product->selling_price - $product->unit_price, 2) ?></span>
                     </div>
 
                     <div class="col-6 col-sm-4">
@@ -89,7 +89,7 @@
 
                     <div class="col-6 col-sm-4">
                         <span class="text-slate-400 d-block fs-8">Total Stock Retail Value</span>
-                        <span class="fw-bold text-emerald">$<?= number_format($product->quantity * $product->selling_price, 2) ?></span>
+                        <span class="fw-bold text-emerald">Rs. <?= number_format($product->quantity * $product->selling_price, 2) ?></span>
                     </div>
 
                     <div class="col-12 border-top border-slate-800 pt-3 mt-3">

@@ -110,8 +110,8 @@ $userRole = $_SESSION['user']['role_name'] ?? 'Staff';
                             </td>
                             <td><span class="badge bg-slate-800 text-slate-200 border border-slate-700"><?= htmlspecialchars($p->category_name ?? 'Unassigned') ?></span></td>
                             <td class="fs-7 text-slate-300"><?= htmlspecialchars($p->supplier_name ?? 'N/A') ?></td>
-                            <td class="text-slate-400 fs-7">$<?= number_format($p->unit_price, 2) ?></td>
-                            <td class="fw-semibold text-white">$<?= number_format($p->selling_price, 2) ?></td>
+                            <td class="text-slate-400 fs-7">Rs. <?= number_format($p->unit_price, 2) ?></td>
+                            <td class="fw-semibold text-white">Rs. <?= number_format($p->selling_price, 2) ?></td>
                             <td class="fw-bold fs-6"><?= number_format($p->quantity) ?></td>
                             <td><?= $p->getStockStatusHtml() ?></td>
                             <td class="text-end">

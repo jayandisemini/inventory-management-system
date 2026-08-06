@@ -69,7 +69,7 @@
                                         <td class="fw-mono text-slate-400 fs-8"><?= htmlspecialchars($p['sku']) ?></td>
                                         <td class="fw-bold text-white"><?= htmlspecialchars($p['product_name']) ?></td>
                                         <td><span class="badge bg-slate-800 text-slate-300 border border-slate-700"><?= htmlspecialchars($p['category_name'] ?? 'N/A') ?></span></td>
-                                        <td class="text-slate-300">$<?= number_format($p['unit_price'], 2) ?></td>
+                                        <td class="text-slate-300">Rs. <?= number_format($p['unit_price'], 2) ?></td>
                                         <td class="fw-bold text-white"><?= $p['quantity'] ?></td>
                                         <td>
                                             <a href="/products/show?id=<?= $p['product_id'] ?>" class="btn btn-xs btn-slate-800 text-white border border-slate-700">
