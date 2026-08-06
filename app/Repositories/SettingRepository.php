@@ -32,7 +32,7 @@ class SettingRepository {
         return $stmt->execute([
             'company_name' => $data['company_name'],
             'tax_id' => $data['tax_id'] ?? null,
-            'currency_symbol' => $data['currency_symbol'] ?? '$',
+            'currency_symbol' => $data['currency_symbol'] ?? 'Rs.',
             'default_min_stock' => (int)($data['default_min_stock'] ?? 5),
             'company_address' => $data['company_address'] ?? null
         ]);

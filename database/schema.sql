@@ -128,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
     `id` INT PRIMARY KEY DEFAULT 1,
     `company_name` VARCHAR(150) NOT NULL DEFAULT 'Smart Inventory Systems',
     `tax_id` VARCHAR(50) NULL DEFAULT 'TAX-889920',
-    `currency_symbol` VARCHAR(10) NOT NULL DEFAULT '$',
+    `currency_symbol` VARCHAR(10) NOT NULL DEFAULT 'Rs.',
     `default_min_stock` INT NOT NULL DEFAULT 5,
     `company_address` TEXT NULL,
     `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP

@@ -39,7 +39,7 @@ class SettingController extends Controller {
         $this->settingRepository->update([
             'company_name' => $companyName,
             'tax_id' => trim($body['tax_id'] ?? ''),
-            'currency_symbol' => trim($body['currency_symbol'] ?? '$'),
+            'currency_symbol' => trim($body['currency_symbol'] ?? 'Rs.'),
             'default_min_stock' => (int)($body['default_min_stock'] ?? 5),
             'company_address' => trim($body['company_address'] ?? '')
         ]);

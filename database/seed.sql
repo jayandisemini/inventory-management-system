@@ -63,3 +63,8 @@ INSERT INTO `notifications` (`notification_id`, `user_id`, `type`, `message`, `i
 (2, 1, 'danger', 'Out of stock alert: Apple MacBook Pro 16 M3 Pro 36GB (Qty: 0, Min: 2)', 0, DATE_SUB(NOW(), INTERVAL 1 DAY)),
 (3, 2, 'info', 'New stock movement recorded by Admin for Dell UltraSharp 27" 4K Monitor', 1, DATE_SUB(NOW(), INTERVAL 3 DAY))
 ON DUPLICATE KEY UPDATE `message` = VALUES(`message`);
+
+-- Insert Settings
+INSERT INTO `settings` (`id`, `company_name`, `tax_id`, `currency_symbol`, `default_min_stock`, `company_address`) VALUES
+(1, 'Smart Inventory Systems', 'TAX-889920', 'Rs.', 5, 'Colombo, Sri Lanka')
+ON DUPLICATE KEY UPDATE `currency_symbol` = 'Rs.';
