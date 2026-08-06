@@ -18,6 +18,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 themeToggleIcon.className = 'fas fa-moon text-primary';
             }
         }
+        if (typeof Chart !== 'undefined') {
+            Chart.defaults.color = theme === 'dark' ? '#94a3b8' : '#64748b';
+            Chart.defaults.borderColor = theme === 'dark' ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)';
+        }
     }
 
     // Initialize icon state on load
