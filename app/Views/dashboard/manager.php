@@ -12,421 +12,228 @@ $outPct = min(100 - ($healthyPct + $lowPct), round(($outCount / $totalProds) * 1
 ?>
 <div class="container-fluid px-0">
 
-    <!-- Manager Header -->
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3 bg-slate-900 p-4 rounded-4 border border-slate-800">
+    <!-- Manager Header Banner -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3 role-banner-manager p-4 rounded-4 shadow-sm text-white">
         <div>
-            <div class="d-flex align-items-center gap-2">
-                <h4 class="fw-bold text-white mb-0">
-                    <i class="fas fa-cubes-stacked text-cyan me-2"></i>Manager Operations Hub & Restock Engine
-                </h4>
-                <span class="badge bg-cyan-subtle text-cyan rounded-pill px-2.5 py-1 fs-8 fw-semibold"><i class="fas fa-shield-halved me-1"></i> Manager Mode</span>
+            <div class="d-flex align-items-center gap-2 mb-1">
+                <h4 class="fw-bold mb-0"><i class="fas fa-boxes-stacked me-2 text-cyan"></i> Manager Operations Hub & Restock Engine</h4>
+                <span class="badge bg-emerald-subtle text-emerald rounded-pill px-2.5 py-1 fs-8 fw-bold border border-emerald">
+                    <i class="fas fa-truck-ramp-box me-1"></i> WAREHOUSE RESTOCK OPERATIONAL MODE
+                </span>
             </div>
-            <p class="text-slate-400 fs-7 mb-0 mt-1">Monitor inventory health, review reorder financial commitments, and execute procurement dispatches.</p>
+            <p class="text-slate-400 fs-7 mb-0">Monitor catalog health, calculate automated reorder quantities, and manage purchase orders.</p>
         </div>
         <div class="d-flex align-items-center gap-2 flex-wrap">
-            <a href="/inventory/stock-in" class="btn btn-emerald btn-sm rounded-3 fw-semibold">
+            <a href="/inventory/stock-in" class="btn btn-emerald btn-sm rounded-3">
                 <i class="fas fa-plus me-1.5"></i> Stock In
             </a>
-            <a href="/inventory/stock-out" class="btn btn-rose btn-sm rounded-3 fw-semibold">
+            <a href="/inventory/stock-out" class="btn btn-rose btn-sm rounded-3">
                 <i class="fas fa-minus me-1.5"></i> Stock Out
             </a>
-            <a href="/purchase-orders/create" class="btn btn-outline-warning btn-sm rounded-3 fw-semibold">
+            <a href="/purchase-orders/create" class="btn btn-cyan btn-sm rounded-3">
                 <i class="fas fa-file-signature me-1.5"></i> Create PO
             </a>
-            <a href="/transfers" class="btn btn-outline-cyan btn-sm rounded-3 fw-semibold">
-                <i class="fas fa-right-left me-1.5"></i> Transfer
+            <a href="/transfers" class="btn btn-theme-outline btn-sm rounded-3">
+                <i class="fas fa-right-left me-1.5"></i> Inter-Warehouse Transfer
             </a>
-            <a href="/stock-takes" class="btn btn-outline-light btn-sm rounded-3">
+            <a href="/stock-takes" class="btn btn-theme-outline btn-sm rounded-3">
                 <i class="fas fa-clipboard-list me-1.5"></i> Stock Audit
-            </a>
-            <a href="/inventory/adjust" class="btn btn-outline-light btn-sm rounded-3">
-                <i class="fas fa-sliders me-1.5"></i> Adjust Count
             </a>
         </div>
     </div>
 
     <!-- 5 Key Operational Metric Cards -->
     <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-5 g-3 mb-4">
+        <!-- 1. Catalog Products -->
         <div class="col">
-            <div class="card card-metric border-0 rounded-4 bg-slate-900 p-4 h-100 border-start border-3 border-cyan">
-                <div class="d-flex align-items-center justify-content-between mb-2">
-                    <span class="text-slate-400 fs-7 fw-semibold">Total Catalog</span>
-                    <div class="metric-icon bg-cyan-subtle text-cyan rounded-3 d-flex align-items-center justify-content-center">
-                        <i class="fas fa-boxes-stacked fs-5"></i>
-                    </div>
-                </div>
-                <h3 class="fw-bold text-white mb-0"><?= number_format($metrics['total_products'] ?? 0) ?></h3>
-                <span class="fs-8 text-slate-400">Total active SKUs</span>
+            <div class="card card-metric border-0 rounded-4 p-3 h-100">
+                <div class="text-theme-muted fs-8 fw-bold text-uppercase mb-1">Total Catalog</div>
+                <h3 class="fw-bold text-theme-main mb-1"><?= number_format($metrics['total_products'] ?? 0) ?></h3>
+                <small class="text-cyan fs-8"><i class="fas fa-layer-group me-1"></i><?= $metrics['total_categories'] ?? 0 ?> Categories</small>
             </div>
         </div>
 
+        <!-- 2. Health Meter -->
         <div class="col">
-            <div class="card card-metric border-0 rounded-4 bg-slate-900 p-4 h-100 border-start border-3 border-emerald">
-                <div class="d-flex align-items-center justify-content-between mb-2">
-                    <span class="text-slate-400 fs-7 fw-semibold">Healthy Items</span>
-                    <div class="metric-icon bg-emerald-subtle text-emerald rounded-3 d-flex align-items-center justify-content-center">
-                        <i class="fas fa-circle-check fs-5"></i>
-                    </div>
-                </div>
-                <h3 class="fw-bold text-emerald mb-0"><?= number_format($healthyCount) ?></h3>
-                <span class="fs-8 text-emerald"><?= $healthyPct ?>% of total stock</span>
+            <div class="card card-metric border-0 rounded-4 p-3 h-100">
+                <div class="text-theme-muted fs-8 fw-bold text-uppercase mb-1">Catalog Health</div>
+                <h3 class="fw-bold text-emerald mb-1"><?= $metrics['health_percentage'] ?? 100 ?>%</h3>
+                <small class="text-emerald fs-8"><i class="fas fa-check-circle me-1"></i><?= $healthyCount ?> Healthy Items</small>
             </div>
         </div>
 
+        <!-- 3. Low Stock Alerts -->
         <div class="col">
-            <div class="card card-metric border-0 rounded-4 bg-slate-900 p-4 h-100 border-start border-3 border-warning">
-                <div class="d-flex align-items-center justify-content-between mb-2">
-                    <span class="text-slate-400 fs-7 fw-semibold">Low Stock</span>
-                    <div class="metric-icon bg-warning-subtle text-warning rounded-3 d-flex align-items-center justify-content-center">
-                        <i class="fas fa-exclamation-triangle fs-5"></i>
-                    </div>
-                </div>
-                <h3 class="fw-bold text-warning mb-0"><?= number_format($lowCount) ?></h3>
-                <span class="fs-8 text-warning">Below min threshold</span>
+            <div class="card card-metric border-0 rounded-4 p-3 h-100">
+                <div class="text-theme-muted fs-8 fw-bold text-uppercase mb-1">Low Stock Alerts</div>
+                <h3 class="fw-bold text-amber mb-1"><?= number_format($metrics['low_stock_count'] ?? 0) ?></h3>
+                <small class="text-amber fs-8"><i class="fas fa-triangle-exclamation me-1"></i>Reorder Recommended</small>
             </div>
         </div>
 
+        <!-- 4. Out of Stock -->
         <div class="col">
-            <div class="card card-metric border-0 rounded-4 bg-slate-900 p-4 h-100 border-start border-3 border-rose">
-                <div class="d-flex align-items-center justify-content-between mb-2">
-                    <span class="text-slate-400 fs-7 fw-semibold">Out of Stock</span>
-                    <div class="metric-icon bg-rose-subtle text-rose rounded-3 d-flex align-items-center justify-content-center">
-                        <i class="fas fa-circle-xmark fs-5"></i>
-                    </div>
-                </div>
-                <h3 class="fw-bold text-rose mb-0"><?= number_format($outCount) ?></h3>
-                <span class="fs-8 text-rose">Immediate restock required</span>
+            <div class="card card-metric border-0 rounded-4 p-3 h-100">
+                <div class="text-theme-muted fs-8 fw-bold text-uppercase mb-1">Out of Stock</div>
+                <h3 class="fw-bold text-rose mb-1"><?= number_format($metrics['out_of_stock_count'] ?? 0) ?></h3>
+                <small class="text-rose fs-8"><i class="fas fa-ban me-1"></i>Zero Inventory</small>
             </div>
         </div>
 
+        <!-- 5. Reorder Commitment Cost -->
         <div class="col">
-            <div class="card card-metric border-0 rounded-4 bg-slate-900 p-4 h-100 border-start border-3 border-indigo">
-                <div class="d-flex align-items-center justify-content-between mb-2">
-                    <span class="text-slate-400 fs-7 fw-semibold">Reorder Capital</span>
-                    <div class="metric-icon bg-indigo-subtle text-indigo rounded-3 d-flex align-items-center justify-content-center">
-                        <i class="fas fa-sack-dollar fs-5"></i>
-                    </div>
-                </div>
-                <h3 class="fw-bold text-indigo mb-0">$<?= number_format($metrics['total_reorder_cost'] ?? 0, 2) ?></h3>
-                <span class="fs-8 text-slate-400">Estimated restock cost</span>
+            <div class="card card-metric border-0 rounded-4 p-3 h-100">
+                <div class="text-theme-muted fs-8 fw-bold text-uppercase mb-1">Est. Reorder Cost</div>
+                <h3 class="fw-bold text-cyan mb-1">$<?= number_format($metrics['total_reorder_cost'] ?? 0, 2) ?></h3>
+                <small class="text-cyan fs-8"><i class="fas fa-cart-shopping me-1"></i>Suggested PO Budget</small>
             </div>
         </div>
     </div>
 
-    <!-- Stock Health Visual Distribution Gauge -->
-    <div class="card border-0 rounded-4 bg-slate-900 p-4 mb-4 border border-slate-800">
+    <!-- Health Visual Gauge Bar -->
+    <div class="card border-0 rounded-4 p-4 mb-4">
         <div class="d-flex align-items-center justify-content-between mb-2">
-            <h6 class="fw-bold text-white mb-0 fs-7">
-                <i class="fas fa-heart-pulse text-emerald me-2"></i> Warehouse Inventory Health Gauge
-            </h6>
-            <span class="fs-8 text-slate-400">Health Ratio: <strong class="text-emerald"><?= $healthyPct ?>%</strong></span>
+            <h6 class="fw-bold text-theme-main mb-0"><i class="fas fa-heart-pulse me-2 text-emerald"></i> Warehouse Stock Health Ratio</h6>
+            <span class="fs-8 text-theme-muted"><?= $healthyPct ?>% Healthy | <?= $lowPct ?>% Low | <?= $outPct ?>% Out</span>
         </div>
-        <div class="progress rounded-pill bg-slate-800 overflow-hidden mb-3" style="height: 12px;">
-            <div class="progress-bar bg-emerald" role="progressbar" style="width: <?= $healthyPct ?>%" title="Healthy (<?= $healthyPct ?>%)"></div>
-            <div class="progress-bar bg-warning" role="progressbar" style="width: <?= $lowPct ?>%" title="Low Stock (<?= $lowPct ?>%)"></div>
-            <div class="progress-bar bg-rose" role="progressbar" style="width: <?= $outPct ?>%" title="Out of Stock (<?= $outPct ?>%)"></div>
-        </div>
-        <div class="d-flex align-items-center justify-content-start gap-4 fs-8">
-            <div class="d-flex align-items-center gap-1.5">
-                <span class="d-inline-block rounded-circle bg-emerald" style="width: 8px; height: 8px;"></span>
-                <span class="text-slate-300">Healthy: <strong><?= $healthyCount ?></strong></span>
-            </div>
-            <div class="d-flex align-items-center gap-1.5">
-                <span class="d-inline-block rounded-circle bg-warning" style="width: 8px; height: 8px;"></span>
-                <span class="text-slate-300">Low Stock: <strong><?= $lowCount ?></strong></span>
-            </div>
-            <div class="d-flex align-items-center gap-1.5">
-                <span class="d-inline-block rounded-circle bg-rose" style="width: 8px; height: 8px;"></span>
-                <span class="text-slate-300">Out of Stock: <strong><?= $outCount ?></strong></span>
-            </div>
+        <div class="progress rounded-pill bg-slate-800" style="height: 12px;">
+            <div class="progress-bar bg-emerald" role="progressbar" style="width: <?= $healthyPct ?>%" title="Healthy Stock"></div>
+            <div class="progress-bar bg-warning" role="progressbar" style="width: <?= $lowPct ?>%" title="Low Stock"></div>
+            <div class="progress-bar bg-danger" role="progressbar" style="width: <?= $outPct ?>%" title="Out of Stock"></div>
         </div>
     </div>
 
-    <!-- Manager Analytics Row: Stock Activity Telemetry & Category Donut Chart -->
+    <!-- Smart Restock Queue & Procurement Stream -->
     <div class="row g-3 mb-4">
-        <!-- Monthly Stock Activity Chart -->
-        <div class="col-12 col-lg-7">
-            <div class="card border-0 rounded-4 bg-slate-900 p-4 h-100 border border-slate-800">
+        <!-- Smart Restock Queue Table -->
+        <div class="col-12 col-lg-8">
+            <div class="card border-0 rounded-4 p-4 h-100">
                 <div class="d-flex align-items-center justify-content-between mb-3">
                     <div>
-                        <h6 class="fw-bold text-white mb-0"><i class="fas fa-chart-bar me-2 text-cyan"></i> Monthly Operations Volume</h6>
-                        <small class="text-slate-400 fs-8">Inflow receiving vs Outflow dispatch history</small>
+                        <h6 class="fw-bold text-theme-main mb-0"><i class="fas fa-triangle-exclamation text-amber me-2"></i> Inventory Restock Queue</h6>
+                        <small class="text-theme-muted fs-8">Items below min stock with automated reorder calculations</small>
                     </div>
-                    <span class="badge bg-slate-800 text-slate-300 fs-8">Telemetry</span>
-                </div>
-                <div style="height: 260px;">
-                    <canvas id="monthlyMovementsChart"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <!-- Category Distribution Chart -->
-        <div class="col-12 col-lg-5">
-            <div class="card border-0 rounded-4 bg-slate-900 p-4 h-100 border border-slate-800">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <div>
-                        <h6 class="fw-bold text-white mb-0"><i class="fas fa-chart-pie me-2 text-emerald"></i> Category Share</h6>
-                        <small class="text-slate-400 fs-8">Inventory volume split by category</small>
-                    </div>
-                </div>
-                <div style="height: 260px; position: relative;">
-                    <canvas id="categoryDistributionChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row g-4 mb-4">
-        <!-- Restock Queue Table with Live Filter -->
-        <div class="col-12 col-xl-8">
-            <div class="card border-0 rounded-4 bg-slate-900 p-4 h-100 border border-slate-800">
-                <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between mb-3 gap-2">
-                    <div>
-                        <h6 class="fw-bold text-white mb-0">
-                            <i class="fas fa-truck-ramp-box text-warning me-2"></i> Items Needing Restock
-                        </h6>
-                        <span class="text-slate-400 fs-8">Smart restock engine recommendations based on safety levels</span>
-                    </div>
-                    <div class="d-flex align-items-center gap-2">
-                        <div class="input-group input-group-sm">
-                            <span class="input-group-text bg-slate-800 border-slate-700 text-slate-400">
-                                <i class="fas fa-search"></i>
-                            </span>
-                            <input type="text" id="restockSearchInput" class="form-control bg-slate-800 border-slate-700 text-white fs-8" placeholder="Filter restock items...">
-                        </div>
-                        <span class="badge bg-warning text-dark px-3 py-1.5 rounded-pill fs-8 fw-bold"><?= count($restockQueue) ?> Item(s)</span>
-                    </div>
+                    <a href="/purchase-orders/create" class="btn btn-cyan btn-xs rounded-2 px-2.5 py-1">
+                        <i class="fas fa-plus me-1"></i> Create PO
+                    </a>
                 </div>
 
-                <div class="table-responsive">
-                    <table class="table align-middle mb-0 fs-7" id="restockTable">
-                        <thead>
-                            <tr class="text-slate-400 border-bottom border-slate-800">
-                                <th>Product Name</th>
-                                <th>SKU</th>
-                                <th>Unit Cost</th>
-                                <th>Current</th>
-                                <th>Min Threshold</th>
-                                <th>Suggested</th>
-                                <th>Est. Cost</th>
-                                <th class="text-end">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if (empty($restockQueue)): ?>
+                <?php if (empty($restockQueue)): ?>
+                    <div class="text-center py-4 my-auto text-theme-muted">
+                        <i class="fas fa-circle-check fs-3 text-emerald mb-2"></i>
+                        <p class="mb-0 fs-7">All warehouse stock levels are healthy! No restock required.</p>
+                    </div>
+                <?php else: ?>
+                    <div class="table-responsive">
+                        <table class="table align-middle mb-0 fs-7">
+                            <thead>
                                 <tr>
-                                    <td colspan="8" class="text-center text-emerald py-4">
-                                        <i class="fas fa-check-circle fs-5 me-2"></i> All products are adequately stocked!
-                                    </td>
+                                    <th>SKU / Product</th>
+                                    <th>Current</th>
+                                    <th>Min Stock</th>
+                                    <th>Suggested Reorder</th>
+                                    <th>Est Cost</th>
+                                    <th>Action</th>
                                 </tr>
-                            <?php else: ?>
-                                <?php foreach ($restockQueue as $p): 
-                                    $estCost = $p->suggested_reorder_qty * ($p->cost_price ?? 0);
-                                ?>
-                                    <tr class="restock-row" data-name="<?= strtolower(htmlspecialchars($p->product_name)) ?>" data-sku="<?= strtolower(htmlspecialchars($p->sku)) ?>">
-                                        <td class="fw-bold text-white"><?= htmlspecialchars($p->product_name) ?></td>
-                                        <td class="fw-mono text-slate-400 fs-8"><?= htmlspecialchars($p->sku) ?></td>
-                                        <td class="text-slate-300">$<?= number_format($p->cost_price ?? 0, 2) ?></td>
-                                        <td class="fw-bold <?= $p->quantity <= 0 ? 'text-rose' : 'text-warning' ?>"><?= $p->quantity ?></td>
-                                        <td><?= $p->min_stock_level ?></td>
+                            </thead>
+                            <tbody>
+                                <?php foreach (array_slice($restockQueue, 0, 6) as $item): ?>
+                                    <tr>
                                         <td>
-                                            <span class="badge bg-emerald-subtle text-emerald px-2.5 py-1 font-mono">
-                                                +<?= $p->suggested_reorder_qty ?> units
-                                            </span>
+                                            <div class="fw-bold text-theme-main"><?= htmlspecialchars($item->product_name) ?></div>
+                                            <small class="text-theme-muted fw-mono fs-8"><?= htmlspecialchars($item->sku) ?></small>
                                         </td>
-                                        <td class="fw-bold text-indigo">$<?= number_format($estCost, 2) ?></td>
-                                        <td class="text-end">
-                                            <div class="d-flex align-items-center justify-content-end gap-1.5">
-                                                <a href="/purchase-orders/create?product_id=<?= $p->product_id ?>&qty=<?= $p->suggested_reorder_qty ?>" 
-                                                   class="btn btn-xs btn-outline-warning rounded-2" 
-                                                   title="Draft Purchase Order for Supplier">
-                                                    <i class="fas fa-file-signature me-1"></i> PO
-                                                </a>
-                                                <button type="button" 
-                                                        class="btn btn-xs btn-emerald rounded-2 open-restock-modal"
-                                                        data-id="<?= $p->product_id ?>"
-                                                        data-name="<?= htmlspecialchars($p->product_name) ?>"
-                                                        data-qty="<?= $p->suggested_reorder_qty ?>">
-                                                    <i class="fas fa-plus me-1"></i> Quick Restock
-                                                </button>
-                                            </div>
+                                        <td class="fw-bold <?= $item->quantity == 0 ? 'text-rose' : 'text-amber' ?>"><?= $item->quantity ?></td>
+                                        <td><?= $item->min_stock_level ?></td>
+                                        <td><span class="badge bg-cyan-subtle text-cyan fw-bold px-2 py-1">+<?= $item->suggested_reorder_qty ?> units</span></td>
+                                        <td class="fw-semibold text-theme-main">$<?= number_format($item->suggested_reorder_qty * (float)($item->cost_price ?? 0), 2) ?></td>
+                                        <td>
+                                            <a href="/inventory/stock-in?product_id=<?= $item->product_id ?>" class="btn btn-emerald btn-xs rounded-2 px-2 py-1">
+                                                <i class="fas fa-plus me-1"></i> Stock In
+                                            </a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
-                </div>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
 
-        <!-- Operations Side Column: PO Pipeline + Recent Feed -->
-        <div class="col-12 col-xl-4 d-flex flex-column gap-4">
-            <!-- Pending Purchase Orders Pipeline Panel -->
-            <div class="card border-0 rounded-4 bg-slate-900 p-4 border border-slate-800">
+        <!-- Pending Purchase Orders Tracker -->
+        <div class="col-12 col-lg-4">
+            <div class="card border-0 rounded-4 p-4 h-100">
                 <div class="d-flex align-items-center justify-content-between mb-3">
                     <div>
-                        <h6 class="fw-bold text-white mb-0">
-                            <i class="fas fa-file-signature text-warning me-2"></i> Pending Supplier POs
-                        </h6>
-                        <small class="text-slate-400 fs-8">Active purchase orders pending delivery</small>
+                        <h6 class="fw-bold text-theme-main mb-0"><i class="fas fa-file-contract me-2 text-cyan"></i> Active PO Orders</h6>
+                        <small class="text-theme-muted fs-8">Supplier purchase orders in transit</small>
                     </div>
-                    <a href="/purchase-orders" class="fs-8 text-cyan text-decoration-none">View All (<?= count($pendingPOs ?? []) ?>) &rarr;</a>
+                    <a href="/purchase-orders" class="text-cyan fs-8 text-decoration-none fw-semibold">View All &rarr;</a>
                 </div>
 
                 <?php if (empty($pendingPOs)): ?>
-                    <div class="text-center py-3 text-slate-400 fs-8">
-                        <i class="fas fa-check-circle text-emerald me-1"></i> No pending purchase orders.
+                    <div class="text-center py-4 my-auto text-theme-muted">
+                        <i class="fas fa-inbox fs-3 text-theme-muted mb-2"></i>
+                        <p class="mb-0 fs-7">No active purchase orders in transit.</p>
                     </div>
                 <?php else: ?>
                     <div class="d-flex flex-column gap-2">
-                        <?php foreach (array_slice($pendingPOs, 0, 3) as $po): ?>
-                            <div class="p-2.5 rounded-3 bg-slate-800/60 border border-slate-700/60 d-flex align-items-center justify-content-between">
+                        <?php foreach (array_slice($pendingPOs, 0, 4) as $po): ?>
+                            <div class="p-3 border rounded-3 d-flex align-items-center justify-content-between">
                                 <div>
-                                    <div class="fw-bold text-white fs-7"><?= htmlspecialchars($po->po_number ?? 'PO-' . $po->po_id) ?></div>
-                                    <small class="text-slate-400 fs-8"><?= htmlspecialchars($po->supplier_name ?? 'Supplier') ?> &bull; <span class="text-emerald">$<?= number_format($po->total_amount ?? 0, 2) ?></span></small>
+                                    <div class="fw-bold text-theme-main fs-7"><?= htmlspecialchars($po->po_number ?? "PO-#{$po->po_id}") ?></div>
+                                    <small class="text-theme-muted fs-8"><i class="fas fa-truck me-1"></i><?= htmlspecialchars($po->supplier_name ?? 'Vendor') ?></small>
                                 </div>
-                                <div class="d-flex align-items-center gap-2">
-                                    <span class="badge bg-warning-subtle text-warning fs-8 px-2 py-1"><i class="fas fa-truck-fast me-1"></i><?= htmlspecialchars($po->status ?? 'Sent') ?></span>
-                                    <a href="/purchase-orders/show?id=<?= $po->po_id ?>" class="btn btn-xs btn-outline-cyan rounded-2 px-2 py-0.5" title="View PO">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
+                                <div class="text-end">
+                                    <div class="fw-bold text-cyan fs-7">$<?= number_format($po->total_amount ?? 0, 2) ?></div>
+                                    <span class="badge bg-warning-subtle text-amber fs-8"><?= htmlspecialchars($po->status ?? 'Sent') ?></span>
                                 </div>
                             </div>
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
             </div>
-
-            <!-- Recent Stock Activity Feed Side Widget -->
-            <div class="card border-0 rounded-4 bg-slate-900 p-4 h-100 border border-slate-800">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h6 class="fw-bold text-white mb-0">
-                        <i class="fas fa-clock-rotate-left text-cyan me-2"></i> Recent Stock Feed
-                    </h6>
-                    <a href="/movements" class="fs-8 text-cyan text-decoration-none">View All <i class="fas fa-arrow-right ms-1"></i></a>
-                </div>
-
-                <div class="activity-feed">
-                    <?php if (empty($recentMovements)): ?>
-                        <p class="text-slate-500 fs-8 text-center my-4">No recent stock movements found.</p>
-                    <?php else: ?>
-                        <div class="d-flex flex-column gap-2.5">
-                            <?php foreach (array_slice($recentMovements, 0, 6) as $m): 
-                                $isObj = is_object($m);
-                                $mType = $isObj ? ($m->movement_type ?? 'Stock In') : ($m['movement_type'] ?? $m['type'] ?? 'Stock In');
-                                $pName = $isObj ? ($m->product_name ?? 'Product') : ($m['product_name'] ?? 'Product');
-                                $uName = $isObj ? ($m->user_name ?? 'System') : ($m['user_name'] ?? 'System');
-                                $qty = $isObj ? ($m->quantity ?? 0) : ($m['quantity'] ?? 0);
-                                $createdAt = $isObj ? ($m->created_at ?? 'now') : ($m['created_at'] ?? 'now');
-
-                                $isOut = str_contains(strtolower($mType), 'out');
-                                $isIn = str_contains(strtolower($mType), 'in');
-
-                                $badgeClass = $isIn ? 'bg-emerald-subtle text-emerald' : ($isOut ? 'bg-rose-subtle text-rose' : 'bg-warning-subtle text-warning');
-                                $icon = $isIn ? 'fa-arrow-down-left' : ($isOut ? 'fa-arrow-up-right' : 'fa-sliders');
-                            ?>
-                                <div class="d-flex align-items-center justify-content-between p-2.5 rounded-3 bg-slate-800/50 border border-slate-800">
-                                    <div class="d-flex align-items-center gap-2.5">
-                                        <div class="metric-icon <?= $badgeClass ?> rounded-3 p-2 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
-                                            <i class="fas <?= $icon ?> fs-7"></i>
-                                        </div>
-                                        <div>
-                                            <div class="fw-bold text-white fs-7"><?= htmlspecialchars($pName) ?></div>
-                                            <div class="text-slate-400 fs-8">By <?= htmlspecialchars($uName) ?> • <?= date('M d, H:i', strtotime($createdAt)) ?></div>
-                                        </div>
-                                    </div>
-                                    <span class="badge <?= $badgeClass ?> font-mono fs-8 fw-bold">
-                                        <?= $isOut ? '-' : '+' ?><?= $qty ?>
-                                    </span>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php endif; ?>
-                </div>
-            </div>
         </div>
     </div>
-</div>
 
-<!-- Quick Restock Modal -->
-<div class="modal fade" id="quickRestockModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content bg-slate-900 text-white border border-slate-800 rounded-4">
-            <div class="modal-header border-bottom border-slate-800">
-                <h5 class="modal-title fw-bold text-white fs-6">
-                    <i class="fas fa-truck-ramp-box text-emerald me-2"></i> Quick Restock Item
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="/inventory/stock-in" method="GET">
-                <div class="modal-body p-4">
-                    <input type="hidden" name="product_id" id="modalProductId">
-                    <div class="mb-3">
-                        <label class="form-label text-slate-400 fs-7">Target Product</label>
-                        <input type="text" id="modalProductName" class="form-control bg-slate-800 border-slate-700 text-white fw-bold" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label text-slate-400 fs-7">Restock Quantity (Units)</label>
-                        <input type="number" name="quantity" id="modalRestockQty" class="form-control bg-slate-800 border-slate-700 text-emerald fw-bold" min="1" required>
-                    </div>
-                    <div class="p-3 bg-slate-800/60 rounded-3 text-slate-400 fs-8">
-                        <i class="fas fa-circle-info text-cyan me-1.5"></i> Direct restock will pre-fill the inventory receiving form with recommended quantities.
-                    </div>
-                </div>
-                <div class="modal-footer border-top border-slate-800">
-                    <button type="button" class="btn btn-outline-light btn-sm rounded-3" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-emerald btn-sm rounded-3">
-                        <i class="fas fa-arrow-right me-1"></i> Proceed to Receive Stock
-                    </button>
-                </div>
-            </form>
+    <!-- Movement Stream -->
+    <div class="card border-0 rounded-4 p-4">
+        <div class="d-flex align-items-center justify-content-between mb-3">
+            <h6 class="fw-bold text-theme-main mb-0"><i class="fas fa-clock-rotate-left me-2 text-cyan"></i> Warehouse Movement Log Stream</h6>
+            <a href="/movements" class="text-cyan fs-8 text-decoration-none fw-semibold">Full Audit Logs &rarr;</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table align-middle mb-0 fs-7">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Type</th>
+                        <th>Qty</th>
+                        <th>Operator</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach (array_slice($recentMovements, 0, 5) as $mv): ?>
+                        <tr>
+                            <td>
+                                <div class="fw-semibold text-theme-main"><?= htmlspecialchars($mv->product_name) ?></div>
+                                <small class="text-theme-muted fw-mono fs-8"><?= htmlspecialchars($mv->sku) ?></small>
+                            </td>
+                            <td><?= $mv->getTypeBadgeHtml() ?></td>
+                            <td class="fw-bold text-theme-main"><?= $mv->quantity ?></td>
+                            <td><?= htmlspecialchars($mv->user_name) ?></td>
+                            <td class="text-theme-muted fs-8"><?= date('M d, H:i', strtotime($mv->created_at)) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
         </div>
     </div>
+
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Instant Filter for Restock Table
-    const searchInput = document.getElementById('restockSearchInput');
-    const tableRows = document.querySelectorAll('.restock-row');
-
-    if (searchInput) {
-        searchInput.addEventListener('keyup', function() {
-            const query = this.value.toLowerCase().trim();
-            tableRows.forEach(row => {
-                const name = row.getAttribute('data-name') || '';
-                const sku = row.getAttribute('data-sku') || '';
-                if (name.includes(query) || sku.includes(query)) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
-        });
-    }
-
-    // Quick Restock Modal Handler
-    const restockButtons = document.querySelectorAll('.open-restock-modal');
-    const modalProductId = document.getElementById('modalProductId');
-    const modalProductName = document.getElementById('modalProductName');
-    const modalRestockQty = document.getElementById('modalRestockQty');
-    const restockModalEl = document.getElementById('quickRestockModal');
-
-    if (restockButtons.length > 0 && restockModalEl) {
-        const bsModal = new bootstrap.Modal(restockModalEl);
-        restockButtons.forEach(btn => {
-            btn.addEventListener('click', function() {
-                modalProductId.value = this.getAttribute('data-id');
-                modalProductName.value = this.getAttribute('data-name');
-                modalRestockQty.value = this.getAttribute('data-qty');
-                bsModal.show();
-            });
-        });
-    }
-});
-</script>
-
-<script>
-    window.dashboardChartsData = <?= json_encode($chartsData ?? []) ?>;
+    window.dashboardChartsData = <?= json_encode($chartsData) ?>;
 </script>
