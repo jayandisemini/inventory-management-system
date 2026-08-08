@@ -60,7 +60,7 @@
                             <i class="fas fa-boxes-stacked fs-5"></i>
                         </div>
                     </div>
-                    <h2 class="fw-bold text-theme-main mb-2"><?= number_format($metrics['total_products'] ?? 0) ?> <span class="fs-7 text-theme-muted fw-normal">SKUs</span></h2>
+                    <h2 class="fw-bold text-theme-main mb-2"><?= number_format($metrics['total_products'] ?? 0) ?> <span class="fs-7 text-theme-muted fw-normal">Products</span></h2>
                     <div class="d-flex align-items-center justify-content-between">
                         <span class="badge bg-cyan-subtle text-cyan rounded-pill fs-8 px-2 py-0.5">
                             <i class="fas fa-heart-pulse me-1"></i>Health: <?= $metrics['health_percentage'] ?? 100 ?>%
